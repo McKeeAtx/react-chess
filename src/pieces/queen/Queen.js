@@ -1,12 +1,12 @@
 import Color from "../Color";
 import Piece from "../Piece";
 
-class Bishop extends Piece {
+class Queen extends Piece {
 
     constructor(color) {
-        super(color == Color.WHITE ? '\u2659' : '\u265F', color);
+        super(color == Color.WHITE ? '\u2655' : '\u265B', color);
     }
 
 }
 
-export default Bishop;
+export default Queen;
