@@ -20,6 +20,10 @@
     background: #fff;
 }
 
+.square.highlighted {
+    background: khaki;
+}
+
 .square:focus {
     outline: none;
 }
