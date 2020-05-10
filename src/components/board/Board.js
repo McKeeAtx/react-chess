@@ -6,8 +6,9 @@ class Board extends React.Component {
     rows = [0, 1, 2, 3, 4, 5, 6, 7];
     cols = [0, 1, 2, 3, 4, 5, 6, 7];
 
-    renderSquare(row, col) {
-        return <Square row={row} col={col} />;
+    renderSquare(col, row) {
+        console.log(this.props)
+        return <Square col={col} row={row} piece={this.props.state.getPiece(col, row)}/>;
     }
 
     renderHeader(title) {
@@ -23,7 +24,7 @@ class Board extends React.Component {
                 {this.rows.map(row =>
                     <div className="board-row">
                         {this.renderHeader(8 - row)}
-                        {this.cols.map(col => this.renderSquare(row, col))}
+                        {this.cols.map(col => this.renderSquare(col, 7 - row))}
                     </div>
                 )
                 }
