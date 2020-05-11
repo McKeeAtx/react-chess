@@ -48,6 +48,10 @@ class BoardState  {
         return snapshot;
     }
 
+    nextPlayer() {
+        return this.moves.length % 2 === 0 ? Color.WHITE : Color.BLACK;
+    }
+
     onClick(col, row) {
         let result = new BoardState();
         result.pieces = this.pieces.slice();
@@ -64,11 +68,10 @@ class BoardState  {
     }
 
     isHighlighted(col, row) {
-        const nextMove = this.moves.length % 2 === 0 ? Color.WHITE : Color.BLACK;
         if (this.clicks.length !== 0) {
             const lastClick = this.clicks.slice(-1)[0];
             if (lastClick.col === col && lastClick.row === row) {
-                if (this.pieces[col][row].color === nextMove) {
+                if (this.pieces[col][row].color === this.nextPlayer()) {
                     return true;
                 }
             }

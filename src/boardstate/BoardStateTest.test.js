@@ -54,6 +54,13 @@ describe('initial state' , function() {
     });
 });
 
+describe('next player' , function() {
+    it('is white in the beginning' , function() {
+        let boardState = BoardState.initial();
+        expect(boardState.nextPlayer()).toEqual(Color.WHITE);
+    });
+});
+
 describe('highlighting' , function(){
     it('initially no square is highlighted' , function() {
         let boardState = BoardState.initial();

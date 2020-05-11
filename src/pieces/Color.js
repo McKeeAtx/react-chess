@@ -1,7 +1,7 @@
 const Color = {
-    BLACK: 1,
-    WHITE: 2,
-    TRANSLUCENT: 3
+    BLACK: 'BLACK',
+    WHITE: 'WHITE',
+    TRANSLUCENT: 'TRANSLUCENT'
 };
 Object.freeze(Color);
 
