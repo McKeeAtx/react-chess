@@ -10,11 +10,9 @@ class Game extends React.Component {
         this.state = {
             boardStates: [BoardState.initial()]
         };
-        console.log("BLA" + this.state);
     }
 
     squareClicked(col, row) {
-        console.log("BLUB" + this.state);
         const lastState = this.state.boardStates[this.state.boardStates.length - 1];
         const newState = this.state.boardStates.slice();
         newState.push(lastState.squareClicked(col, row));

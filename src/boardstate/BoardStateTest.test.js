@@ -71,17 +71,17 @@ describe('selection' , function(){
     });
 
     it('player can not select empty square' , function() {
-        let boardState = BoardState.initial().onClick(4, 4);
+        let boardState = BoardState.initial().squareClicked(4, 4);
         expect(boardState.getData(4, 4).selected).toEqual(false);
     });
 
     it('player can select own piece' , function() {
-        let boardState = BoardState.initial().onClick(0, 0);
+        let boardState = BoardState.initial().squareClicked(0, 0);
         expect(boardState.getData(0, 0).selected).toEqual(true);
     });
 
     it('player can not select own opponent\'s piece' , function() {
-        let boardState = BoardState.initial().onClick(7, 7);
+        let boardState = BoardState.initial().squareClicked(7, 7);
         expect(boardState.getData(7, 7).selected).toEqual(false);
     });
 
