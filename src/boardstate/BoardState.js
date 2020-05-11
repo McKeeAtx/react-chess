@@ -7,20 +7,22 @@ import Queen from "../pieces/queen/Queen";
 import King from "../pieces/king/King";
 import None from "../pieces/none/None";
 
-class Snapshot  {
+/**
+ * Represent the state (the position of all pieces and all previous clicks) at a particular point in time
+ * during a game.
+ */
+class BoardState  {
 
     pieces = [];
-    highlighted = [];
+    clicks = [];
 
     constructor() {
-        for (let i = 0; i < 8; i++) {
-            this.pieces.push(Array(8).fill(new None()));
-            this.highlighted.push(Array(8).fill(false));
-        }
+        this.pieces = new Array(8).fill(0).map(() => new Array(8).fill(new None()));
+        this.clicks = [];
     }
 
     static initial() {
-        let snapshot = new Snapshot();
+        let snapshot = new BoardState();
         for (let col = 0; col < 8; col++) {
             snapshot.pieces[col][1] = new Pawn(Color.WHITE);
             snapshot.pieces[col][6] = new Pawn(Color.BLACK);
@@ -44,23 +46,27 @@ class Snapshot  {
         return snapshot;
     }
 
-    highlight(col, row) {
-        let result = new Snapshot();
+    onClick(col, row) {
+        let result = new BoardState();
         result.pieces = this.pieces.slice();
-        for (let i = 0; i < 8; i++) {
-            result.highlighted.push(Array(8).fill(false));
-        }
-        result.highlighted[col][row] = true;
+        result.clicks = this.clicks.slice();
+        result.clicks.push({ col: col, row: row});
         return result;
     }
 
     getData(col, row) {
         return {
             piece: this.pieces[col][row],
-            highlighted: this.highlighted[col][row]
+            highlighted: this.isHighlighted(col, row)
         };
     }
 
+    isHighlighted(col, row) {
+        if (this.clicks.length !== 0) {
+            return this.clicks.slice(-1)[0].col === col && this.clicks.slice(-1)[0].row === row;
+        }
+        return false;
+    }
 }
 
-export default Snapshot;
+export default BoardState;
