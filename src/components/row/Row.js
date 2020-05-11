@@ -7,10 +7,6 @@ class Row extends React.Component {
 
     cols = [0, 1, 2, 3, 4, 5, 6, 7];
 
-    constructor(props) {
-        super(props);
-    }
-
     renderSquare(col, row) {
         return <Square
             key={'square-' + col}

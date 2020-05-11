@@ -6,8 +6,8 @@ class Square extends React.Component {
     row = this.props.row;
 
     className() {
-        if (this.props.data.highlighted) {
-            return 'square highlighted'
+        if (this.props.data.selected) {
+            return 'square selected'
         }
         if ((this.col + this.row) % 2 === 0) {
             return 'square dark'

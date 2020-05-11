@@ -20,7 +20,7 @@
     background: #fff;
 }
 
-.square.highlighted {
+.square.selected {
     background: khaki;
 }
 

@@ -1,4 +1,3 @@
-import * as assert from "assert";
 import BoardState from "./BoardState";
 import Rook from "../pieces/rook/Rook";
 import Color from "../pieces/Color";
@@ -61,29 +60,29 @@ describe('next player' , function() {
     });
 });
 
-describe('highlighting' , function(){
-    it('initially no square is highlighted' , function() {
+describe('selection' , function(){
+    it('initially no square is selected' , function() {
         let boardState = BoardState.initial();
         for (let col = 0; col < 8; col++) {
             for (let row = 0; row < 8; row++) {
-                expect(boardState.getData(7, 7).highlighted).toEqual(false);
+                expect(boardState.getData(7, 7).selected).toEqual(false);
             }
         }
     });
 
-    it('a click on an empty square does not result in highlighting' , function() {
+    it('player can not select empty square' , function() {
         let boardState = BoardState.initial().onClick(4, 4);
-        expect(boardState.getData(4, 4).highlighted).toEqual(false);
+        expect(boardState.getData(4, 4).selected).toEqual(false);
     });
 
-    it('own pieces are highlighted upon click' , function() {
+    it('player can select own piece' , function() {
         let boardState = BoardState.initial().onClick(0, 0);
-        expect(boardState.getData(0, 0).highlighted).toEqual(true);
+        expect(boardState.getData(0, 0).selected).toEqual(true);
     });
 
-    it('opponent pieces are not highlighted upon click' , function() {
+    it('player can not select own opponent\'s piece' , function() {
         let boardState = BoardState.initial().onClick(7, 7);
-        expect(boardState.getData(7, 7).highlighted).toEqual(false);
+        expect(boardState.getData(7, 7).selected).toEqual(false);
     });
 
 });

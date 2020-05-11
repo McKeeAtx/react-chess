@@ -63,11 +63,11 @@ class BoardState  {
     getData(col, row) {
         return {
             piece: this.pieces[col][row],
-            highlighted: this.isHighlighted(col, row)
+            selected: this.isSelected(col, row)
         };
     }
 
-    isHighlighted(col, row) {
+    isSelected(col, row) {
         if (this.clicks.length !== 0) {
             const lastClick = this.clicks.slice(-1)[0];
             if (lastClick.col === col && lastClick.row === row) {
