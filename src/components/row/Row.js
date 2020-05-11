@@ -1,6 +1,6 @@
 import * as React from "react";
 import './row.css';
-import Header from "../header/Header";
+import Label from "../header/Label";
 import Square from "../square/Square";
 
 class Row extends React.Component {
@@ -13,28 +13,28 @@ class Row extends React.Component {
             col={col}
             row={row}
             data={this.props.boardState.getData(col, row)}
-            squareClicked={(a, b) => this.props.squareClicked(a, b)}
+            squareClicked={this.props.squareClicked}
         />;
     }
 
     renderColHeader(col) {
         const title = String.fromCodePoint('A'.charCodeAt(0) + col);
-        return <Header key={'header-' + col} title={title} />
+        return <Label key={'header-' + col} title={title} />
     }
 
     render() {
         if (this.props.row === 'header') {
             return (
                 <div className="board-row">
-                    <Header key='header-empty' title='' />
+                    <Label key='header-empty' title='' />
                     {this.cols.map(col => this.renderColHeader(col))}
                 </div>
             );
         } else {
             return (
                 <div className="board-row">
-                    <Header key='header' title={8 - this.props.row} />
-                    {this.cols.map(col => this.renderSquare(col, 7 - this.props.row))}
+                    <Label key='header' title={8 - this.props.row} />
+                    {this.cols.map(col => this.renderSquare(col, this.props.row))}
                 </div>
             );
         }
