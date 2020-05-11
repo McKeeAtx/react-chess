@@ -18,7 +18,7 @@ class Square extends React.Component {
 
     render() {
         return (
-            <button className={this.className()} onClick={() => this.props.onClick()}>
+            <button className={this.className()} onClick={() => this.props.squareClicked(this.col, this.row)}>
                 { this.getSymbol() }
             </button>
         );

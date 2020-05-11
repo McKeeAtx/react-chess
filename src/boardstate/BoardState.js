@@ -52,7 +52,7 @@ class BoardState  {
         return this.moves.length % 2 === 0 ? Color.WHITE : Color.BLACK;
     }
 
-    onClick(col, row) {
+    squareClicked(col, row) {
         let result = new BoardState();
         result.pieces = this.pieces.slice();
         result.clicks = this.clicks.slice();

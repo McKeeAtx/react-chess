@@ -5,20 +5,21 @@ import BoardState from "../../boardstate/BoardState";
 
 class Game extends React.Component {
 
-    boardStates = [BoardState.initial()];
-
     constructor(props) {
         super(props);
         this.state = {
-            boardStates: this.boardStates
+            boardStates: [BoardState.initial()]
         };
+        console.log("BLA" + this.state);
     }
 
-    handleClick(col, row) {
+    squareClicked(col, row) {
+        console.log("BLUB" + this.state);
         const lastState = this.state.boardStates[this.state.boardStates.length - 1];
-        this.state.boardStates.push(lastState.onClick(col, row));
+        const newState = this.state.boardStates.slice();
+        newState.push(lastState.squareClicked(col, row));
         this.setState({
-            boardStates: this.state.boardStates
+            boardStates: newState
         });
     }
 
@@ -29,7 +30,7 @@ class Game extends React.Component {
         return (
             <div className="game">
                 <div className="game-board">
-                    <Board boardState={lastState} onClick={(col, row) => this.handleClick(col, row)}/>
+                    <Board boardState={lastState} squareClicked={ (a, b) => this.squareClicked(a, b) }/>
                 </div>
                 <div className="game-info">
                     <div>Clicks:</div>

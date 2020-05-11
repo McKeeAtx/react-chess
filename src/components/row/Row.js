@@ -13,7 +13,7 @@ class Row extends React.Component {
             col={col}
             row={row}
             data={this.props.boardState.getData(col, row)}
-            onClick={() => this.props.onClick(col, row) }
+            squareClicked={(a, b) => this.props.squareClicked(a, b)}
         />;
     }
 
