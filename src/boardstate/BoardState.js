@@ -8,17 +8,19 @@ import King from "../pieces/king/King";
 import None from "../pieces/none/None";
 
 /**
- * Represent the state (the position of all pieces and all previous clicks) at a particular point in time
+ * Represent the state (the position of all pieces and all previous clicks and moves) at a particular point in time
  * during a game.
  */
 class BoardState  {
 
     pieces = [];
     clicks = [];
+    moves = [];
 
     constructor() {
         this.pieces = new Array(8).fill(0).map(() => new Array(8).fill(new None()));
         this.clicks = [];
+        this.moves = [];
     }
 
     static initial() {
@@ -62,8 +64,14 @@ class BoardState  {
     }
 
     isHighlighted(col, row) {
+        const nextMove = this.moves.length % 2 === 0 ? Color.WHITE : Color.BLACK;
         if (this.clicks.length !== 0) {
-            return this.clicks.slice(-1)[0].col === col && this.clicks.slice(-1)[0].row === row;
+            const lastClick = this.clicks.slice(-1)[0];
+            if (lastClick.col === col && lastClick.row === row) {
+                if (this.pieces[col][row].color === nextMove) {
+                    return true;
+                }
+            }
         }
         return false;
     }
