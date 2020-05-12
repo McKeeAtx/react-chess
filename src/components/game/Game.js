@@ -12,10 +12,10 @@ class Game extends React.Component {
         };
     }
 
-    squareClicked(col, row) {
+    onSquareClick(col, row) {
         const lastState = this.state.gameStates[this.state.gameStates.length - 1];
         const newState = this.state.gameStates.slice();
-        newState.push(lastState.squareClicked(col, row));
+        newState.push(lastState.handleSquareClick(col, row));
         this.setState({
             gameStates: newState
         });
@@ -28,7 +28,7 @@ class Game extends React.Component {
         return (
             <div className="game">
                 <div className="game-board">
-                    <Board gameState={lastState} squareClicked={ (a, b) => this.squareClicked(a, b) }/>
+                    <Board gameState={lastState} onSquareClick={ (a, b) => this.onSquareClick(a, b) }/>
                 </div>
                 <div className="game-info">
                     <div>Clicks:</div>
@@ -39,7 +39,7 @@ class Game extends React.Component {
                 <div className="game-info">
                     <div>Moves:</div>
                     <ol>
-                        {moves.map(move => move)}
+                        {moves.map(move => move.from)}
                     </ol>
                 </div>
 

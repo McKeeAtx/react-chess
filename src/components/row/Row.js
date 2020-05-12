@@ -17,7 +17,7 @@ class Row extends React.Component {
                 selected: this.props.gameState.isSelected(col, row),
                 highlighted: this.props.gameState.isHighlighted(col, row),
             }}
-            squareClicked={this.props.squareClicked}
+            onSquareClick={this.props.onSquareClick}
         />;
     }
 

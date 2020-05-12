@@ -3,17 +3,25 @@ import Piece from "../Piece";
 
 class Pawn extends Piece {
 
+    static BLACK = new Pawn(Color.BLACK);
+    static WHITE = new Pawn(Color.WHITE);
+
     constructor(color) {
         super(color === Color.WHITE ? '\u2659' : '\u265F', color);
     }
 
     getAllowedMovesInternal(col, row, gameState) {
         const sign = this.color === Color.WHITE ? + 1 : -1;
-        /* move one rank */
-        let result = [{col: col, row: row + 1 * sign}];
-        if ((this.color === Color.WHITE && row === 1) || ((this.color === Color.BLACK && row === 6))) {
-            /* pawns can move 2 ranks in the initial move */
-            result.push({col: col, row: row + 2 * sign});
+        let result = [];
+        /* pawn can move one rank if the square is empty */
+        if (gameState.getPiece(col, row + 1 * sign).color === Color.TRANSLUCENT) {
+            result.push({col: col, row: row + 1 * sign});
+            if ((this.color === Color.WHITE && row === 1) || ((this.color === Color.BLACK && row === 6))) {
+                /* pawns can move another rank in the initial move if the square is empty as well */
+                if (gameState.getPiece(col, row + 2 * sign).color === Color.TRANSLUCENT) {
+                    result.push({col: col, row: row + 2 * sign});
+                }
+            }
         }
         return result;
     }

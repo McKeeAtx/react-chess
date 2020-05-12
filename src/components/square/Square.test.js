@@ -14,7 +14,7 @@ describe('<Square />', () => {
 
   it('even  <Square />s are dark', () => {
     const data = {
-      piece: new Pawn(Color.WHITE),
+      piece: Pawn.WHITE,
       selected: false,
       highlighted: false
     }
@@ -25,7 +25,7 @@ describe('<Square />', () => {
 
   it('odd  <Square />s are light', () => {
     const data = {
-      piece: new Pawn(Color.WHITE),
+      piece: Pawn.WHITE,
       selected: false,
       highlighted: false
     }
@@ -36,7 +36,7 @@ describe('<Square />', () => {
 
   it('rendering of non-selected <Square />', () => {
     const data = {
-      piece: new Pawn(Color.WHITE),
+      piece: Pawn.WHITE,
       selected: false,
       highlighted: false
     }
@@ -46,7 +46,7 @@ describe('<Square />', () => {
 
   it('rendering of selected <Square />', () => {
     const data = {
-      piece: new Pawn(Color.WHITE),
+      piece: Pawn.WHITE,
       selected: true,
       highlighted: false
     }
@@ -56,12 +56,12 @@ describe('<Square />', () => {
 
   it('onClick on <Square /> works as expected', () => {
     const data = {
-      piece: new Pawn(Color.WHITE),
+      piece: Pawn.WHITE,
       selected: false,
       highlighted: false
     }
     const mockFn = jest.fn();
-    const wrapper = shallow(<Square col={1} row={3} data={data} squareClicked={mockFn} />);
+    const wrapper = shallow(<Square col={1} row={3} data={data} onSquareClick={mockFn} />);
     expect(mockFn.mock.calls).toEqual([]);
     wrapper.find('button').simulate('click');
     expect(mockFn.mock.calls).toEqual([[1, 3]]);
@@ -69,7 +69,7 @@ describe('<Square />', () => {
 
   it('<Square />s can have piece on them', () => {
     const data = {
-      piece: new Pawn(Color.WHITE),
+      piece: Pawn.WHITE,
       selected: true,
       highlighted: false
     }

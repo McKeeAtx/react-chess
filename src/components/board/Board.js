@@ -10,7 +10,7 @@ class Board extends React.Component {
             <div>
                 <div className="status">{status}</div>
                 {this.rows.map(row =>
-                    <Row key={'row-' + row} row={row} gameState={this.props.gameState} squareClicked={this.props.squareClicked}/>
+                    <Row key={'row-' + row} row={row} gameState={this.props.gameState} onSquareClick={this.props.onSquareClick}/>
                 )}
                 <Row key='row-header' row='header' />
             </div>

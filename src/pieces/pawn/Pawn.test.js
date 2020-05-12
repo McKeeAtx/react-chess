@@ -2,7 +2,7 @@ import GameState from "../../gamestate/GameState";
 import Pawn from "./Pawn";
 import Color from "../Color";
 
-describe('test moves' , () => {
+describe('test pawn moves' , () => {
 
     it('white pawn can move 1 or 2 ranks up in the first move' , () => {
         let gameState = GameState.initialBoard();
@@ -15,13 +15,51 @@ describe('test moves' , () => {
     });
 
     it('white pawn can move 1 rank down in subsequent moves' , () => {
-        let gameState = GameState.initialBoard().setPiece(0, 2, new Pawn(Color.WHITE));
+        let gameState = GameState.initialBoard().setPiece(0, 2, Pawn.WHITE);
         expect(gameState.getAllowedMoves(0, 2)).toEqual([{col: 0, row: 3}]);
     });
 
     it('black pawn can move 1 rank up in subsequent moves' , () => {
-        let gameState = GameState.initialBoard().setPiece(0, 5, new Pawn(Color.BLACk));
+        let gameState = GameState.initialBoard().setPiece(0, 5, Pawn.BLACK);
         expect(gameState.getAllowedMoves(0, 5)).toEqual([{col: 0, row: 4}]);
+    });
+
+    it('white pawn at row 7 can\'t move anywhere', () => {
+        let gameState = GameState.initialBoard().setPiece(0, 7, Pawn.WHITE);
+        expect(gameState.getAllowedMoves(0, 2)).toEqual([]);
+    });
+
+    it('black pawn at row 0 can\'t move anywhere', () => {
+        let gameState = GameState.initialBoard().setPiece(0, 0, Pawn.BLACK);
+        expect(gameState.getAllowedMoves(0, 2)).toEqual([]);
+    });
+
+    it('white pawn at row 1 can\'t move anywhere if a white piece is at row 2', () => {
+        let gameState = GameState.initialBoard()
+            .setPiece(0, 1, Pawn.WHITE)
+            .setPiece(0, 2, Pawn.WHITE);
+        expect(gameState.getAllowedMoves(0, 1)).toEqual([]);
+    });
+
+    it('white pawn at row 1 can\'t move anywhere if a black piece is at row 2', () => {
+        let gameState = GameState.initialBoard()
+            .setPiece(0, 1, Pawn.WHITE)
+            .setPiece(0, 2, Pawn.BLACK);
+        expect(gameState.getAllowedMoves(0, 1)).toEqual([]);
+    });
+
+    it('black pawn at row 6 can\'t move anywhere if a black piece is at row 5', () => {
+        let gameState = GameState.initialBoard()
+            .setPiece(0, 6, Pawn.BLACK)
+            .setPiece(0, 5, Pawn.BLACK);
+        expect(gameState.getAllowedMoves(0, 6)).toEqual([]);
+    });
+
+    it('black pawn at row 6 can\'t move anywhere if a white piece is at row 5', () => {
+        let gameState = GameState.initialBoard()
+            .setPiece(0, 6, Pawn.BLACK)
+            .setPiece(0, 5, Pawn.WHITE);
+        expect(gameState.getAllowedMoves(0, 6)).toEqual([]);
     });
 
 });

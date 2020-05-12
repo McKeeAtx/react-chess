@@ -8,7 +8,7 @@ import King from "../pieces/king/King";
 import None from "../pieces/none/None";
 
 /**
- * Represent a game (the position of all pieces and all previous clicks and moves)
+ * Represent the state of a game (the position of all pieces and all previous clicks and moves)
  * at a particular point in time.
  */
 class GameState  {
@@ -19,16 +19,26 @@ class GameState  {
         this.moves = [];
     }
 
+    /**
+     * Creates {GameState} with an empty board.
+     *
+     * @returns {GameState}
+     */
     static emptyBoard() {
         let state = new GameState();
         return state;
     }
 
+    /**
+     * Creates {GameState} with every piece at its starting position.
+     *
+     * @returns {GameState}
+     */
     static initialBoard() {
         let state = new GameState();
         for (let col = 0; col < 8; col++) {
-            state.pieces[col][1] = new Pawn(Color.WHITE);
-            state.pieces[col][6] = new Pawn(Color.BLACK);
+            state.pieces[col][1] = Pawn.WHITE;
+            state.pieces[col][6] = Pawn.BLACK;
         }
         state.pieces[0][0] = new Rook(Color.WHITE);
         state.pieces[7][0] = new Rook(Color.WHITE);
@@ -49,27 +59,74 @@ class GameState  {
         return state;
     }
 
+    /**
+     * Returns the piece at square col / row.
+     *
+     * @param col the piece's column
+     * @param row the piece's row
+     * @returns {Piece}
+     */
     getPiece(col, row) {
         return this.pieces[col][row];
     }
 
+    /**
+     * Creates a new {GameState} from this instance by assigning {piece} to square {col} / {row}.
+     *
+     * @param col
+     * @param row
+     * @param piece
+     * @returns {GameState}
+     */
     setPiece(col, row, piece) {
-        this.pieces[col][row] = piece;
-        return this;
+        let result = new GameState();
+        result.pieces = this.pieces.slice();
+        result.pieces[col][row] = piece;
+        result.clicks = this.clicks.slice();
+        result.moves = this.moves.slice();
+        return result;
     }
 
+    /**
+     * Returns the color of the next player.
+     *
+     * @returns {string}
+     */
     nextPlayer() {
         return this.moves.length % 2 === 0 ? Color.WHITE : Color.BLACK;
     }
 
-    squareClicked(col, row) {
+    handleSquareClick(col, row) {
+        let selectedSquare = this.getSelectedSquare();
         let result = new GameState();
         result.pieces = this.pieces.slice();
         result.clicks = this.clicks.slice();
+        result.moves = this.moves.slice();
         result.clicks.push({ col: col, row: row});
+        if (selectedSquare &&
+            this.getAllowedMoves(selectedSquare.col, selectedSquare.row)
+                .filter(e => e.col === col && e.row === row).length > 0) {
+            result.moves.push({
+                from: selectedSquare,
+                to: {
+                    col: col,
+                    row: row
+                }
+            });
+            const piece = result.pieces[selectedSquare.col][selectedSquare.row];
+            result.pieces[selectedSquare.col][selectedSquare.row] = new None();
+            result.pieces[col][row] = piece;
+        }
         return result;
     }
 
+    /**
+     * Returns true if the square at {col} / {row} is selected, false otherwise.
+     *
+     * @param col the square's column
+     * @param row the square's row
+     * @returns true if the square at {col} / {row} is selected, false otherwise
+     */
     isSelected(col, row) {
         const selected = this.getSelectedSquare();
         if (selected) {
@@ -77,7 +134,6 @@ class GameState  {
         }
         return false;
     }
-
 
     /**
      * Returns the square that is currently selected.
@@ -98,11 +154,11 @@ class GameState  {
     }
 
     /**
-     * Returns true if the square at col/row is be highlighted, false otherwise.
+     * Returns true if the square at {col} / {row} is highlighted, false otherwise.
      *
      * @param col the square's column
      * @param row the square's row
-     * @returns true if the square at col/row is be highlighted, false otherwise
+     * @returns true if the square at {col} / {row} is highlighted, false otherwise
      */
     isHighlighted(col, row) {
         let selected = this.getSelectedSquare();
@@ -114,7 +170,7 @@ class GameState  {
     }
 
     /**
-     * Returns the squares that the piece at col / row can move to.
+     * Returns the squares that the piece at {col} / {row} can move to.
      *
      * @param col the piece's column
      * @param row the piece's row
