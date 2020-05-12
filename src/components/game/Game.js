@@ -8,7 +8,7 @@ class Game extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            gameStates: [GameState.initial()]
+            gameStates: [GameState.initialBoard()]
         };
     }
 

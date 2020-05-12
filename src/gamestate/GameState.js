@@ -8,14 +8,10 @@ import King from "../pieces/king/King";
 import None from "../pieces/none/None";
 
 /**
- * Represent the state (the position of all pieces and all previous clicks and moves) at a particular point in time
- * during a game.
+ * Represent a game (the position of all pieces and all previous clicks and moves)
+ * at a particular point in time.
  */
 class GameState  {
-
-    pieces = [];
-    clicks = [];
-    moves = [];
 
     constructor() {
         this.pieces = new Array(8).fill(0).map(() => new Array(8).fill(new None()));
@@ -23,29 +19,43 @@ class GameState  {
         this.moves = [];
     }
 
-    static initial() {
-        let snapshot = new GameState();
+    static emptyBoard() {
+        let state = new GameState();
+        return state;
+    }
+
+    static initialBoard() {
+        let state = new GameState();
         for (let col = 0; col < 8; col++) {
-            snapshot.pieces[col][1] = new Pawn(Color.WHITE);
-            snapshot.pieces[col][6] = new Pawn(Color.BLACK);
+            state.pieces[col][1] = new Pawn(Color.WHITE);
+            state.pieces[col][6] = new Pawn(Color.BLACK);
         }
-        snapshot.pieces[0][0] = new Rook(Color.WHITE);
-        snapshot.pieces[7][0] = new Rook(Color.WHITE);
-        snapshot.pieces[0][7] = new Rook(Color.BLACK);
-        snapshot.pieces[7][7] = new Rook(Color.BLACK);
-        snapshot.pieces[1][0] = new Knight(Color.WHITE);
-        snapshot.pieces[6][0] = new Knight(Color.WHITE);
-        snapshot.pieces[1][7] = new Knight(Color.BLACK);
-        snapshot.pieces[6][7] = new Knight(Color.BLACK);
-        snapshot.pieces[2][0] = new Bishop(Color.WHITE);
-        snapshot.pieces[5][0] = new Bishop(Color.WHITE);
-        snapshot.pieces[2][7] = new Bishop(Color.BLACK);
-        snapshot.pieces[5][7] = new Bishop(Color.BLACK);
-        snapshot.pieces[3][0] = new Queen(Color.WHITE);
-        snapshot.pieces[4][0] = new King(Color.WHITE);
-        snapshot.pieces[3][7] = new King(Color.BLACK);
-        snapshot.pieces[4][7] = new Queen(Color.BLACK);
-        return snapshot;
+        state.pieces[0][0] = new Rook(Color.WHITE);
+        state.pieces[7][0] = new Rook(Color.WHITE);
+        state.pieces[0][7] = new Rook(Color.BLACK);
+        state.pieces[7][7] = new Rook(Color.BLACK);
+        state.pieces[1][0] = new Knight(Color.WHITE);
+        state.pieces[6][0] = new Knight(Color.WHITE);
+        state.pieces[1][7] = new Knight(Color.BLACK);
+        state.pieces[6][7] = new Knight(Color.BLACK);
+        state.pieces[2][0] = new Bishop(Color.WHITE);
+        state.pieces[5][0] = new Bishop(Color.WHITE);
+        state.pieces[2][7] = new Bishop(Color.BLACK);
+        state.pieces[5][7] = new Bishop(Color.BLACK);
+        state.pieces[3][0] = new Queen(Color.WHITE);
+        state.pieces[4][0] = new King(Color.WHITE);
+        state.pieces[3][7] = new King(Color.BLACK);
+        state.pieces[4][7] = new Queen(Color.BLACK);
+        return state;
+    }
+
+    getPiece(col, row) {
+        return this.pieces[col][row];
+    }
+
+    setPiece(col, row, piece) {
+        this.pieces[col][row] = piece;
+        return this;
     }
 
     nextPlayer() {
@@ -60,14 +70,6 @@ class GameState  {
         return result;
     }
 
-    getSquare(col, row) {
-        return {
-            piece: this.pieces[col][row],
-            selected: this.isSelected(col, row),
-            highlighted: this.isHighlighted(col, row)
-        };
-    }
-
     isSelected(col, row) {
         const selected = this.getSelectedSquare();
         if (selected) {
@@ -76,6 +78,12 @@ class GameState  {
         return false;
     }
 
+
+    /**
+     * Returns the square that is currently selected.
+     *
+     * @returns {{col: *, row: *}|undefined}
+     */
     getSelectedSquare() {
         if (this.clicks.length !== 0) {
             const lastClick = this.clicks.slice(-1)[0];
@@ -89,14 +97,31 @@ class GameState  {
         return undefined;
     }
 
+    /**
+     * Returns true if the square at col/row is be highlighted, false otherwise.
+     *
+     * @param col the square's column
+     * @param row the square's row
+     * @returns true if the square at col/row is be highlighted, false otherwise
+     */
     isHighlighted(col, row) {
         let selected = this.getSelectedSquare();
         if (selected) {
-            const piece = this.pieces[selected.col][selected.row];
-            const targetSquares = piece.getTargetSquares(selected.col, selected.row, this);
-            return targetSquares.filter(e => e.col === col && e.row === row).length > 0;
+            return this.getAllowedMoves(selected.col, selected.row)
+                .filter(e => e.col === col && e.row === row).length > 0;
         }
         return false;
+    }
+
+    /**
+     * Returns the squares that the piece at col / row can move to.
+     *
+     * @param col the piece's column
+     * @param row the piece's row
+     * @returns {{col: *, row: *}[]}
+     */
+    getAllowedMoves(col, row) {
+        return this.pieces[col][row].getAllowedMoves(col, row, this);
     }
 
 }

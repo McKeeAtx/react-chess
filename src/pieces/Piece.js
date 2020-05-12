@@ -5,13 +5,13 @@ class Piece {
         this.color = color;
     }
 
-    getTargetSquares(col, row, gameState) {
-        return this.getTargetSquaresInternal(col, row, gameState)
+    getAllowedMoves(col, row, gameState) {
+        return this.getAllowedMovesInternal(col, row, gameState)
             .filter(target => this.withinBoard(target.col, target.row))
             .filter(target => this.emptyOrEnemy(target.col, target.row, gameState));
     }
 
-    getTargetSquaresInternal(col, row, gameState) {
+    getAllowedMovesInternal(col, row, gameState) {
         return [];
     }
 
@@ -20,7 +20,7 @@ class Piece {
     }
 
     emptyOrEnemy(col, row, gameState) {
-        return gameState.pieces[col][row].color !== this.color;
+        return gameState.getPiece(col, row).color !== this.color;
     }
 
 }

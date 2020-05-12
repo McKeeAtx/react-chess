@@ -7,7 +7,7 @@ class Knight extends Piece {
         super(color === Color.WHITE ? '\u2658' : '\u265E', color);
     }
 
-    getTargetSquaresInternal(col, row, gameState) {
+    getAllowedMovesInternal(col, row, gameState) {
         return [
             {col: col + 1, row: row + 2},
             {col: col - 1, row: row + 2},

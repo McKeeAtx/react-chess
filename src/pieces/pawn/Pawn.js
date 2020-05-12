@@ -7,9 +7,15 @@ class Pawn extends Piece {
         super(color === Color.WHITE ? '\u2659' : '\u265F', color);
     }
 
-    getTargetSquaresInternal(col, row, gameState) {
+    getAllowedMovesInternal(col, row, gameState) {
         const sign = this.color === Color.WHITE ? + 1 : -1;
-        return [{col: col, row: row + 1 * sign}, {col: col, row: row + 2 * sign}];
+        /* move one rank */
+        let result = [{col: col, row: row + 1 * sign}];
+        if ((this.color === Color.WHITE && row === 1) || ((this.color === Color.BLACK && row === 6))) {
+            /* pawns can move 2 ranks in the initial move */
+            result.push({col: col, row: row + 2 * sign});
+        }
+        return result;
     }
 
 }
