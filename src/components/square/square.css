@@ -24,6 +24,10 @@
     background: khaki;
 }
 
+.square.highlighted {
+    background: khaki;
+}
+
 .square:focus {
     outline: none;
 }

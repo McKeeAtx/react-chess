@@ -63,18 +63,37 @@ class GameState  {
     getData(col, row) {
         return {
             piece: this.pieces[col][row],
-            selected: this.isSelected(col, row)
+            selected: this.isSelected(col, row),
+            highlighted: this.isHighlighted(col, row)
         };
     }
 
     isSelected(col, row) {
+        const selected = this.getSelectedSquare();
+        if (selected) {
+            return selected.col === col && selected.row === row;
+        }
+        return false;
+    }
+
+    getSelectedSquare() {
         if (this.clicks.length !== 0) {
             const lastClick = this.clicks.slice(-1)[0];
-            if (lastClick.col === col && lastClick.row === row) {
-                if (this.pieces[col][row].color === this.nextPlayer()) {
-                    return true;
+            if (this.pieces[lastClick.col][lastClick.row].color === this.nextPlayer()) {
+                return {
+                    col: lastClick.col,
+                    row: lastClick.row
                 }
             }
+        }
+        return undefined;
+    }
+
+    isHighlighted(col, row) {
+        let selected = this.getSelectedSquare();
+        if (selected) {
+            return selected.col === col && ((selected.row + 1) === row
+                || (selected.row + 2) === row);
         }
         return false;
     }

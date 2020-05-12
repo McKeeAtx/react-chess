@@ -53,14 +53,14 @@ describe('initial state' , function() {
     });
 });
 
-describe('next player' , function() {
+describe('next player' , () => {
     it('is white in the beginning' , function() {
         let gameState = GameState.initial();
         expect(gameState.nextPlayer()).toEqual(Color.WHITE);
     });
 });
 
-describe('selection' , function(){
+describe('selection' , () => {
     it('initially no square is selected' , function() {
         let gameState = GameState.initial();
         for (let col = 0; col < 8; col++) {
@@ -70,19 +70,25 @@ describe('selection' , function(){
         }
     });
 
-    it('player can not select empty square' , function() {
+    it('player can not select empty square' , () => {
         let gameState = GameState.initial().squareClicked(4, 4);
         expect(gameState.getData(4, 4).selected).toEqual(false);
     });
 
-    it('player can select own piece' , function() {
+    it('player can select own piece' , () => {
         let gameState = GameState.initial().squareClicked(0, 0);
         expect(gameState.getData(0, 0).selected).toEqual(true);
     });
 
-    it('player can not select own opponent\'s piece' , function() {
+    it('player can not select own opponent\'s piece' , () => {
         let gameState = GameState.initial().squareClicked(7, 7);
         expect(gameState.getData(7, 7).selected).toEqual(false);
+    });
+
+    it('upon selection of a piece, the squares it can move to are highlighted' , () => {
+        let gameState = GameState.initial().squareClicked(6, 1);
+        expect(gameState.getData(6, 2).highlighted).toEqual(true);
+        expect(gameState.getData(6, 3).highlighted).toEqual(true);
     });
 
 });

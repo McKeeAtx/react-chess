@@ -15,7 +15,8 @@ describe('<Square />', () => {
   it('even  <Square />s are dark', () => {
     const data = {
       piece: new Pawn(Color.WHITE),
-      selected: false
+      selected: false,
+      highlighted: false
     }
     const wrapper = shallow(<Square col='0' row='0' data={data} onClick={(col, row) => {}} />);
     expect(wrapper.find("button").hasClass("dark")).toEqual(true);
@@ -25,7 +26,8 @@ describe('<Square />', () => {
   it('odd  <Square />s are light', () => {
     const data = {
       piece: new Pawn(Color.WHITE),
-      selected: false
+      selected: false,
+      highlighted: false
     }
     const wrapper = shallow(<Square col='0' row='1' data={data} onClick={(col, row) => {}} />);
     expect(wrapper.find("button").hasClass("dark")).toEqual(false);
@@ -35,7 +37,8 @@ describe('<Square />', () => {
   it('rendering of non-selected <Square />', () => {
     const data = {
       piece: new Pawn(Color.WHITE),
-      selected: false
+      selected: false,
+      highlighted: false
     }
     const wrapper = shallow(<Square col='0' row='0' data={data} onClick={(col, row) => {}} />);
     expect(wrapper.find("button").hasClass("selected")).toEqual(false);
@@ -44,7 +47,8 @@ describe('<Square />', () => {
   it('rendering of selected <Square />', () => {
     const data = {
       piece: new Pawn(Color.WHITE),
-      selected: true
+      selected: true,
+      highlighted: false
     }
     const wrapper = shallow(<Square col='0' row='0' data={data} onClick={(col, row) => {}} />);
     expect(wrapper.find("button").hasClass("selected")).toEqual(true);
@@ -53,7 +57,8 @@ describe('<Square />', () => {
   it('onClick on <Square /> works as expected', () => {
     const data = {
       piece: new Pawn(Color.WHITE),
-      selected: false
+      selected: false,
+      highlighted: false
     }
     const mockFn = jest.fn();
     const wrapper = shallow(<Square col={1} row={3} data={data} squareClicked={mockFn} />);
@@ -65,7 +70,8 @@ describe('<Square />', () => {
   it('<Square />s can have piece on them', () => {
     const data = {
       piece: new Pawn(Color.WHITE),
-      selected: true
+      selected: true,
+      highlighted: false
     }
     const wrapper = shallow(<Square col='0' row='0' data={data} onClick={(col, row) => {}} />);
     expect(wrapper.find('button').text()).toEqual("♙")
@@ -74,10 +80,21 @@ describe('<Square />', () => {
   it('<Square />s can be empty', () => {
     const data = {
       piece: new None(),
-      selected: true
+      selected: true,
+      highlighted: false
     }
     const wrapper = shallow(<Square col='0' row='0' data={data} onClick={(col, row) => {}} />);
     expect(wrapper.find('button').text()).toEqual(" ")
+  });
+
+  it('<Square />s can be highlighted', () => {
+    const data = {
+      piece: new None(),
+      selected: false,
+      highlighted: true
+    }
+    const wrapper = shallow(<Square col='0' row='0' data={data} onClick={(col, row) => {}} />);
+    expect(wrapper.find("button").hasClass("highlighted")).toEqual(true);
   });
 
 });
