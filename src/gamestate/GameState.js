@@ -60,7 +60,7 @@ class GameState  {
         return result;
     }
 
-    getData(col, row) {
+    getSquare(col, row) {
         return {
             piece: this.pieces[col][row],
             selected: this.isSelected(col, row),
@@ -93,7 +93,7 @@ class GameState  {
         let selected = this.getSelectedSquare();
         if (selected) {
             const piece = this.pieces[selected.col][selected.row];
-            const targetSquares = piece.getTargetSquares(selected.col, selected.row, this.pieces);
+            const targetSquares = piece.getTargetSquares(selected.col, selected.row, this);
             return targetSquares.filter(e => e.col === col && e.row === row).length > 0;
         }
         return false;
