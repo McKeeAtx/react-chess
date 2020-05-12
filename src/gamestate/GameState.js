@@ -92,11 +92,13 @@ class GameState  {
     isHighlighted(col, row) {
         let selected = this.getSelectedSquare();
         if (selected) {
-            return selected.col === col && ((selected.row + 1) === row
-                || (selected.row + 2) === row);
+            const piece = this.pieces[selected.col][selected.row];
+            const targetSquares = piece.getTargetSquares(selected.col, selected.row, this.pieces);
+            return targetSquares.filter(e => e.col === col && e.row === row).length > 0;
         }
         return false;
     }
+
 }
 
 export default GameState;

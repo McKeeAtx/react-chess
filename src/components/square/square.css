@@ -21,11 +21,11 @@
 }
 
 .square.selected {
-    background: khaki;
+    background: sandybrown;
 }
 
 .square.highlighted {
-    background: khaki;
+    background: navajowhite;
 }
 
 .square:focus {
