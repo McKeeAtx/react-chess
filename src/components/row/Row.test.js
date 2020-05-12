@@ -3,7 +3,7 @@ import * as Enzyme from 'enzyme'
 import {shallow} from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16';
 import Row from "./Row";
-import BoardState from "../../boardstate/BoardState";
+import GameState from "../../gamestate/GameState";
 import Square from "../square/Square";
 import Label from "../label/Label";
 import Color from "../../pieces/Color";
@@ -15,28 +15,28 @@ describe('<Row />', () => {
   Enzyme.configure({ adapter: new Adapter() })
 
   it('each <Row /> has a label', () => {
-    const wrapper = shallow(<Row row={0} boardState={BoardState.initial()} squareClicked={jest.fn()} />);
+    const wrapper = shallow(<Row row={0} gameState={GameState.initial()} squareClicked={jest.fn()} />);
     expect(wrapper.find(Label)).toHaveLength(1);
   });
 
   it('the label of the bottom <Row /> is 1', () => {
-    const wrapper = shallow(<Row row={0} boardState={BoardState.initial()} squareClicked={jest.fn()} />);
+    const wrapper = shallow(<Row row={0} gameState={GameState.initial()} squareClicked={jest.fn()} />);
     expect(wrapper.find(Label).props()).toEqual({title: 1});
   });
 
   it('the label of the top <Row /> is 8', () => {
-    const wrapper = shallow(<Row row={7} boardState={BoardState.initial()} squareClicked={jest.fn()} />);
+    const wrapper = shallow(<Row row={7} gameState={GameState.initial()} squareClicked={jest.fn()} />);
     expect(wrapper.find(Label).props()).toEqual({title: 8});
   });
 
   it('each <Row /> has 8 squares', () => {
-    const wrapper = shallow(<Row row={0} boardState={BoardState.initial()} squareClicked={jest.fn()} />);
+    const wrapper = shallow(<Row row={0} gameState={GameState.initial()} squareClicked={jest.fn()} />);
     expect(wrapper.find(Square)).toHaveLength(8);
   });
 
   it('properties are passed from top <Row /> to <Square />s as expected', () => {
     const mockFn = jest.fn();
-    const wrapper = shallow(<Row row={7} boardState={BoardState.initial()} squareClicked={mockFn} />);
+    const wrapper = shallow(<Row row={7} gameState={GameState.initial()} squareClicked={mockFn} />);
     expect(wrapper.find(Square).at(0).props()).toEqual({
       col: 0, row: 7, data: { piece: new Rook(Color.BLACK), selected: false }, squareClicked: mockFn
     });
@@ -47,7 +47,7 @@ describe('<Row />', () => {
 
   it('properties are passed from bottom <Row /> to <Square />s as expected', () => {
     const mockFn = jest.fn();
-    const wrapper = shallow(<Row row={0} boardState={BoardState.initial()} squareClicked={mockFn} />);
+    const wrapper = shallow(<Row row={0} gameState={GameState.initial()} squareClicked={mockFn} />);
     expect(wrapper.find(Square).at(0).props()).toEqual({
       col: 0, row: 0, data: { piece: new Rook(Color.WHITE), selected: false }, squareClicked: mockFn
     });
@@ -58,7 +58,7 @@ describe('<Row />', () => {
 
   it('the last header row contains column names', () => {
     const mockFn = jest.fn();
-    const wrapper = shallow(<Row row='header' boardState={BoardState.initial()} squareClicked={mockFn} />);
+    const wrapper = shallow(<Row row='header' gameState={GameState.initial()} squareClicked={mockFn} />);
     expect(wrapper.find(Label).at(0).props()).toEqual({
       "title": ""
     });

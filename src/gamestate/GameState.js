@@ -11,7 +11,7 @@ import None from "../pieces/none/None";
  * Represent the state (the position of all pieces and all previous clicks and moves) at a particular point in time
  * during a game.
  */
-class BoardState  {
+class GameState  {
 
     pieces = [];
     clicks = [];
@@ -24,7 +24,7 @@ class BoardState  {
     }
 
     static initial() {
-        let snapshot = new BoardState();
+        let snapshot = new GameState();
         for (let col = 0; col < 8; col++) {
             snapshot.pieces[col][1] = new Pawn(Color.WHITE);
             snapshot.pieces[col][6] = new Pawn(Color.BLACK);
@@ -53,7 +53,7 @@ class BoardState  {
     }
 
     squareClicked(col, row) {
-        let result = new BoardState();
+        let result = new GameState();
         result.pieces = this.pieces.slice();
         result.clicks = this.clicks.slice();
         result.clicks.push({ col: col, row: row});
@@ -80,4 +80,4 @@ class BoardState  {
     }
 }
 
-export default BoardState;
+export default GameState;
