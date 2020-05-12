@@ -5,11 +5,10 @@ import Adapter from 'enzyme-adapter-react-16';
 import Row from "./Row";
 import BoardState from "../../boardstate/BoardState";
 import Square from "../square/Square";
-import Label from "../header/Label";
+import Label from "../label/Label";
 import Color from "../../pieces/Color";
 import Rook from "../../pieces/rook/Rook";
 import Knight from "../../pieces/knight/Knight";
-
 
 describe('<Row />', () => {
 
@@ -20,55 +19,40 @@ describe('<Row />', () => {
     expect(wrapper.find(Label)).toHaveLength(1);
   });
 
+  it('the label of the bottom <Row /> is 1', () => {
+    const wrapper = shallow(<Row row={0} boardState={BoardState.initial()} squareClicked={jest.fn()} />);
+    expect(wrapper.find(Label).props()).toEqual({title: 1});
+  });
+
+  it('the label of the top <Row /> is 8', () => {
+    const wrapper = shallow(<Row row={7} boardState={BoardState.initial()} squareClicked={jest.fn()} />);
+    expect(wrapper.find(Label).props()).toEqual({title: 8});
+  });
+
   it('each <Row /> has 8 squares', () => {
-    const boardState = BoardState.initial();
-    const wrapper = shallow(<Row row={0} boardState={boardState} squareClicked={jest.fn()} />);
+    const wrapper = shallow(<Row row={0} boardState={BoardState.initial()} squareClicked={jest.fn()} />);
     expect(wrapper.find(Square)).toHaveLength(8);
   });
 
-  it('properties are passed from <Row /> 7 to <Square />s as expected', () => {
+  it('properties are passed from top <Row /> to <Square />s as expected', () => {
     const mockFn = jest.fn();
     const wrapper = shallow(<Row row={7} boardState={BoardState.initial()} squareClicked={mockFn} />);
     expect(wrapper.find(Square).at(0).props()).toEqual({
-      col: 0,
-      row: 7,
-      data: {
-        piece: new Rook(Color.BLACK),
-        selected: false
-      },
-      squareClicked: mockFn
+      col: 0, row: 7, data: { piece: new Rook(Color.BLACK), selected: false }, squareClicked: mockFn
     });
     expect(wrapper.find(Square).at(1).props()).toEqual({
-      col: 1,
-      row: 7,
-      data: {
-        piece: new Knight(Color.BLACK),
-        selected: false
-      },
-      squareClicked: mockFn
+      col: 1, row: 7, data: { piece: new Knight(Color.BLACK), selected: false }, squareClicked: mockFn
     });
   });
 
-  it('properties are passed from <Row /> 1 to <Square />s as expected', () => {
+  it('properties are passed from bottom <Row /> to <Square />s as expected', () => {
     const mockFn = jest.fn();
     const wrapper = shallow(<Row row={0} boardState={BoardState.initial()} squareClicked={mockFn} />);
     expect(wrapper.find(Square).at(0).props()).toEqual({
-      col: 0,
-      row: 0,
-      data: {
-        piece: new Rook(Color.WHITE),
-        selected: false
-      },
-      squareClicked: mockFn
+      col: 0, row: 0, data: { piece: new Rook(Color.WHITE), selected: false }, squareClicked: mockFn
     });
     expect(wrapper.find(Square).at(1).props()).toEqual({
-      col: 1,
-      row: 0,
-      data: {
-        piece: new Knight(Color.WHITE),
-        selected: false
-      },
-      squareClicked: mockFn
+      col: 1, row: 0, data: { piece: new Knight(Color.WHITE), selected: false}, squareClicked: mockFn
     });
   });
 

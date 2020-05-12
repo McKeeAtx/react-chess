@@ -1,6 +1,6 @@
 import * as React from "react";
 import './row.css';
-import Label from "../header/Label";
+import Label from "../label/Label";
 import Square from "../square/Square";
 
 class Row extends React.Component {
@@ -33,7 +33,7 @@ class Row extends React.Component {
         } else {
             return (
                 <div className="board-row">
-                    <Label key='header' title={8 - this.props.row} />
+                    <Label key='header' title={1 + this.props.row} />
                     {this.cols.map(col => this.renderSquare(col, this.props.row))}
                 </div>
             );

@@ -18,7 +18,6 @@ describe('<Square />', () => {
       selected: false
     }
     const wrapper = shallow(<Square col='0' row='0' data={data} onClick={(col, row) => {}} />);
-    console.log(wrapper.debug())
     expect(wrapper.find("button").hasClass("dark")).toEqual(true);
     expect(wrapper.find("button").hasClass("light")).toEqual(false);
   });
@@ -80,8 +79,5 @@ describe('<Square />', () => {
     const wrapper = shallow(<Square col='0' row='0' data={data} onClick={(col, row) => {}} />);
     expect(wrapper.find('button').text()).toEqual(" ")
   });
-
-
-
 
 });
