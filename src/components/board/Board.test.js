@@ -20,7 +20,7 @@ describe('<Board />', () => {
     expect(wrapper.find(Row).at(0).props().row).toEqual(7);
   });
 
-  it('the bottom row has row id 7', () => {
+  it('the bottom row has row id 0', () => {
     const wrapper = shallow(<Board boardState={BoardState.initial()} squareClicked={jest.fn()} />);
     expect(wrapper.find(Row).at(7).props().row).toEqual(0);
   });
