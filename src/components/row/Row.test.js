@@ -56,4 +56,19 @@ describe('<Row />', () => {
     });
   });
 
+  it('the last header row contains column names', () => {
+    const mockFn = jest.fn();
+    const wrapper = shallow(<Row row='header' boardState={BoardState.initial()} squareClicked={mockFn} />);
+    expect(wrapper.find(Label).at(0).props()).toEqual({
+      "title": ""
+    });
+    expect(wrapper.find(Label).at(1).props()).toEqual({
+      "title": "A"
+    });
+    expect(wrapper.find(Label).at(8).props()).toEqual({
+      "title": "H"
+    });
+  });
+
+
 });
