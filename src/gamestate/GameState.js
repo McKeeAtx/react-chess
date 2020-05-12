@@ -67,6 +67,9 @@ class GameState  {
      * @returns {Piece}
      */
     getPiece(col, row) {
+        if (col < 0 || col > 7 || row < 0 || row > 7) {
+            return undefined;
+        }
         return this.pieces[col][row];
     }
 
@@ -113,6 +116,7 @@ class GameState  {
                     row: row
                 }
             });
+            console.log(result.moves)
             const piece = result.pieces[selectedSquare.col][selectedSquare.row];
             result.pieces[selectedSquare.col][selectedSquare.row] = new None();
             result.pieces[col][row] = piece;

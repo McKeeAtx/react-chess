@@ -1,6 +1,6 @@
 import GameState from "../../gamestate/GameState";
 import Pawn from "./Pawn";
-import Color from "../Color";
+import Queen from "../queen/Queen";
 
 describe('test pawn moves' , () => {
 
@@ -60,6 +60,22 @@ describe('test pawn moves' , () => {
             .setPiece(0, 6, Pawn.BLACK)
             .setPiece(0, 5, Pawn.WHITE);
         expect(gameState.getAllowedMoves(0, 6)).toEqual([]);
+    });
+
+    it('white pawns can\'t capture white pieces', () => {
+        let gameState = GameState.emptyBoard()
+            .setPiece(0, 2, Pawn.WHITE)
+            .setPiece(1, 1, Pawn.WHITE)
+            .setPiece(2, 2, Pawn.WHITE);
+        expect(gameState.getAllowedMoves(1, 1)).toEqual([{col: 1, row: 2}, {col: 1, row: 3}]);
+    });
+
+    it('white pawns can capture black pieces', () => {
+        let gameState = GameState.emptyBoard()
+            .setPiece(0, 2, Pawn.BLACK)
+            .setPiece(1, 1, Pawn.WHITE)
+            .setPiece(2, 2, Pawn.BLACK);
+        expect(gameState.getAllowedMoves(1, 1)).toEqual([{col: 1, row: 2}, {col: 1, row: 3}, {col: 0, row: 2}, {col: 2, row: 2}]);
     });
 
 });

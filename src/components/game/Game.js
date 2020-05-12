@@ -24,7 +24,7 @@ class Game extends React.Component {
     render() {
         const lastState = this.state.gameStates[this.state.gameStates.length - 1];
         const clicks = lastState.clicks.map((click, index) => <div key={"click-" + index}>{"{" + click.col + ", " + click.row + "}"}</div>);
-        const moves = lastState.moves.map(move => <div>{move}</div>);
+        const moves = lastState.moves.map(move => <div>{"{" + move.from.col + ", " + move.from.row + "} -> {" + move.to.col + ", " + move.to.row + "}"}</div>);
         return (
             <div className="game">
                 <div className="game-board">
@@ -39,7 +39,7 @@ class Game extends React.Component {
                 <div className="game-info">
                     <div>Moves:</div>
                     <ol>
-                        {moves.map(move => move.from)}
+                        {moves.map(move => move)}
                     </ol>
                 </div>
 

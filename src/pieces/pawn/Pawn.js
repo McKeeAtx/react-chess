@@ -23,6 +23,16 @@ class Pawn extends Piece {
                 }
             }
         }
+        /* pawn can capture diagonally */
+        const enemy = this.color === Color.WHITE ? Color.BLACK : Color.WHITE;
+        const leftCaptureCandidate = gameState.getPiece(col - 1, row + 1 * sign);
+        if (leftCaptureCandidate && leftCaptureCandidate.color === enemy) {
+            result.push({col: col - 1, row: row + 1 * sign});
+        }
+        const rightCaptureCandidate = gameState.getPiece(col + 1, row + 1 * sign);
+        if (rightCaptureCandidate && rightCaptureCandidate.color === enemy) {
+            result.push({col: col + 1, row: row + 1 * sign});
+        }
         return result;
     }
 
