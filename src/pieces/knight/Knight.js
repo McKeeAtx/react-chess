@@ -1,5 +1,6 @@
 import Color from "../../common/Color";
 import Piece from "../Piece";
+import Squares from "../../common/Squares";
 
 class Knight extends Piece {
 
@@ -14,16 +15,16 @@ class Knight extends Piece {
         return "N";
     }
 
-    getAllowedMovesInternal(col, row, gameState) {
+    getAllowedMovesInternal(square, gameState) {
         return [
-            {col: col + 1, row: row + 2},
-            {col: col - 1, row: row + 2},
-            {col: col + 1, row: row - 2},
-            {col: col - 1, row: row - 2},
-            {col: col + 2, row: row + 1},
-            {col: col - 2, row: row + 1},
-            {col: col + 2, row: row - 1},
-            {col: col - 2, row: row - 1}
+            Squares.of(square.col + 1, square.row + 2),
+            Squares.of(square.col - 1, square.row + 2),
+            Squares.of(square.col + 1, square.row - 2),
+            Squares.of(square.col - 1, square.row - 2),
+            Squares.of(square.col + 2, square.row + 1),
+            Squares.of(square.col - 2, square.row + 1),
+            Squares.of(square.col + 2, square.row - 1),
+            Squares.of(square.col - 2, square.row - 1)
         ];
     }
 

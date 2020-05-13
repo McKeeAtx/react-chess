@@ -6,6 +6,7 @@ import Bishop from "../pieces/bishop/Bishop";
 import Queen from "../pieces/queen/Queen";
 import King from "../pieces/king/King";
 import None from "../pieces/none/None";
+import Squares from "../common/Squares";
 
 /**
  * Represent the state of a game (the position of all pieces and all previous clicks and moves)
@@ -60,44 +61,29 @@ class GameState  {
     }
 
     /**
-     * Returns the piece at square col / row.
-     *
-     * @param col the piece's column
-     * @param row the piece's row
-     * @returns {Piece}
-     */
-    getPiece(col, row) {
-        if (col < 0 || col > 7 || row < 0 || row > 7) {
-            return undefined;
-        }
-        return this.pieces[col][row];
-    }
-
-    /**
      * Returns the piece at square {square}.
      *
      * @param square the piece's square
      * @returns {Piece}
      */
-    _getPiece(square) {
-        if (square == undefined) {
+    getPiece(square) {
+        if (square === undefined) {
             return undefined;
         }
         return this.pieces[square.col][square.row];
     }
 
     /**
-     * Creates a new {GameState} from this instance by assigning {piece} to square {col} / {row}.
+     * Creates a new {GameState} from this instance by assigning {piece} to  {square}.
      *
-     * @param col
-     * @param row
+     * @param square
      * @param piece
      * @returns {GameState}
      */
-    setPiece(col, row, piece) {
+    setPiece(square, piece) {
         let result = new GameState();
         result.pieces = this.pieces.map(row => row.slice());
-        result.pieces[col][row] = piece;
+        result.pieces[square.col][square.row] = piece;
         result.clicks = this.clicks.slice();
         result.moves = this.moves.slice();
         return result;
@@ -112,37 +98,20 @@ class GameState  {
         return this.moves.length % 2 === 0 ? Color.WHITE : Color.BLACK;
     }
 
-    handleSquareClick(col, row) {
+    handleSquareClick(square) {
         let selectedSquare = this.getSelectedSquare();
         let result = new GameState();
         result.pieces = this.pieces.map(row => row.slice());
         result.clicks = this.clicks.slice();
         result.moves = this.moves.slice();
-        result.clicks.push({ col: col, row: row});
-        if (selectedSquare &&
-            this.getAllowedMoves(selectedSquare.col, selectedSquare.row)
-                .filter(e => e.col === col && e.row === row).length > 0) {
+        result.clicks.push(square);
+        if (selectedSquare && this.getAllowedMoves(selectedSquare).filter(sq => sq === square).length > 0) {
             const piece = result.pieces[selectedSquare.col][selectedSquare.row];
             result.pieces[selectedSquare.col][selectedSquare.row] = new None();
-            result.pieces[col][row] = piece;
-            result.moves.push(piece.getLetter() + this.getSquareName(col, row));
+            result.pieces[square.col][square.row] = piece;
+            result.moves.push(square);
         }
         return result;
-    }
-
-    /**
-     * Returns true if the square at {col} / {row} is selected, false otherwise.
-     *
-     * @param col the square's column
-     * @param row the square's row
-     * @returns true if the square at {col} / {row} is selected, false otherwise
-     */
-    isSelected(col, row) {
-        const selected = this.getSelectedSquare();
-        if (selected) {
-            return selected.col === col && selected.row === row;
-        }
-        return false;
     }
 
     /**
@@ -151,7 +120,7 @@ class GameState  {
      * @param square the square to check
      * @returns true if the {square} is selected, false otherwise
      */
-    _isSelected(square) {
+    isSelected(square) {
         const selected = this.getSelectedSquare();
         if (selected) {
             return selected.col === square.col && selected.row === square.row;
@@ -167,11 +136,9 @@ class GameState  {
     getSelectedSquare() {
         if (this.clicks.length !== 0) {
             const lastClick = this.clicks.slice(-1)[0];
+            console.log(this.clicks)
             if (this.pieces[lastClick.col][lastClick.row].color === this.nextPlayer()) {
-                return {
-                    col: lastClick.col,
-                    row: lastClick.row
-                }
+                return Squares.of(lastClick.col, lastClick.row);
             }
         }
         return undefined;
@@ -184,24 +151,23 @@ class GameState  {
      * @param row the square's row
      * @returns true if the square at {col} / {row} is highlighted, false otherwise
      */
-    isHighlighted(col, row) {
+    isHighlighted(square) {
         let selected = this.getSelectedSquare();
         if (selected) {
-            return this.getAllowedMoves(selected.col, selected.row)
-                .filter(e => e.col === col && e.row === row).length > 0;
+            return this.getAllowedMoves(selected)
+                .filter(sq => sq === square).length > 0;
         }
         return false;
     }
 
     /**
-     * Returns the squares that the piece at s{col} / {row} can move to.
+     * Returns the squares that the piece at {square} can move to.
      *
-     * @param squareName the name of the square
-     * @param row the piece's row
-     * @returns {{col: *, row: *}[]}
+     * @param square
+     * @returns {Squares[]}
      */
-    getAllowedMoves(col, row) {
-        return this.pieces[col][row].getAllowedMoves(col, row, this);
+    getAllowedMoves(square) {
+        return this.pieces[square.col][square.row].getAllowedMoves(square, this);
     }
 
 }

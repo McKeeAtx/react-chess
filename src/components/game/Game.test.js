@@ -5,6 +5,7 @@ import {shallow} from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import GameState from "../../gamestate/GameState";
 import Board from "../board/Board";
+import {A1, E2} from "../../common/Squares";
 
 describe('<Game />', () => {
 
@@ -23,14 +24,16 @@ describe('<Game />', () => {
   it('a click adds a new GameState to the state', () => {
     const wrapper = shallow(<Game />);
     expect(wrapper.state()).toEqual({gameStates: [GameState.initialBoard()], indexOfCurrentState: 0});
-    wrapper.instance().handleSquareClick(0, 0);
-    expect(wrapper.state()).toEqual({gameStates: [GameState.initialBoard(), GameState.initialBoard().handleSquareClick(0, 0)], indexOfCurrentState: 1});
+    wrapper.instance().handleSquareClick(A1);
+    expect(wrapper.state()).toEqual({gameStates: [GameState.initialBoard(), GameState.initialBoard().handleSquareClick(A1)], indexOfCurrentState: 1});
   });
 
 });
 
 describe('move list' , () => {
   it('n/a' , () => {
-    expect(true).toEqual(false);
+    const wrapper = shallow(<Game />);
+    wrapper.instance.handleSquareClick(E2);
+    expect(wrapper.find(Board).props().gameState).toEqual(GameState.initialBoard());
   });
 });

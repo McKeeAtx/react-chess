@@ -20,15 +20,15 @@ import Squares, {
     C7,
     C8,
     D1,
-    D2,
+    D2, D4,
     D7,
     D8,
     E1,
-    E2,
+    E2, E4, E5,
     E7,
     E8,
     F1,
-    F2,
+    F2, F3, F4,
     F7,
     F8,
     G1,
@@ -46,45 +46,45 @@ describe('initialBoard state' , () => {
     it('is as expected for white' , () => {
         let gameState = GameState.initialBoard();
 
-        expect(gameState._getPiece(A2)).toEqual(Pawn.WHITE);
-        expect(gameState._getPiece(B2)).toEqual(Pawn.WHITE);
-        expect(gameState._getPiece(C2)).toEqual(Pawn.WHITE);
-        expect(gameState._getPiece(D2)).toEqual(Pawn.WHITE);
-        expect(gameState._getPiece(E2)).toEqual(Pawn.WHITE);
-        expect(gameState._getPiece(F2)).toEqual(Pawn.WHITE);
-        expect(gameState._getPiece(G2)).toEqual(Pawn.WHITE);
-        expect(gameState._getPiece(H2)).toEqual(Pawn.WHITE);
+        expect(gameState.getPiece(A2)).toEqual(Pawn.WHITE);
+        expect(gameState.getPiece(B2)).toEqual(Pawn.WHITE);
+        expect(gameState.getPiece(C2)).toEqual(Pawn.WHITE);
+        expect(gameState.getPiece(D2)).toEqual(Pawn.WHITE);
+        expect(gameState.getPiece(E2)).toEqual(Pawn.WHITE);
+        expect(gameState.getPiece(F2)).toEqual(Pawn.WHITE);
+        expect(gameState.getPiece(G2)).toEqual(Pawn.WHITE);
+        expect(gameState.getPiece(H2)).toEqual(Pawn.WHITE);
 
-        expect(gameState._getPiece(A1)).toEqual(new Rook(Color.WHITE));
-        expect(gameState._getPiece(B1)).toEqual(Knight.WHITE);
-        expect(gameState._getPiece(C1)).toEqual(new Bishop(Color.WHITE));
-        expect(gameState._getPiece(D1)).toEqual(new Queen(Color.WHITE));
-        expect(gameState._getPiece(E1)).toEqual(new King(Color.WHITE));
-        expect(gameState._getPiece(F1)).toEqual(new Bishop(Color.WHITE));
-        expect(gameState._getPiece(G1)).toEqual(Knight.WHITE);
-        expect(gameState._getPiece(H1)).toEqual(new Rook(Color.WHITE));
+        expect(gameState.getPiece(A1)).toEqual(new Rook(Color.WHITE));
+        expect(gameState.getPiece(B1)).toEqual(Knight.WHITE);
+        expect(gameState.getPiece(C1)).toEqual(new Bishop(Color.WHITE));
+        expect(gameState.getPiece(D1)).toEqual(new Queen(Color.WHITE));
+        expect(gameState.getPiece(E1)).toEqual(new King(Color.WHITE));
+        expect(gameState.getPiece(F1)).toEqual(new Bishop(Color.WHITE));
+        expect(gameState.getPiece(G1)).toEqual(Knight.WHITE);
+        expect(gameState.getPiece(H1)).toEqual(new Rook(Color.WHITE));
     });
 
     it('is as expected for black' , () => {
         let gameState = GameState.initialBoard();
 
-        expect(gameState._getPiece(A7)).toEqual(Pawn.BLACK);
-        expect(gameState._getPiece(B7)).toEqual(Pawn.BLACK);
-        expect(gameState._getPiece(C7)).toEqual(Pawn.BLACK);
-        expect(gameState._getPiece(D7)).toEqual(Pawn.BLACK);
-        expect(gameState._getPiece(E7)).toEqual(Pawn.BLACK);
-        expect(gameState._getPiece(F7)).toEqual(Pawn.BLACK);
-        expect(gameState._getPiece(G7)).toEqual(Pawn.BLACK);
-        expect(gameState._getPiece(H7)).toEqual(Pawn.BLACK);
+        expect(gameState.getPiece(A7)).toEqual(Pawn.BLACK);
+        expect(gameState.getPiece(B7)).toEqual(Pawn.BLACK);
+        expect(gameState.getPiece(C7)).toEqual(Pawn.BLACK);
+        expect(gameState.getPiece(D7)).toEqual(Pawn.BLACK);
+        expect(gameState.getPiece(E7)).toEqual(Pawn.BLACK);
+        expect(gameState.getPiece(F7)).toEqual(Pawn.BLACK);
+        expect(gameState.getPiece(G7)).toEqual(Pawn.BLACK);
+        expect(gameState.getPiece(H7)).toEqual(Pawn.BLACK);
 
-        expect(gameState._getPiece(A8)).toEqual(new Rook(Color.BLACK));
-        expect(gameState._getPiece(B8)).toEqual(new Knight(Color.BLACK));
-        expect(gameState._getPiece(C8)).toEqual(new Bishop(Color.BLACK));
-        expect(gameState._getPiece(D8)).toEqual(new King(Color.BLACK));
-        expect(gameState._getPiece(E8)).toEqual(new Queen(Color.BLACK));
-        expect(gameState._getPiece(F8)).toEqual(new Bishop(Color.BLACK));
-        expect(gameState._getPiece(G8)).toEqual(new Knight(Color.BLACK));
-        expect(gameState._getPiece(H8)).toEqual(new Rook(Color.BLACK));
+        expect(gameState.getPiece(A8)).toEqual(new Rook(Color.BLACK));
+        expect(gameState.getPiece(B8)).toEqual(new Knight(Color.BLACK));
+        expect(gameState.getPiece(C8)).toEqual(new Bishop(Color.BLACK));
+        expect(gameState.getPiece(D8)).toEqual(new King(Color.BLACK));
+        expect(gameState.getPiece(E8)).toEqual(new Queen(Color.BLACK));
+        expect(gameState.getPiece(F8)).toEqual(new Bishop(Color.BLACK));
+        expect(gameState.getPiece(G8)).toEqual(new Knight(Color.BLACK));
+        expect(gameState.getPiece(H8)).toEqual(new Rook(Color.BLACK));
     });
 });
 
@@ -98,22 +98,22 @@ describe('next player' , () => {
 describe('selection' , () => {
     it('initially no square is selected' , () => {
         let gameState = GameState.initialBoard();
-        Squares.all().forEach(square => expect(gameState._isSelected(square)).toEqual(false));
+        Squares.all().forEach(square => expect(gameState.isSelected(square)).toEqual(false));
     });
 
     it('player can not select empty square' , () => {
-        let gameState = GameState.initialBoard().handleSquareClick(4, 4);
-        expect(gameState.isSelected(4, 4)).toEqual(false);
+        let gameState = GameState.initialBoard().handleSquareClick(E5);
+        expect(gameState.isSelected(E5)).toEqual(false);
     });
 
     it('player can select own piece' , () => {
-        let gameState = GameState.initialBoard().handleSquareClick(0, 0);
-        expect(gameState.isSelected(0, 0)).toEqual(true);
+        let gameState = GameState.initialBoard().handleSquareClick(A1);
+        expect(gameState.isSelected(A1)).toEqual(true);
     });
 
     it('player can not select own opponent\'s piece' , () => {
-        let gameState = GameState.initialBoard().handleSquareClick(7, 7);
-        expect(gameState.isSelected(7, 7)).toEqual(false);
+        let gameState = GameState.initialBoard().handleSquareClick(H8);
+        expect(gameState.isSelected(H8)).toEqual(false);
     });
 
 });
@@ -121,17 +121,13 @@ describe('selection' , () => {
 describe('highlighting' , () => {
     it('initially no square is highlighted' , () => {
         let gameState = GameState.initialBoard();
-        for (let col = 0; col < 8; col++) {
-            for (let row = 0; row < 8; row++) {
-                expect(gameState.isHighlighted(col, row)).toEqual(false);
-            }
-        }
+        Squares.all().forEach(square => expect(gameState.isHighlighted(square)).toEqual(false));
     });
 
     it('upon selection of a piece, the squares it can move to are highlighted' , () => {
-        let gameState = GameState.initialBoard().handleSquareClick(6, 1);
-        expect(gameState.isHighlighted(6, 2)).toEqual(true);
-        expect(gameState.isHighlighted(6, 3)).toEqual(true);
+        let gameState = GameState.initialBoard().handleSquareClick(F2);
+        expect(gameState.isHighlighted(F3)).toEqual(true);
+        expect(gameState.isHighlighted(F4)).toEqual(true);
     });
 });
 

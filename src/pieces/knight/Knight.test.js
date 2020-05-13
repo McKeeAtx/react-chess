@@ -1,5 +1,6 @@
 import Knight from "./Knight";
 import GameState from "../../gamestate/GameState";
+import {A3, A6, B1, B8, C3, C4, C6, D3, D7, E5, F3, F6, F7, G1, G4, G6, G8, H3, H6} from "../../common/Squares";
 
 describe('knight' , () => {
 
@@ -7,38 +8,29 @@ describe('knight' , () => {
         expect(Knight.BLACK.getLetter()).toEqual("N");
     });
 
-    it('white knight on col 1 has two allowed moves' , () => {
+    it('white knight on B1 can move to C3 and A3' , () => {
         let gameState = GameState.initialBoard();
-        expect(gameState.getAllowedMoves(1, 0)).toEqual([{col: 2, row: 2}, {col: 0, row: 2}]);
+        expect(gameState.getAllowedMoves(B1)).toEqual([C3, A3]);
     });
 
-    it('white knight on col 6 has two allowed moves' , () => {
+    it('white knight on G1 can move to H3 and F3' , () => {
         let gameState = GameState.initialBoard();
-        expect(gameState.getAllowedMoves(6, 0)).toEqual([{col: 7, row: 2}, {col: 5, row: 2}]);
+        expect(gameState.getAllowedMoves(G1)).toEqual([H3, F3]);
     });
 
-    it('black knight on col 1 has two allowed moves' , () => {
+    it('black knight on B8 can move to C6 and A6' , () => {
         let gameState = GameState.initialBoard();
-        expect(gameState.getAllowedMoves(1, 7)).toEqual([{col: 2, row: 5}, {col: 0, row: 5}]);
+        expect(gameState.getAllowedMoves(B8)).toEqual([C6, A6]);
     });
 
-    it('black knight on col 6 has two allowed moves' , () => {
+    it('black knight on G8 can move to H6 and F6' , () => {
         let gameState = GameState.initialBoard();
-        expect(gameState.getAllowedMoves(6, 7)).toEqual([{col: 7, row: 5}, {col: 5, row: 5}]);
+        expect(gameState.getAllowedMoves(G8)).toEqual([H6, F6]);
     });
 
-    it('black knight in middle of empty board has 4 moves' , () => {
-        let gameState = GameState.emptyBoard().setPiece(4, 4, Knight.BLACK);
-        expect(gameState.getAllowedMoves(4, 4)).toEqual([
-            {col: 5, row: 6},
-            {col: 3, row: 6},
-            {col: 5, row: 2},
-            {col: 3, row: 2},
-            {col: 6, row: 5},
-            {col: 2, row: 5},
-            {col: 6, row: 3},
-            {col: 2, row: 3}
-        ]);
+    it('black knight that sits on empty board at E5 can move to 8 squares' , () => {
+        let gameState = GameState.emptyBoard().setPiece(E5, Knight.BLACK);
+        expect(gameState.getAllowedMoves(E5)).toEqual([F7, D7, F3, D3, G6, C6, G4, C4]);
     });
 
 });

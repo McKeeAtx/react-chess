@@ -5,26 +5,22 @@ class Piece {
         this.color = color;
     }
 
-    getAllowedMoves(col, row, gameState) {
-        return this.getAllowedMovesInternal(col, row, gameState)
-            .filter(target => this.withinBoard(target.col, target.row))
-            .filter(target => this.emptyOrEnemy(target.col, target.row, gameState));
+    getAllowedMoves(square, gameState) {
+        return this.getAllowedMovesInternal(square, gameState)
+            .filter(sq => sq != undefined)
+            .filter(sq => this.emptyOrEnemy(sq, gameState));
     }
 
     getLetter() {
         return "?";
     }
 
-    getAllowedMovesInternal(col, row, gameState) {
+    getAllowedMovesInternal(square, gameState) {
         return [];
     }
 
-    withinBoard(col, row) {
-        return col >= 0 & col < 8 && row >= 0 && row < 8;
-    }
-
-    emptyOrEnemy(col, row, gameState) {
-        return gameState.getPiece(col, row).color !== this.color;
+    emptyOrEnemy(square, gameState) {
+        return gameState.getPiece(square).color !== this.color;
     }
 
 }

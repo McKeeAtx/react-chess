@@ -2,20 +2,22 @@ import * as React from "react";
 import './row.css';
 import Label from "../label/Label";
 import Square from "../square/Square";
+import Squares from "../../common/Squares";
 
 class Row extends React.Component {
 
     cols = [0, 1, 2, 3, 4, 5, 6, 7];
 
     renderSquare(col, row) {
+        const square = Squares.of(col, row);
         return <Square
             key={'square-' + col}
             col={col}
             row={row}
             data={{
-                piece: this.props.gameState.getPiece(col, row),
-                selected: this.props.gameState.isSelected(col, row),
-                highlighted: this.props.gameState.isHighlighted(col, row),
+                piece: this.props.gameState.getPiece(square),
+                selected: this.props.gameState.isSelected(square),
+                highlighted: this.props.gameState.isHighlighted(square),
             }}
             onSquareClick={this.props.onSquareClick}
         />;
