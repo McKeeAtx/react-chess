@@ -1,7 +1,7 @@
 import React from 'react';
 import {mount, shallow} from 'enzyme'
 import Pawn from "../../pieces/pawn/Pawn";
-import Color from "../../pieces/Color";
+import Color from "../../common/Color";
 import Square from "./Square";
 import * as Enzyme from "enzyme";
 import Adapter from 'enzyme-adapter-react-16';

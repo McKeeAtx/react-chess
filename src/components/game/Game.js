@@ -29,8 +29,7 @@ class Game extends React.Component {
         });
     }
 
-    render() {
-        const currentState = this.state.gameStates[this.state.indexOfCurrentState];
+    generateListOfMoves() {
         let moves = [];
         for (let i = 0; i < this.state.gameStates.length; i++) {
             if (this.state.gameStates[i].moves.length !== moves.length) {
@@ -41,6 +40,14 @@ class Game extends React.Component {
                 })
             }
         }
+        if (moves.length > 0 && moves.filter(move => move.btnClass === 'highlighted').length === 0) {
+            moves[moves.length - 1].btnClass = 'highlighted';
+        }
+        return moves;
+    }
+
+    render() {
+        const currentState = this.state.gameStates[this.state.indexOfCurrentState];
         return (
             <div className="game">
                 <div className="game-board">
@@ -48,9 +55,8 @@ class Game extends React.Component {
                 </div>
                 <div className="game-info">
                     <div>Moves:</div>
-                    {moves.map(move => <div key={"move-" + move.index}><button className={move.btnClass} onClick={() => this.handleMoveClick(move.index)}>{move.title}</button></div>)}
+                    {this.generateListOfMoves().map(move => <div key={"move-" + move.index}><button className={move.btnClass} onClick={() => this.handleMoveClick(move.index)}>{move.title}</button></div>)}
                 </div>
-
             </div>
         );
     }

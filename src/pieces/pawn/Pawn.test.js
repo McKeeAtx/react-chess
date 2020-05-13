@@ -2,7 +2,6 @@ import GameState from "../../gamestate/GameState";
 import Pawn from "./Pawn";
 
 describe('pawn' , () => {
-
     it('pawns don\'t have a letter' , () => {
         expect(Pawn.BLACK.getLetter()).toEqual("");
     });

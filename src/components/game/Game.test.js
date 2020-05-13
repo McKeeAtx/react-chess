@@ -5,7 +5,6 @@ import {shallow} from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import GameState from "../../gamestate/GameState";
 import Board from "../board/Board";
-import Row from "../row/Row";
 
 describe('<Game />', () => {
 
@@ -28,4 +27,10 @@ describe('<Game />', () => {
     expect(wrapper.state()).toEqual({gameStates: [GameState.initialBoard(), GameState.initialBoard().handleSquareClick(0, 0)], indexOfCurrentState: 1});
   });
 
+});
+
+describe('move list' , () => {
+  it('n/a' , () => {
+    expect(true).toEqual(false);
+  });
 });

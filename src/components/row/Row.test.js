@@ -6,7 +6,7 @@ import Row from "./Row";
 import GameState from "../../gamestate/GameState";
 import Square from "../square/Square";
 import Label from "../label/Label";
-import Color from "../../pieces/Color";
+import Color from "../../common/Color";
 import Rook from "../../pieces/rook/Rook";
 import Knight from "../../pieces/knight/Knight";
 

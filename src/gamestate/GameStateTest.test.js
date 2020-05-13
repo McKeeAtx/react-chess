@@ -1,6 +1,6 @@
 import GameState from "./GameState";
 import Rook from "../pieces/rook/Rook";
-import Color from "../pieces/Color";
+import Color from "../common/Color";
 import Knight from "../pieces/knight/Knight";
 import Bishop from "../pieces/bishop/Bishop";
 import Queen from "../pieces/queen/Queen";
@@ -104,3 +104,9 @@ describe('highlighting' , () => {
     });
 });
 
+describe('test moves' , () => {
+    it('move white pawn' , () => {
+        let gameState = GameState.initialBoard().handleSquareClick(6, 1);
+        expect(true).toEqual(false);
+    });
+});

@@ -1,4 +1,4 @@
-import Color from "../pieces/Color";
+import Color from "../common/Color";
 import Pawn from "../pieces/pawn/Pawn";
 import Rook from "../pieces/rook/Rook";
 import Knight from "../pieces/knight/Knight";
@@ -44,10 +44,10 @@ class GameState  {
         state.pieces[7][0] = new Rook(Color.WHITE);
         state.pieces[0][7] = new Rook(Color.BLACK);
         state.pieces[7][7] = new Rook(Color.BLACK);
-        state.pieces[1][0] = new Knight(Color.WHITE);
-        state.pieces[6][0] = new Knight(Color.WHITE);
-        state.pieces[1][7] = new Knight(Color.BLACK);
-        state.pieces[6][7] = new Knight(Color.BLACK);
+        state.pieces[1][0] = Knight.WHITE;
+        state.pieces[6][0] = Knight.WHITE;
+        state.pieces[1][7] = Knight.BLACK;
+        state.pieces[6][7] = Knight.BLACK;
         state.pieces[2][0] = new Bishop(Color.WHITE);
         state.pieces[5][0] = new Bishop(Color.WHITE);
         state.pieces[2][7] = new Bishop(Color.BLACK);
@@ -115,12 +115,6 @@ class GameState  {
             result.moves.push(piece.getLetter() + this.getSquareName(col, row));
         }
         return result;
-    }
-
-    getSquareName(col, row) {
-        const file = String.fromCodePoint('a'.charCodeAt(0) + col);
-        const rank = 1 + row;
-        return file + rank;
     }
 
     /**

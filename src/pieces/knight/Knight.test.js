@@ -38,7 +38,6 @@ describe('knight' , () => {
             {col: 2, row: 5},
             {col: 6, row: 3},
             {col: 2, row: 3}
-
         ]);
     });
 
