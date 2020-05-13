@@ -6,12 +6,14 @@ import Bishop from "../pieces/bishop/Bishop";
 import Queen from "../pieces/queen/Queen";
 import King from "../pieces/king/King";
 import Pawn from "../pieces/pawn/Pawn";
+import A2 from "../common/Coordinate";
+
 
 describe('initialBoard state' , () => {
     it('is as expected for white' , () => {
         let gameState = GameState.initialBoard();
 
-        expect(gameState.getPiece(0, 1)).toEqual(Pawn.WHITE);
+        expect(gameState.getPiece(A2)).toEqual(Pawn.WHITE);
         expect(gameState.getPiece(1, 1)).toEqual(Pawn.WHITE);
         expect(gameState.getPiece(2, 1)).toEqual(Pawn.WHITE);
         expect(gameState.getPiece(3, 1)).toEqual(Pawn.WHITE);

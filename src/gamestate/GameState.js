@@ -74,6 +74,19 @@ class GameState  {
     }
 
     /**
+     * Returns the piece at square {square}.
+     *
+     * @param square the piece's square
+     * @returns {Piece}
+     */
+    getPiece(square) {
+        if (square == undefined) {
+            return undefined;
+        }
+        return this.pieces[square.col][square.row];
+    }
+
+    /**
      * Creates a new {GameState} from this instance by assigning {piece} to square {col} / {row}.
      *
      * @param col
