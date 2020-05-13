@@ -79,7 +79,7 @@ class GameState  {
      * @param square the piece's square
      * @returns {Piece}
      */
-    getPiece(square) {
+    _getPiece(square) {
         if (square == undefined) {
             return undefined;
         }
@@ -141,6 +141,20 @@ class GameState  {
         const selected = this.getSelectedSquare();
         if (selected) {
             return selected.col === col && selected.row === row;
+        }
+        return false;
+    }
+
+    /**
+     * Returns true if the {square} is selected, false otherwise.
+     *
+     * @param square the square to check
+     * @returns true if the {square} is selected, false otherwise
+     */
+    _isSelected(square) {
+        const selected = this.getSelectedSquare();
+        if (selected) {
+            return selected.col === square.col && selected.row === square.row;
         }
         return false;
     }
