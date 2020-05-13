@@ -36,7 +36,6 @@ describe('<Game />', () => {
 
 describe('the list of moves' , () => {
   it('keeps track of every move' , () => {
-
     const getProps = (wrapper) => wrapper.find(Move).map(move => { return {index: move.props().index, name: move.props().name, btnClass: move.props().btnClass} });
     const wrapper = shallow(<Game />);
     wrapper.instance().handleSquareClick(E2);
@@ -55,4 +54,31 @@ describe('the list of moves' , () => {
       { index: 4, name: 'F5', btnClass: 'highlighted' }
     ]);
   });
+
+  it('a click lets us travel back and forth in time' , () => {
+    const getMoves = (wrapper) => wrapper.find(Move).map(move => { return {index: move.props().index, name: move.props().name, btnClass: move.props().btnClass} });
+    const wrapper = shallow(<Game />);
+    wrapper.instance().handleSquareClick(E2);
+    wrapper.instance().handleSquareClick(E3);
+    wrapper.instance().handleSquareClick(F7);
+    wrapper.instance().handleSquareClick(F5);
+    expect(getMoves(wrapper)).toEqual([
+      { index: 2, name: 'E3', btnClass: '' },
+      { index: 4, name: 'F5', btnClass: 'highlighted' }
+    ]);
+    expect(wrapper.state().indexOfCurrentState).toEqual(4);
+    wrapper.instance().handleMoveClick(2);
+    expect(getMoves(wrapper)).toEqual([
+      { index: 2, name: 'E3', btnClass: 'highlighted' },
+      { index: 4, name: 'F5', btnClass: '' }
+    ]);
+    expect(wrapper.state().indexOfCurrentState).toEqual(2);
+    wrapper.instance().handleMoveClick(4);
+    expect(getMoves(wrapper)).toEqual([
+      { index: 2, name: 'E3', btnClass: '' },
+      { index: 4, name: 'F5', btnClass: 'highlighted' }
+    ]);
+    expect(wrapper.state().indexOfCurrentState).toEqual(4);
+  });
+
 });
