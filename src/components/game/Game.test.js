@@ -23,9 +23,9 @@ describe('<Game />', () => {
 
   it('a click adds a new GameState to the state', () => {
     const wrapper = shallow(<Game />);
-    expect(wrapper.state()).toEqual({gameStates: [GameState.initialBoard()]});
-    wrapper.instance().onSquareClick(0, 0);
-    expect(wrapper.state()).toEqual({gameStates: [GameState.initialBoard(), GameState.initialBoard().handleSquareClick(0, 0)]});
+    expect(wrapper.state()).toEqual({gameStates: [GameState.initialBoard()], currentState: 0});
+    wrapper.instance().handleSquareClick(0, 0);
+    expect(wrapper.state()).toEqual({gameStates: [GameState.initialBoard(), GameState.initialBoard().handleSquareClick(0, 0)], currentState: 1});
   });
 
 });

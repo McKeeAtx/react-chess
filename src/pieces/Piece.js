@@ -11,6 +11,10 @@ class Piece {
             .filter(target => this.emptyOrEnemy(target.col, target.row, gameState));
     }
 
+    getLetter() {
+        return "?";
+    }
+
     getAllowedMovesInternal(col, row, gameState) {
         return [];
     }

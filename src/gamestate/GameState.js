@@ -83,7 +83,7 @@ class GameState  {
      */
     setPiece(col, row, piece) {
         let result = new GameState();
-        result.pieces = this.pieces.slice();
+        result.pieces = this.pieces.map(row => row.slice());
         result.pieces[col][row] = piece;
         result.clicks = this.clicks.slice();
         result.moves = this.moves.slice();
@@ -102,26 +102,25 @@ class GameState  {
     handleSquareClick(col, row) {
         let selectedSquare = this.getSelectedSquare();
         let result = new GameState();
-        result.pieces = this.pieces.slice();
+        result.pieces = this.pieces.map(row => row.slice());
         result.clicks = this.clicks.slice();
         result.moves = this.moves.slice();
         result.clicks.push({ col: col, row: row});
         if (selectedSquare &&
             this.getAllowedMoves(selectedSquare.col, selectedSquare.row)
                 .filter(e => e.col === col && e.row === row).length > 0) {
-            result.moves.push({
-                from: selectedSquare,
-                to: {
-                    col: col,
-                    row: row
-                }
-            });
-            console.log(result.moves)
             const piece = result.pieces[selectedSquare.col][selectedSquare.row];
             result.pieces[selectedSquare.col][selectedSquare.row] = new None();
             result.pieces[col][row] = piece;
+            result.moves.push(piece.getLetter() + this.getSquareName(col, row));
         }
         return result;
+    }
+
+    getSquareName(col, row) {
+        const file = String.fromCodePoint('A'.charCodeAt(0) + col);
+        const rank = 1 + row;
+        return file + rank;
     }
 
     /**

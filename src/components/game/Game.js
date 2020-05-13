@@ -8,38 +8,48 @@ class Game extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            gameStates: [GameState.initialBoard()]
+            gameStates: [GameState.initialBoard()],
+            currentState: 0
         };
     }
 
-    onSquareClick(col, row) {
+    handleSquareClick(col, row) {
         const lastState = this.state.gameStates[this.state.gameStates.length - 1];
         const newState = this.state.gameStates.slice();
         newState.push(lastState.handleSquareClick(col, row));
         this.setState({
-            gameStates: newState
+            gameStates: newState,
+            currentState: newState.length - 1
+        });
+    }
+
+    handleMoveClick(index) {
+        this.setState({
+            currentState: index
         });
     }
 
     render() {
         const lastState = this.state.gameStates[this.state.gameStates.length - 1];
-        const clicks = lastState.clicks.map((click, index) => <div key={"click-" + index}>{"{" + click.col + ", " + click.row + "}"}</div>);
-        const moves = lastState.moves.map(move => <div>{"{" + move.from.col + ", " + move.from.row + "} -> {" + move.to.col + ", " + move.to.row + "}"}</div>);
+        const currentState = this.state.gameStates[this.state.currentState];
+        let moves = [];
+        for (let i = 0; i < this.state.gameStates.length; i++) {
+            if (this.state.gameStates[i].moves.length != moves.length) {
+                moves.push({
+                    title: this.state.gameStates[i].moves[this.state.gameStates[i].moves.length - 1],
+                    index: i
+                })
+            }
+        }
         return (
             <div className="game">
                 <div className="game-board">
-                    <Board gameState={lastState} onSquareClick={ (a, b) => this.onSquareClick(a, b) }/>
-                </div>
-                <div className="game-info">
-                    <div>Clicks:</div>
-                    <ol>
-                        {clicks.map(click => click)}
-                    </ol>
+                    <Board gameState={currentState} onSquareClick={ (a, b) => this.handleSquareClick(a, b) }/>
                 </div>
                 <div className="game-info">
                     <div>Moves:</div>
                     <ol>
-                        {moves.map(move => move)}
+                        {moves.map(move => <div key={"move-" + move.index}><button  onClick={() => this.handleMoveClick(move.index)}>{move.title}</button></div>)}
                     </ol>
                 </div>
 

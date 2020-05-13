@@ -10,6 +10,10 @@ class Pawn extends Piece {
         super(color === Color.WHITE ? '\u2659' : '\u265F', color);
     }
 
+    getLetter() {
+        return "";
+    }
+
     getAllowedMovesInternal(col, row, gameState) {
         const sign = this.color === Color.WHITE ? + 1 : -1;
         let result = [];
