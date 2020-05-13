@@ -1,8 +1,11 @@
 import GameState from "../../gamestate/GameState";
 import Pawn from "./Pawn";
-import Queen from "../queen/Queen";
 
-describe('test pawn moves' , () => {
+describe('pawn' , () => {
+
+    it('pawns don\'t have a letter' , () => {
+        expect(Pawn.BLACK.getLetter()).toEqual("");
+    });
 
     it('white pawn can move 1 or 2 ranks up in the first move' , () => {
         let gameState = GameState.initialBoard();

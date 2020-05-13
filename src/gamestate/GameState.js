@@ -118,7 +118,7 @@ class GameState  {
     }
 
     getSquareName(col, row) {
-        const file = String.fromCodePoint('A'.charCodeAt(0) + col);
+        const file = String.fromCodePoint('a'.charCodeAt(0) + col);
         const rank = 1 + row;
         return file + rank;
     }
@@ -173,9 +173,9 @@ class GameState  {
     }
 
     /**
-     * Returns the squares that the piece at {col} / {row} can move to.
+     * Returns the squares that the piece at s{col} / {row} can move to.
      *
-     * @param col the piece's column
+     * @param squareName the name of the square
      * @param row the piece's row
      * @returns {{col: *, row: *}[]}
      */

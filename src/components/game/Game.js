@@ -33,7 +33,7 @@ class Game extends React.Component {
         const currentState = this.state.gameStates[this.state.indexOfCurrentState];
         let moves = [];
         for (let i = 0; i < this.state.gameStates.length; i++) {
-            if (this.state.gameStates[i].moves.length != moves.length) {
+            if (this.state.gameStates[i].moves.length !== moves.length) {
                 moves.push({
                     title: this.state.gameStates[i].moves[this.state.gameStates[i].moves.length - 1],
                     index: i,
@@ -48,9 +48,7 @@ class Game extends React.Component {
                 </div>
                 <div className="game-info">
                     <div>Moves:</div>
-                    <ol>
-                        {moves.map(move => <div key={"move-" + move.index}><button className={move.btnClass} onClick={() => this.handleMoveClick(move.index)}>{move.title}</button></div>)}
-                    </ol>
+                    {moves.map(move => <div key={"move-" + move.index}><button className={move.btnClass} onClick={() => this.handleMoveClick(move.index)}>{move.title}</button></div>)}
                 </div>
 
             </div>
