@@ -136,7 +136,6 @@ class GameState  {
     getSelectedSquare() {
         if (this.clicks.length !== 0) {
             const lastClick = this.clicks.slice(-1)[0];
-            console.log(this.clicks)
             if (this.pieces[lastClick.col][lastClick.row].color === this.nextPlayer()) {
                 return Squares.of(lastClick.col, lastClick.row);
             }

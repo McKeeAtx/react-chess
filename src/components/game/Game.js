@@ -3,6 +3,7 @@ import Board from "../board/Board";
 import './game.css'
 import GameState from "../../gamestate/GameState";
 import Squares from "../../common/Squares";
+import Move from "../move/Move";
 
 class Game extends React.Component {
 
@@ -56,7 +57,7 @@ class Game extends React.Component {
                 </div>
                 <div className="game-info">
                     <div>Moves:</div>
-                    {this.generateListOfMoves().map(move => <div key={"move-" + move.index}><button className={move.btnClass} onClick={() => this.handleMoveClick(move.index)}>{move.name}</button></div>)}
+                    {this.generateListOfMoves().map(move => <Move key={move.index} index={move.index} btnClass={move.btnClass} onClick={() => this.handleMoveClick(move.index)} name={move.name} />)}
                 </div>
             </div>
         );
