@@ -15,7 +15,7 @@ import Squares from "../common/Squares";
 class GameState  {
 
     constructor() {
-        this.pieces = new Array(8).fill(0).map(() => new Array(8).fill(new None()));
+        this.pieces = new Array(8).fill(0).map(() => new Array(8).fill(None.INSTANCE));
         this.clicks = [];
         this.moves = [];
     }
@@ -107,7 +107,7 @@ class GameState  {
         result.clicks.push(square);
         if (selectedSquare && this.getAllowedMoves(selectedSquare).filter(sq => sq === square).length > 0) {
             const piece = result.pieces[selectedSquare.col][selectedSquare.row];
-            result.pieces[selectedSquare.col][selectedSquare.row] = new None();
+            result.pieces[selectedSquare.col][selectedSquare.row] = None.INSTANCE;
             result.pieces[square.col][square.row] = piece;
             result.moves.push(square);
         }

@@ -24,11 +24,11 @@ import Squares, {
     D7,
     D8,
     E1,
-    E2, E4, E5,
+    E2, E3, E4, E5, E6,
     E7,
     E8,
     F1,
-    F2, F3, F4,
+    F2, F3, F4, F5, F6,
     F7,
     F8,
     G1,
@@ -40,6 +40,7 @@ import Squares, {
     H7,
     H8
 } from "../common/Squares";
+import None from "../pieces/none/None";
 
 
 describe('initialBoard state' , () => {
@@ -132,8 +133,15 @@ describe('highlighting' , () => {
 });
 
 describe('test moves' , () => {
-    it('move white pawn' , () => {
-        let gameState = GameState.initialBoard().handleSquareClick(6, 1);
-        expect(true).toEqual(false);
+    it('some pawn play' , () => {
+        let gameState = GameState.initialBoard()
+            .handleSquareClick(E2)
+            .handleSquareClick(E4)
+            .handleSquareClick(F7)
+            .handleSquareClick(F5)
+            .handleSquareClick(E4)
+            .handleSquareClick(F5);
+        [E2, E3, E4, E5, E6, F3, F4, F6, F7].forEach(square => expect(gameState.getPiece(square)).toEqual(None.INSTANCE))
+        expect(gameState.getPiece(F5)).toEqual(Pawn.WHITE);
     });
 });

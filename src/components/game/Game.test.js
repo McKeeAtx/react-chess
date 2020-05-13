@@ -81,4 +81,25 @@ describe('the list of moves' , () => {
     expect(wrapper.state().indexOfCurrentState).toEqual(4);
   });
 
+  it('a click on a square brings us back to the latest state' , () => {
+    const getMoves = (wrapper) => wrapper.find(Move).map(move => { return {index: move.props().index, name: move.props().name, btnClass: move.props().btnClass} });
+    const wrapper = shallow(<Game />);
+    wrapper.instance().handleSquareClick(E2);
+    wrapper.instance().handleSquareClick(E3);
+    wrapper.instance().handleSquareClick(F7);
+    wrapper.instance().handleSquareClick(F5);
+    wrapper.instance().handleMoveClick(2);
+    expect(getMoves(wrapper)).toEqual([
+      { index: 2, name: 'E3', btnClass: 'highlighted' },
+      { index: 4, name: 'F5', btnClass: '' }
+    ]);
+    expect(wrapper.state().indexOfCurrentState).toEqual(2);
+    wrapper.instance().handleSquareClick(A1)
+    expect(getMoves(wrapper)).toEqual([
+      { index: 2, name: 'E3', btnClass: '' },
+      { index: 4, name: 'F5', btnClass: 'highlighted' }
+    ]);
+    expect(wrapper.state().indexOfCurrentState).toEqual(5);
+  });
+
 });

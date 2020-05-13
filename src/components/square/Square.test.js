@@ -79,7 +79,7 @@ describe('<Square />', () => {
 
   it('<Square />s can be empty', () => {
     const data = {
-      piece: new None(),
+      piece: None.INSTANCE,
       selected: true,
       highlighted: false
     }
@@ -89,7 +89,7 @@ describe('<Square />', () => {
 
   it('<Square />s can be highlighted', () => {
     const data = {
-      piece: new None(),
+      piece: None.INSTANCE,
       selected: false,
       highlighted: true
     }
