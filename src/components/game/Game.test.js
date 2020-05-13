@@ -7,9 +7,6 @@ import GameState from "../../gamestate/GameState";
 import Board from "../board/Board";
 import {A1, E2, E3, F5, F7} from "../../common/Squares";
 import Move from "../move/Move";
-import Square from "../square/Square";
-import Knight from "../../pieces/knight/Knight";
-import Color from "../../common/Color";
 
 describe('<Game />', () => {
 
@@ -81,7 +78,7 @@ describe('the list of moves' , () => {
     expect(wrapper.state().indexOfCurrentState).toEqual(4);
   });
 
-  it('a click on a square brings us back to the latest state' , () => {
+  it('a click on a square when viewing an old moves removes newer moves' , () => {
     const getMoves = (wrapper) => wrapper.find(Move).map(move => { return {index: move.props().index, name: move.props().name, btnClass: move.props().btnClass} });
     const wrapper = shallow(<Game />);
     wrapper.instance().handleSquareClick(E2);
@@ -96,10 +93,9 @@ describe('the list of moves' , () => {
     expect(wrapper.state().indexOfCurrentState).toEqual(2);
     wrapper.instance().handleSquareClick(A1)
     expect(getMoves(wrapper)).toEqual([
-      { index: 2, name: 'E3', btnClass: '' },
-      { index: 4, name: 'F5', btnClass: 'highlighted' }
+      { index: 2, name: 'E3', btnClass: 'highlighted' }
     ]);
-    expect(wrapper.state().indexOfCurrentState).toEqual(5);
+    expect(wrapper.state().indexOfCurrentState).toEqual(3);
   });
 
 });

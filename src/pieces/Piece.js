@@ -7,7 +7,7 @@ class Piece {
 
     getAllowedMoves(square, gameState) {
         return this.getAllowedMovesInternal(square, gameState)
-            .filter(sq => sq != undefined)
+            .filter(sq => sq !== undefined)
             .filter(sq => this.emptyOrEnemy(sq, gameState));
     }
 

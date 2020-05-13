@@ -16,6 +16,14 @@ class Game extends React.Component {
     }
 
     handleSquareClick(square) {
+        const moves = this.generateListOfMoves();
+        const rewritePast = moves.length > 1 && this.state.indexOfCurrentState < moves[moves.length - 1].index;
+        if (rewritePast) {
+            this.setState({
+                gameStates: this.state.gameStates.slice(0, this.state.indexOfCurrentState + 1),
+            }, () => this.handleSquareClick(square));
+            return;
+        }
         const lastState = this.state.gameStates[this.state.gameStates.length - 1];
         const newStates = this.state.gameStates.slice();
         newStates.push(lastState.handleSquareClick(square));
@@ -34,6 +42,7 @@ class Game extends React.Component {
     generateListOfMoves() {
         let moves = [];
         for (let i = 0; i < this.state.gameStates.length; i++) {
+            /* some gameStates might be generate by clicks - we only care about states that introduce new moves */
             if (this.state.gameStates[i].moves.length !== moves.length) {
                 moves.push({
                     name: this.state.gameStates[i].moves[this.state.gameStates[i].moves.length - 1].name,
