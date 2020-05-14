@@ -108,9 +108,9 @@ class GameState  {
         result.clicks.push(square);
         if (selectedSquare && this.getAllowedMoves(selectedSquare).filter(sq => sq === square).length > 0) {
             const piece = result.pieces[selectedSquare.col][selectedSquare.row];
-            result.pieces[selectedSquare.col][selectedSquare.row] = None.INSTANCE;
-            result.pieces[square.col][square.row] = piece;
-            result.moves.push(new Move(selectedSquare, square));
+            const move  = new Move(selectedSquare, square);
+            piece.performMove(move, result.pieces, None.INSTANCE);
+            result.moves.push(move);
         }
         return result;
     }

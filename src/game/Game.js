@@ -1,21 +1,27 @@
 import GameState from "../gamestate/GameState";
+import {A4, A7, B4, B7} from "../common/Square";
+import Pawn from "../pieces/pawn/Pawn";
 
 class Game {
 
     static INITIAL = new Game([GameState.initialBoard()], 0);
 
     constructor(states, indexOfCurrentState) {
-        this.states = this.removeNonSuffixClickStates(states);
+        this.states = this.removeUselessStates(states);
         this.indexOfCurrentState = indexOfCurrentState < this.states.length ? indexOfCurrentState : this.states.length - 1;
     }
 
-    removeNonSuffixClickStates(states) {
+    /**
+     * Some states are created by clicks that haven't resulted in a move yet.
+     * Once we have a move, we discard states that merely represent a click.
+     */
+    removeUselessStates(states) {
         let result = [];
         const totalMoves = states[states.length -1].moves.length;
         let moves = 0;
         for (let i = 0; i < states.length; i++) {
             if (states[i].moves.length < totalMoves) {
-                if (i == 0 || states[i].moves.length > moves) {
+                if (i === 0 || states[i].moves.length > moves) {
                     result.push(states[i]);
                     moves = states[i].moves.length;
                 }

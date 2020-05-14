@@ -1,4 +1,3 @@
-import React from 'react';
 import Game from "./Game";
 import {A7, E2, E3, F5, F7} from "../common/Square";
 

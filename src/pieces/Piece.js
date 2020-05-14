@@ -51,6 +51,11 @@ class Piece {
         return gameState.getPiece(square).color !== this.color;
     }
 
+    performMove(move, pieces, none) {
+        pieces[move.from.col][move.from.row] = none;
+        pieces[move.to.col][move.to.row] = this;
+    }
+
 }
 
 export default Piece;
