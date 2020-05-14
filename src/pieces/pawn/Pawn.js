@@ -1,6 +1,5 @@
 import Color from "../../common/Color";
 import Piece from "../Piece";
-import Move from "../../common/Move";
 
 class Pawn extends Piece {
 
@@ -62,8 +61,8 @@ class Pawn extends Piece {
             if (gameState.getPiece(square.withOffset(colOffset, 0)) === enemy) {
                 if (gameState.moves.length > 0) {
                     const lastMove = gameState.moves[gameState.moves.length - 1];
-                    if (lastMove.from == square.withOffset(colOffset, +2 * sign) &&
-                        lastMove.to == square.withOffset(colOffset, 0)) {
+                    if (lastMove.from === square.withOffset(colOffset, +2 * sign) &&
+                        lastMove.to === square.withOffset(colOffset, 0)) {
                         moves.push(square.withOffset(colOffset, +sign));
                     }
                 }

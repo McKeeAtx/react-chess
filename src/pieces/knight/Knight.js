@@ -1,6 +1,5 @@
 import Color from "../../common/Color";
 import Piece from "../Piece";
-import Square from "../../common/Square";
 
 class Knight extends Piece {
 
