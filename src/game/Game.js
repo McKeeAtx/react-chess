@@ -5,8 +5,23 @@ class Game {
     static INITIAL = new Game([GameState.initialBoard()], 0);
 
     constructor(states, indexOfCurrentState) {
-        this.states = states;
+        this.states = this.removeNonSuffixClickStates(states);
         this.indexOfCurrentState = indexOfCurrentState;
+    }
+
+    removeNonSuffixClickStates(states) {
+        let result = [];
+        const totalMoves = states[states.length -1].moves;
+        let moves = 0;
+        for (let i = 0; i < states.length; i++) {
+            if (states[i].moves.length < totalMoves) {
+                if (states[i].moves.length > moves) {
+                    result.push(states[i]);
+                    moves = states[i].moves.length;
+                }
+            }
+        }
+        return result;
     }
 
     handleSquareClick(square) {
