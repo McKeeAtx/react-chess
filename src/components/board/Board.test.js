@@ -10,7 +10,7 @@ describe('<Board />', () => {
 
   Enzyme.configure({adapter: new Adapter()})
 
-  it('<Board /> renders 8 rows plus 1 row with column names', () => {
+  it('<Board /> renders 8 rows shift 1 row with column names', () => {
     const wrapper = shallow(<Board gameState={GameState.initialBoard()} onSquareClick={jest.fn()} />);
     expect(wrapper.find(Row)).toHaveLength(9);
   });

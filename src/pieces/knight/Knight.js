@@ -17,14 +17,14 @@ class Knight extends Piece {
 
     getAllowedMovesInternal(square, gameState) {
         return [
-            Squares.of(square.col + 1, square.row + 2),
-            Squares.of(square.col - 1, square.row + 2),
-            Squares.of(square.col + 1, square.row - 2),
-            Squares.of(square.col - 1, square.row - 2),
-            Squares.of(square.col + 2, square.row + 1),
-            Squares.of(square.col - 2, square.row + 1),
-            Squares.of(square.col + 2, square.row - 1),
-            Squares.of(square.col - 2, square.row - 1)
+            square.withOffset(+ 1, + 2),
+            square.withOffset(- 1, + 2),
+            square.withOffset(+ 1, - 2),
+            square.withOffset(- 1, - 2),
+            square.withOffset(+ 2, + 1),
+            square.withOffset(- 2, + 1),
+            square.withOffset(+ 2, - 1),
+            square.withOffset(- 2, - 1)
         ];
     }
 

@@ -1,8 +1,15 @@
 class Squares {
+
+    static COMPARATOR = (a, b) => a.name.localeCompare(b.name);
+
     constructor(name, col, row) {
         this.name = name;
         this.col = col;
         this.row = row;
+    }
+
+    withOffset(colOffset, rowOffset) {
+        return Squares.of(this.col + colOffset, this.row + rowOffset);
     }
 
     static of(col, row) {
