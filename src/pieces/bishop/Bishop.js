@@ -23,22 +23,6 @@ class Bishop extends Piece {
         return result;
     }
 
-    getAllowedMovesWithOffset(originalSquare, square, offsetCol, offsetRow, gameState) {
-        const newSquare = square.withOffset(offsetCol, offsetRow);
-        if (newSquare) {
-            if (gameState.getPiece(newSquare).color === Color.TRANSLUCENT) {
-                let result = [];
-                result.push(newSquare);
-                result = result.concat(this.getAllowedMovesWithOffset(originalSquare, newSquare, offsetCol, offsetRow, gameState));
-                return result;
-            }
-            if (gameState.getPiece(newSquare).color !== gameState.getPiece(originalSquare).color) {
-                return [newSquare];
-            }
-        }
-        return [];
-    }
-
 }
 
 export default Bishop;

@@ -38,8 +38,12 @@ describe('bishop' , () => {
             .setPiece(D7, Pawn.BLACK)
             .setPiece(D4, Bishop.BLACK)
             .setPiece(F5, Bishop.WHITE);
-        expect(gameState.getAllowedMoves(D4).sort(Squares.COMPARATOR)).toEqual([C5, B6, A7, C3, B2, A1, E5, F6, G7, H8, E3, F2, G1].sort(Squares.COMPARATOR));
-        expect(gameState.getAllowedMoves(F5).sort(Squares.COMPARATOR)).toEqual([E6, D7, E4, D3, G6, H7, G4, H3].sort(Squares.COMPARATOR));
+        expect(gameState.getAllowedMoves(D4).sort(Squares.COMPARATOR)).toEqual(
+            [C5, B6, A7, C3, B2, A1, E5, F6, G7, H8, E3, F2, G1].sort(Squares.COMPARATOR)
+        );
+        expect(gameState.getAllowedMoves(F5).sort(Squares.COMPARATOR)).toEqual(
+            [E6, D7, E4, D3, G6, H7, G4, H3].sort(Squares.COMPARATOR)
+        );
     });
 
 });
