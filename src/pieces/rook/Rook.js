@@ -3,8 +3,24 @@ import Piece from "../Piece";
 
 class Rook extends Piece {
 
+    static BLACK = new Rook(Color.BLACK);
+    static WHITE = new Rook(Color.WHITE);
+
     constructor(color) {
         super(color === Color.WHITE ? '\u2656' : '\u265C', color);
+    }
+
+    getLetter() {
+        return "R";
+    }
+
+    getAllowedMovesInternal(square, gameState) {
+        let result = []
+        result = result.concat(this.getAllowedMovesWithOffset(square, square, -1, 0, gameState));
+        result = result.concat(this.getAllowedMovesWithOffset(square, square, +1, 0, gameState));
+        result = result.concat(this.getAllowedMovesWithOffset(square, square,  0, +1, gameState));
+        result = result.concat(this.getAllowedMovesWithOffset(square, square,  0, -1, gameState));
+        return result;
     }
 
 }
