@@ -6,7 +6,8 @@ import Bishop from "../pieces/bishop/Bishop";
 import Queen from "../pieces/queen/Queen";
 import King from "../pieces/king/King";
 import None from "../pieces/none/None";
-import Squares from "../common/Squares";
+import Square from "../common/Square";
+import Move from "../common/Move";
 
 /**
  * Represent the state of a game (the position of all pieces and all previous clicks and moves)
@@ -109,7 +110,7 @@ class GameState  {
             const piece = result.pieces[selectedSquare.col][selectedSquare.row];
             result.pieces[selectedSquare.col][selectedSquare.row] = None.INSTANCE;
             result.pieces[square.col][square.row] = piece;
-            result.moves.push(square);
+            result.moves.push(new Move(selectedSquare, square));
         }
         return result;
     }
@@ -137,7 +138,7 @@ class GameState  {
         if (this.clicks.length !== 0) {
             const lastClick = this.clicks.slice(-1)[0];
             if (this.pieces[lastClick.col][lastClick.row].color === this.nextPlayer()) {
-                return Squares.of(lastClick.col, lastClick.row);
+                return Square.of(lastClick.col, lastClick.row);
             }
         }
         return undefined;
@@ -163,7 +164,7 @@ class GameState  {
      * Returns the squares that the piece at {square} can move to.
      *
      * @param square
-     * @returns {Squares[]}
+     * @returns {Square[]}
      */
     getAllowedMoves(square) {
         return this.pieces[square.col][square.row].getAllowedMoves(square, this);

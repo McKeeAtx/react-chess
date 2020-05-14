@@ -1,6 +1,6 @@
 import GameState from "../../gamestate/GameState";
 import Pawn from "../pawn/Pawn";
-import Squares, {
+import Square, {
     A1, A4, A5,
     A7,
     B2, B4, B5,
@@ -23,7 +23,7 @@ import Squares, {
     G7, H3, H4, H5,
     H7,
     H8
-} from "../../common/Squares";
+} from "../../common/Square";
 import Queen from "./Queen";
 
 describe('queen' , () => {
@@ -38,16 +38,16 @@ describe('queen' , () => {
             .setPiece(D7, Pawn.BLACK)
             .setPiece(D4, Queen.BLACK)
             .setPiece(F5, Queen.WHITE);
-        expect(gameState.getAllowedMoves(D4).sort(Squares.COMPARATOR)).toEqual(
+        expect(gameState.getAllowedMoves(D4).sort(Square.COMPARATOR)).toEqual(
             [
                 A1, A4, A7, B2, B4,
                 B6, C3, C4, C5, D1,
                 D2, D3, D5, D6, E3,
                 E4, E5, F2, F4, F6,
                 G1, G4, G7, H4, H8
-            ].sort(Squares.COMPARATOR)
+            ].sort(Square.COMPARATOR)
         );
-        expect(gameState.getAllowedMoves(F5).sort(Squares.COMPARATOR)).toEqual(
+        expect(gameState.getAllowedMoves(F5).sort(Square.COMPARATOR)).toEqual(
             [
                 A5, B5, C5, D3,
                 D5, D7, E4, E5,
@@ -55,7 +55,7 @@ describe('queen' , () => {
                 F4, F6, F7, F8,
                 G4, G5, G6, H3,
                 H5, H7
-            ].sort(Squares.COMPARATOR)
+            ].sort(Square.COMPARATOR)
         );
     });
 

@@ -2,14 +2,14 @@ import * as React from "react";
 import './row.css';
 import Label from "../label/Label";
 import Square from "../square/Square";
-import Squares from "../../common/Squares";
+import _Square from "../../common/Square";
 
 class Row extends React.Component {
 
     cols = [0, 1, 2, 3, 4, 5, 6, 7];
 
     renderSquare(col, row) {
-        const square = Squares.of(col, row);
+        const square = _Square.of(col, row);
         return <Square
             key={'square-' + col}
             col={col}

@@ -1,6 +1,6 @@
 import GameState from "../../gamestate/GameState";
 import Pawn from "../pawn/Pawn";
-import Squares, {
+import Square, {
     A1, A4, A5,
     A7,
     B2, B4, B5,
@@ -23,7 +23,7 @@ import Squares, {
     G7, H3, H4, H5,
     H7,
     H8
-} from "../../common/Squares";
+} from "../../common/Square";
 import Rook from "./Rook";
 
 describe('rook' , () => {
@@ -38,20 +38,20 @@ describe('rook' , () => {
             .setPiece(D7, Pawn.BLACK)
             .setPiece(D4, Rook.BLACK)
             .setPiece(F4, Rook.WHITE);
-        expect(gameState.getAllowedMoves(D4).sort(Squares.COMPARATOR)).toEqual(
+        expect(gameState.getAllowedMoves(D4).sort(Square.COMPARATOR)).toEqual(
             [
                 A4, B4, C4,
                 D2, D3, D5,
                 D6, E4, F4
-            ].sort(Squares.COMPARATOR)
+            ].sort(Square.COMPARATOR)
         );
-        expect(gameState.getAllowedMoves(F4).sort(Squares.COMPARATOR)).toEqual(
+        expect(gameState.getAllowedMoves(F4).sort(Square.COMPARATOR)).toEqual(
             [
                 D4, E4, F1,
                 F2, F3, F5,
                 F6, F7, F8,
                 G4, H4
-            ].sort(Squares.COMPARATOR)
+            ].sort(Square.COMPARATOR)
         );
     });
 

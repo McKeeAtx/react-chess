@@ -1,6 +1,6 @@
 import Knight from "./Knight";
 import GameState from "../../gamestate/GameState";
-import {A3, A6, B1, B8, C3, C4, C6, D3, D7, E5, F3, F6, F7, G1, G4, G6, G8, H3, H6} from "../../common/Squares";
+import {A3, A6, B1, B8, C3, C4, C6, D3, D7, E5, F3, F6, F7, G1, G4, G6, G8, H3, H6} from "../../common/Square";
 
 describe('knight' , () => {
 

@@ -6,7 +6,7 @@ import Bishop from "../pieces/bishop/Bishop";
 import Queen from "../pieces/queen/Queen";
 import King from "../pieces/king/King";
 import Pawn from "../pieces/pawn/Pawn";
-import Squares, {
+import Square, {
     A1,
     A2,
     A7,
@@ -39,7 +39,7 @@ import Squares, {
     H2,
     H7,
     H8
-} from "../common/Squares";
+} from "../common/Square";
 import None from "../pieces/none/None";
 
 
@@ -99,7 +99,7 @@ describe('next player' , () => {
 describe('selection' , () => {
     it('initially no square is selected' , () => {
         let gameState = GameState.initialBoard();
-        Squares.all().forEach(square => expect(gameState.isSelected(square)).toEqual(false));
+        Square.all().forEach(square => expect(gameState.isSelected(square)).toEqual(false));
     });
 
     it('player can not select empty square' , () => {
@@ -122,7 +122,7 @@ describe('selection' , () => {
 describe('highlighting' , () => {
     it('initially no square is highlighted' , () => {
         let gameState = GameState.initialBoard();
-        Squares.all().forEach(square => expect(gameState.isHighlighted(square)).toEqual(false));
+        Square.all().forEach(square => expect(gameState.isHighlighted(square)).toEqual(false));
     });
 
     it('upon selection of a piece, the squares it can move to are highlighted' , () => {

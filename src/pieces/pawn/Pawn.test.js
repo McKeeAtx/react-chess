@@ -1,6 +1,6 @@
 import GameState from "../../gamestate/GameState";
 import Pawn from "./Pawn";
-import {A1, A2, A3, A4, A5, A6, A7, A8, B2, B3, B4, C3} from "../../common/Squares";
+import {A1, A2, A3, A4, A5, A6, A7, A8, B2, B3, B4, C3} from "../../common/Square";
 
 describe('pawn' , () => {
     it('pawns don\'t have a letter' , () => {

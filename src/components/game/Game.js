@@ -1,53 +1,40 @@
 import * as React from "react";
 import Board from "../board/Board";
 import './game.css'
-import GameState from "../../gamestate/GameState";
-import Squares from "../../common/Squares";
+import Square from "../../common/Square";
 import Move from "../move/Move";
+import GameModel from "../../game/Game";
 
 class Game extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            gameStates: [GameState.initialBoard()],
-            indexOfCurrentState: 0
+            game: GameModel.INITIAL
         };
     }
 
     handleSquareClick(square) {
-        const moves = this.generateListOfMoves();
-        const rewritePast = moves.length > 1 && this.state.indexOfCurrentState < moves[moves.length - 1].index;
-        if (rewritePast) {
-            this.setState({
-                gameStates: this.state.gameStates.slice(0, this.state.indexOfCurrentState + 1),
-            }, () => this.handleSquareClick(square));
-            return;
-        }
-        const lastState = this.state.gameStates[this.state.gameStates.length - 1];
-        const newStates = this.state.gameStates.slice();
-        newStates.push(lastState.handleSquareClick(square));
         this.setState({
-            gameStates: newStates,
-            indexOfCurrentState: newStates.length - 1
-        });
+            game: this.state.game.handleSquareClick(square)
+        })
     }
 
     handleMoveClick(index) {
         this.setState({
-            indexOfCurrentState: index
-        });
+            game: this.state.game.handleMoveClick(index)
+        })
     }
 
     generateListOfMoves() {
         let moves = [];
-        for (let i = 0; i < this.state.gameStates.length; i++) {
+        for (let i = 0; i < this.state.game.states.length; i++) {
             /* some gameStates might be generate by clicks - we only care about states that introduce new moves */
-            if (this.state.gameStates[i].moves.length !== moves.length) {
+            if (this.state.game.states[i].moves.length !== moves.length) {
                 moves.push({
-                    name: this.state.gameStates[i].moves[this.state.gameStates[i].moves.length - 1].name,
+                    name: this.state.game.states[i].moves[this.state.game.states[i].moves.length - 1].getName(),
                     index: i,
-                    btnClass: i === this.state.indexOfCurrentState ? 'highlighted' : ''
+                    btnClass: i === this.state.game.indexOfCurrentState ? 'highlighted' : ''
                 })
             }
         }
@@ -58,11 +45,11 @@ class Game extends React.Component {
     }
 
     render() {
-        const currentState = this.state.gameStates[this.state.indexOfCurrentState];
+        const currentState = this.state.game.states[this.state.game.indexOfCurrentState];
         return (
             <div className="game">
                 <div className="game-board">
-                    <Board gameState={currentState} onSquareClick={ (a, b) => this.handleSquareClick(Squares.of(a, b)) }/>
+                    <Board gameState={currentState} onSquareClick={ (a, b) => this.handleSquareClick(Square.of(a, b)) }/>
                 </div>
                 <div className="game-info">
                     <div>Moves:</div>

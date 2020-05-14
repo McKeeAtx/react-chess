@@ -1,7 +1,7 @@
 import GameState from "../../gamestate/GameState";
 import Bishop from "./Bishop";
 import Pawn from "../pawn/Pawn";
-import Squares, {
+import Square, {
     A1,
     A7,
     B2,
@@ -24,7 +24,7 @@ import Squares, {
     G7, H3,
     H7,
     H8
-} from "../../common/Squares";
+} from "../../common/Square";
 
 describe('bishop' , () => {
 
@@ -38,11 +38,11 @@ describe('bishop' , () => {
             .setPiece(D7, Pawn.BLACK)
             .setPiece(D4, Bishop.BLACK)
             .setPiece(F5, Bishop.WHITE);
-        expect(gameState.getAllowedMoves(D4).sort(Squares.COMPARATOR)).toEqual(
-            [C5, B6, A7, C3, B2, A1, E5, F6, G7, H8, E3, F2, G1].sort(Squares.COMPARATOR)
+        expect(gameState.getAllowedMoves(D4).sort(Square.COMPARATOR)).toEqual(
+            [C5, B6, A7, C3, B2, A1, E5, F6, G7, H8, E3, F2, G1].sort(Square.COMPARATOR)
         );
-        expect(gameState.getAllowedMoves(F5).sort(Squares.COMPARATOR)).toEqual(
-            [E6, D7, E4, D3, G6, H7, G4, H3].sort(Squares.COMPARATOR)
+        expect(gameState.getAllowedMoves(F5).sort(Square.COMPARATOR)).toEqual(
+            [E6, D7, E4, D3, G6, H7, G4, H3].sort(Square.COMPARATOR)
         );
     });
 
