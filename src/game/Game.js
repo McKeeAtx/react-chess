@@ -6,19 +6,21 @@ class Game {
 
     constructor(states, indexOfCurrentState) {
         this.states = this.removeNonSuffixClickStates(states);
-        this.indexOfCurrentState = indexOfCurrentState;
+        this.indexOfCurrentState = indexOfCurrentState < this.states.length ? indexOfCurrentState : this.states.length - 1;
     }
 
     removeNonSuffixClickStates(states) {
         let result = [];
-        const totalMoves = states[states.length -1].moves;
+        const totalMoves = states[states.length -1].moves.length;
         let moves = 0;
         for (let i = 0; i < states.length; i++) {
             if (states[i].moves.length < totalMoves) {
-                if (states[i].moves.length > moves) {
+                if (i == 0 || states[i].moves.length > moves) {
                     result.push(states[i]);
                     moves = states[i].moves.length;
                 }
+            } else {
+                result.push(states[i]);
             }
         }
         return result;
