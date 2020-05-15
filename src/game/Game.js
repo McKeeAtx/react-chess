@@ -1,4 +1,6 @@
 import GameState from "../gamestate/GameState";
+import Square from "../common/Square";
+import Move from "../common/Move";
 
 class Game {
 
@@ -7,6 +9,10 @@ class Game {
     constructor(states, indexOfCurrentState) {
         this.states = this.removeUselessStates(states);
         this.indexOfCurrentState = indexOfCurrentState < this.states.length ? indexOfCurrentState : this.states.length - 1;
+    }
+
+    getAllowedMoves() {
+        return this.states[this.indexOfCurrentState].getAllowedMoves();
     }
 
     /**

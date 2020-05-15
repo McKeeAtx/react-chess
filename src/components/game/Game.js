@@ -12,12 +12,37 @@ class Game extends React.Component {
         this.state = {
             game: GameModel.INITIAL
         };
+        setTimeout(() => {
+            this.play(1000);
+        }, 1000);
+    }
+
+    play(n) {
+        if (n === 0) {
+            return;
+        }
+        const allowedMoves = this.state.game.getAllowedMoves();
+        if (allowedMoves.length > 0) {
+            const move = allowedMoves[Math.floor(Math.random() * allowedMoves.length)];
+            setTimeout(() => {
+                this.setState({
+                    game: this.state.game.handleSquareClick(move.from)
+                });
+                setTimeout(() => {
+                    this.setState({
+                        game: this.state.game.handleSquareClick(move.to)
+                    });
+                    this.play(n-1)
+                }, 1500);
+            }, 1500);
+
+        }
     }
 
     handleSquareClick(square) {
         this.setState({
             game: this.state.game.handleSquareClick(square)
-        })
+        });
     }
 
     handleMoveClick(index) {

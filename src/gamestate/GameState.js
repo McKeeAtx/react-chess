@@ -205,15 +205,18 @@ class GameState  {
      * @returns {Square[]}
      */
     _getAllowedSquares(square, checkForKingAttacked) {
-        console.log("_getAllowedSquares(" + square.getName() + ", " + checkForKingAttacked + ")");
         return this.pieces[square.col][square.row].getAllowedSquares(square, this, checkForKingAttacked);
     }
 
     getAllowedSquares(square) {
-        console.log("getAllowedSquares(" + square.getName() + ")");
         return this._getAllowedSquares(square, true);
     }
 
+    getAllowedMoves() {
+        return Square.all()
+            .filter(square => this.getPiece(square).color === this.nextPlayer())
+            .flatMap(from => this.getAllowedSquares(from).map(to => new Move(from, to)));
+    }
 
     getNone() {
         return None.INSTANCE;
