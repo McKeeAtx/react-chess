@@ -43,22 +43,22 @@ class GameState  {
             state.pieces[col][1] = Pawn.WHITE;
             state.pieces[col][6] = Pawn.BLACK;
         }
-        state.pieces[0][0] = new Rook(Color.WHITE);
-        state.pieces[7][0] = new Rook(Color.WHITE);
-        state.pieces[0][7] = new Rook(Color.BLACK);
-        state.pieces[7][7] = new Rook(Color.BLACK);
+        state.pieces[0][0] = Rook.WHITE;
+        state.pieces[7][0] = Rook.WHITE;
+        state.pieces[0][7] = Rook.BLACK;
+        state.pieces[7][7] = Rook.BLACK;
         state.pieces[1][0] = Knight.WHITE;
         state.pieces[6][0] = Knight.WHITE;
         state.pieces[1][7] = Knight.BLACK;
         state.pieces[6][7] = Knight.BLACK;
-        state.pieces[2][0] = new Bishop(Color.WHITE);
-        state.pieces[5][0] = new Bishop(Color.WHITE);
-        state.pieces[2][7] = new Bishop(Color.BLACK);
-        state.pieces[5][7] = new Bishop(Color.BLACK);
-        state.pieces[3][0] = new Queen(Color.WHITE);
-        state.pieces[4][0] = new King(Color.WHITE);
-        state.pieces[3][7] = new King(Color.BLACK);
-        state.pieces[4][7] = new Queen(Color.BLACK);
+        state.pieces[2][0] = Bishop.WHITE;
+        state.pieces[5][0] = Bishop.WHITE;
+        state.pieces[2][7] = Bishop.BLACK;
+        state.pieces[5][7] = Bishop.BLACK;
+        state.pieces[3][0] = Queen.WHITE;
+        state.pieces[4][0] = King.WHITE;
+        state.pieces[3][7] = King.BLACK;
+        state.pieces[4][7] = Queen.BLACK;
         return state;
     }
 
