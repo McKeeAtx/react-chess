@@ -14,7 +14,7 @@ class Pawn extends Piece {
         return "";
     }
 
-    getAllowedMovesInternal(square, gameState) {
+    getAllowedSquaresInternal(square, gameState) {
         const sign = this.color === Color.WHITE ? + 1 : -1;
         return []
             .concat(this.getVerticalMoves(square, gameState, sign))
@@ -71,14 +71,14 @@ class Pawn extends Piece {
         return moves;
     }
 
-    performMove(move, pieces, pieceNone) {
-        if (move.from.col !== move.to.col && pieces[move.to.col][move.to.row] === pieceNone) {
+    performMove(move, gameState) {
+        if (move.from.col !== move.to.col && gameState.pieces[move.to.col][move.to.row] === gameState.getNone()) {
             // en passant
             const sign = this.color === Color.WHITE ? + 1 : -1;
-            pieces[move.to.col][move.to.row - sign] = pieceNone;
+            gameState.pieces[move.to.col][move.to.row - sign] = gameState.getNone();
         }
-        pieces[move.from.col][move.from.row] = pieceNone;
-        pieces[move.to.col][move.to.row] = this;
+        gameState.pieces[move.from.col][move.from.row] = gameState.getNone();
+        gameState.pieces[move.to.col][move.to.row] = this;
     }
 
 }

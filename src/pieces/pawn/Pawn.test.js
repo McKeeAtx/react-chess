@@ -33,60 +33,60 @@ describe('pawn' , () => {
 
     it('white pawn at A2 can move to A3 or A4' , () => {
         let gameState = GameState.initialBoard();
-        expect(gameState.getAllowedMoves(A2)).toEqual([A3, A4]);
+        expect(gameState.getAllowedSquares(A2)).toEqual([A3, A4]);
     });
 
     it('black pawn at A7 can move to A6 and A5' , () => {
         let gameState = GameState.initialBoard();
-        expect(gameState.getAllowedMoves(A7)).toEqual([A6, A5]);
+        expect(gameState.getAllowedSquares(A7)).toEqual([A6, A5]);
     });
 
     it('white pawn at A3 can move to A4' , () => {
         let gameState = GameState.initialBoard().setPiece(A3, Pawn.WHITE);
-        expect(gameState.getAllowedMoves(A3)).toEqual([A4]);
+        expect(gameState.getAllowedSquares(A3)).toEqual([A4]);
     });
 
     it('black pawn at A6 can move to A5' , () => {
         let gameState = GameState.initialBoard().setPiece(A6, Pawn.BLACK);
-        expect(gameState.getAllowedMoves(A6)).toEqual([A5]);
+        expect(gameState.getAllowedSquares(A6)).toEqual([A5]);
     });
 
     it('white pawn at A8 can\'t move anywhere', () => {
         let gameState = GameState.initialBoard().setPiece(A8, Pawn.WHITE);
-        expect(gameState.getAllowedMoves(A8)).toEqual([]);
+        expect(gameState.getAllowedSquares(A8)).toEqual([]);
     });
 
     it('black pawn at A1 can\'t move anywhere', () => {
         let gameState = GameState.initialBoard().setPiece(A1, Pawn.BLACK);
-        expect(gameState.getAllowedMoves(A1)).toEqual([]);
+        expect(gameState.getAllowedSquares(A1)).toEqual([]);
     });
 
     it('white pawn at A2 can\'t move anywhere if a white piece is A3', () => {
         let gameState = GameState.initialBoard()
             .setPiece(A2, Pawn.WHITE)
             .setPiece(A3, Pawn.WHITE);
-        expect(gameState.getAllowedMoves(A2)).toEqual([]);
+        expect(gameState.getAllowedSquares(A2)).toEqual([]);
     });
 
     it('white pawn at row 1 can\'t move anywhere if a black piece is at row 2', () => {
         let gameState = GameState.initialBoard()
             .setPiece(A2, Pawn.WHITE)
             .setPiece(A3, Pawn.BLACK);
-        expect(gameState.getAllowedMoves(A2)).toEqual([]);
+        expect(gameState.getAllowedSquares(A2)).toEqual([]);
     });
 
     it('black pawn at A7 can\'t move anywhere if a black piece is at A6', () => {
         let gameState = GameState.initialBoard()
             .setPiece(A7, Pawn.BLACK)
             .setPiece(A6, Pawn.BLACK);
-        expect(gameState.getAllowedMoves(A7)).toEqual([]);
+        expect(gameState.getAllowedSquares(A7)).toEqual([]);
     });
 
     it('black pawn at A7 can\'t move anywhere if a white piece is at A6', () => {
         let gameState = GameState.initialBoard()
             .setPiece(A7, Pawn.BLACK)
             .setPiece(A6, Pawn.WHITE);
-        expect(gameState.getAllowedMoves(A7)).toEqual([]);
+        expect(gameState.getAllowedSquares(A7)).toEqual([]);
     });
 
     it('white pawns can\'t capture white pieces', () => {
@@ -94,7 +94,7 @@ describe('pawn' , () => {
             .setPiece(A3, Pawn.WHITE)
             .setPiece(B2, Pawn.WHITE)
             .setPiece(C3, Pawn.WHITE);
-        expect(gameState.getAllowedMoves(B2)).toEqual([B3, B4]);
+        expect(gameState.getAllowedSquares(B2)).toEqual([B3, B4]);
     });
 
     it('white pawns can capture black pieces', () => {
@@ -102,7 +102,7 @@ describe('pawn' , () => {
             .setPiece(A3, Pawn.BLACK)
             .setPiece(B2, Pawn.WHITE)
             .setPiece(C3, Pawn.BLACK);
-        expect(gameState.getAllowedMoves(B2)).toEqual([B3, B4, A3, C3]);
+        expect(gameState.getAllowedSquares(B2)).toEqual([B3, B4, A3, C3]);
     });
 
     it('test black pawn captures white pawn en passant', () => {
@@ -111,7 +111,7 @@ describe('pawn' , () => {
             .setPiece(B4, Pawn.BLACK)
             .handleSquareClick(A2)
             .handleSquareClick(A4);
-        expect(gameState.getAllowedMoves(B4)).toEqual([B3, A3]);
+        expect(gameState.getAllowedSquares(B4)).toEqual([B3, A3]);
         expect(gameState.getPiece(A4)).toEqual(Pawn.WHITE);
         gameState = gameState
             .handleSquareClick(B4)
@@ -127,7 +127,7 @@ describe('pawn' , () => {
             .handleSquareClick(B5)
             .handleSquareClick(A7)
             .handleSquareClick(A5);
-        expect(gameState.getAllowedMoves(B5)).toEqual([B6, A6]);
+        expect(gameState.getAllowedSquares(B5)).toEqual([B6, A6]);
         expect(gameState.getPiece(A5)).toEqual(Pawn.BLACK);
         gameState = gameState
             .handleSquareClick(B5)
@@ -143,7 +143,7 @@ describe('pawn' , () => {
             .handleSquareClick(B5)
             .handleSquareClick(C7)
             .handleSquareClick(C5);
-        expect(gameState.getAllowedMoves(B5)).toEqual([B6, C6]);
+        expect(gameState.getAllowedSquares(B5)).toEqual([B6, C6]);
         expect(gameState.getPiece(C5)).toEqual(Pawn.BLACK);
         gameState = gameState
             .handleSquareClick(B5)
@@ -168,7 +168,7 @@ describe('pawn' , () => {
             .handleSquareClick(H4)
             .handleSquareClick(G5)
             .handleSquareClick(G6);
-        expect(gameState.getAllowedMoves(B4)).toEqual([B3]);
+        expect(gameState.getAllowedSquares(B4)).toEqual([B3]);
     });
 
 });

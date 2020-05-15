@@ -14,16 +14,16 @@ class Queen extends Piece {
         return "Q";
     }
 
-    getAllowedMovesInternal(square, gameState) {
+    getAllowedSquaresInternal(square, gameState) {
         let result = []
-        result = result.concat(this.getAllowedMovesWithOffset(square, square, -1, 0, gameState));
-        result = result.concat(this.getAllowedMovesWithOffset(square, square, +1, 0, gameState));
-        result = result.concat(this.getAllowedMovesWithOffset(square, square,  0, +1, gameState));
-        result = result.concat(this.getAllowedMovesWithOffset(square, square,  0, -1, gameState));
-        result = result.concat(this.getAllowedMovesWithOffset(square, square, -1, -1, gameState));
-        result = result.concat(this.getAllowedMovesWithOffset(square, square, -1, +1, gameState));
-        result = result.concat(this.getAllowedMovesWithOffset(square, square, +1, -1, gameState));
-        result = result.concat(this.getAllowedMovesWithOffset(square, square, +1, +1, gameState));
+        result = result.concat(this.getAllowedSquaresWithOffset(square, square, -1, 0, gameState));
+        result = result.concat(this.getAllowedSquaresWithOffset(square, square, +1, 0, gameState));
+        result = result.concat(this.getAllowedSquaresWithOffset(square, square,  0, +1, gameState));
+        result = result.concat(this.getAllowedSquaresWithOffset(square, square,  0, -1, gameState));
+        result = result.concat(this.getAllowedSquaresWithOffset(square, square, -1, -1, gameState));
+        result = result.concat(this.getAllowedSquaresWithOffset(square, square, -1, +1, gameState));
+        result = result.concat(this.getAllowedSquaresWithOffset(square, square, +1, -1, gameState));
+        result = result.concat(this.getAllowedSquaresWithOffset(square, square, +1, +1, gameState));
         return result;
     }
 

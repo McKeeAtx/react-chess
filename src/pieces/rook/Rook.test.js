@@ -38,14 +38,14 @@ describe('rook' , () => {
             .setPiece(D7, Pawn.BLACK)
             .setPiece(D4, Rook.BLACK)
             .setPiece(F4, Rook.WHITE);
-        expect(gameState.getAllowedMoves(D4).sort(Square.COMPARATOR)).toEqual(
+        expect(gameState.getAllowedSquares(D4).sort(Square.COMPARATOR)).toEqual(
             [
                 A4, B4, C4,
                 D2, D3, D5,
                 D6, E4, F4
             ].sort(Square.COMPARATOR)
         );
-        expect(gameState.getAllowedMoves(F4).sort(Square.COMPARATOR)).toEqual(
+        expect(gameState.getAllowedSquares(F4).sort(Square.COMPARATOR)).toEqual(
             [
                 D4, E4, F1,
                 F2, F3, F5,

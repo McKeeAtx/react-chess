@@ -1,4 +1,5 @@
 import Color from "../common/Color";
+import Move from "../common/Move";
 
 class Piece {
 
@@ -7,10 +8,11 @@ class Piece {
         this.color = color;
     }
 
-    getAllowedMoves(square, gameState) {
-        return this.getAllowedMovesInternal(square, gameState)
-            .filter(sq => sq !== undefined)
-            .filter(sq => this.emptyOrEnemy(sq, gameState));
+    getAllowedSquares(from, gameState, checkForKingAttacked) {
+        return this.getAllowedSquaresInternal(from, gameState)
+            .filter(to => to !== undefined)
+            .filter(to => this.emptyOrEnemy(to, gameState))
+            .filter(to => (false === checkForKingAttacked) || (false === this.kingUnderAttack(from, to, gameState)));
     }
 
     /**
@@ -22,13 +24,13 @@ class Piece {
      * @param gameState
      * @returns {*[]}
      */
-    getAllowedMovesWithOffset(originalSquare, square, offsetCol, offsetRow, gameState) {
+    getAllowedSquaresWithOffset(originalSquare, square, offsetCol, offsetRow, gameState) {
         const newSquare = square.withOffset(offsetCol, offsetRow);
         if (newSquare) {
             if (gameState.getPiece(newSquare).color === Color.TRANSLUCENT) {
                 let result = [];
                 result.push(newSquare);
-                result = result.concat(this.getAllowedMovesWithOffset(originalSquare, newSquare, offsetCol, offsetRow, gameState));
+                result = result.concat(this.getAllowedSquaresWithOffset(originalSquare, newSquare, offsetCol, offsetRow, gameState));
                 return result;
             }
             if (gameState.getPiece(newSquare).color !== gameState.getPiece(originalSquare).color) {
@@ -43,7 +45,7 @@ class Piece {
         return "?";
     }
 
-    getAllowedMovesInternal(square, gameState) {
+    getAllowedSquaresInternal(square, gameState) {
         return [];
     }
 
@@ -51,11 +53,14 @@ class Piece {
         return gameState.getPiece(square).color !== this.color;
     }
 
-    performMove(move, pieces, none) {
-        pieces[move.from.col][move.from.row] = none;
-        pieces[move.to.col][move.to.row] = this;
+    performMove(move, gameState) {
+        gameState.pieces[move.from.col][move.from.row] = gameState.getNone();
+        gameState.pieces[move.to.col][move.to.row] = this;
     }
 
+    kingUnderAttack(from, to, gameState) {
+        return gameState.performMove(new Move(from, to)).kingUnderAttack(this.color);
+    }
 }
 
 export default Piece;

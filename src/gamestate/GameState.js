@@ -1,4 +1,3 @@
-import Color from "../common/Color";
 import Pawn from "../pieces/pawn/Pawn";
 import Rook from "../pieces/rook/Rook";
 import Knight from "../pieces/knight/Knight";
@@ -8,6 +7,8 @@ import King from "../pieces/king/King";
 import None from "../pieces/none/None";
 import Square from "../common/Square";
 import Move from "../common/Move";
+import Squares from "../common/Square";
+import Color from "../common/Color";
 
 /**
  * Represent the state of a game (the position of all pieces and all previous clicks and moves)
@@ -74,6 +75,14 @@ class GameState  {
         return this.pieces[square.col][square.row];
     }
 
+    copy() {
+        let result = new GameState();
+        result.pieces = this.pieces.map(row => row.slice());
+        result.clicks = this.clicks.slice();
+        result.moves = this.moves.slice();
+        return result;
+    }
+
     /**
      * Creates a new {GameState} from this instance by assigning {piece} to  {square}.
      *
@@ -82,11 +91,8 @@ class GameState  {
      * @returns {GameState}
      */
     setPiece(square, piece) {
-        let result = new GameState();
-        result.pieces = this.pieces.map(row => row.slice());
+        let result = this.copy();
         result.pieces[square.col][square.row] = piece;
-        result.clicks = this.clicks.slice();
-        result.moves = this.moves.slice();
         return result;
     }
 
@@ -101,19 +107,25 @@ class GameState  {
 
     handleSquareClick(square) {
         let selectedSquare = this.getSelectedSquare();
-        let result = new GameState();
-        result.pieces = this.pieces.map(row => row.slice());
-        result.clicks = this.clicks.slice();
-        result.moves = this.moves.slice();
-        result.clicks.push(square);
-        if (selectedSquare && this.getAllowedMoves(selectedSquare).filter(sq => sq === square).length > 0) {
-            const piece = result.pieces[selectedSquare.col][selectedSquare.row];
-            const move  = new Move(selectedSquare, square);
-            piece.performMove(move, result.pieces, None.INSTANCE);
-            result.moves.push(move);
+        if (selectedSquare && this.getAllowedSquares(selectedSquare).filter(sq => sq === square).length > 0) {
+            let result = this.performMove(new Move(selectedSquare, square));
+            result.clicks.push(square)
+            return result;
+        } else {
+            let result = this.copy();
+            result.clicks.push(square);
+            return result;
         }
+    }
+
+    performMove(move) {
+        let result = this.copy();
+        const piece = result.pieces[move.from.col][move.from.row];
+        piece.performMove(move, result);
+        result.moves.push(move);
         return result;
     }
+
 
     /**
      * Returns true if the {square} is selected, false otherwise.
@@ -154,7 +166,7 @@ class GameState  {
     isHighlighted(square) {
         let selected = this.getSelectedSquare();
         if (selected) {
-            return this.getAllowedMoves(selected)
+            return this.getAllowedSquares(selected)
                 .filter(sq => sq === square).length > 0;
         }
         return false;
@@ -166,8 +178,29 @@ class GameState  {
      * @param square
      * @returns {Square[]}
      */
-    getAllowedMoves(square) {
-        return this.pieces[square.col][square.row].getAllowedMoves(square, this);
+    _getAllowedSquares(square, checkForKingAttacked) {
+        return this.pieces[square.col][square.row].getAllowedSquares(square, this, checkForKingAttacked);
+    }
+
+    getAllowedSquares(square) {
+        return this._getAllowedSquares(square, true);
+    }
+
+
+    getNone() {
+        return None.INSTANCE;
+    }
+
+    kingUnderAttack(color) {
+        const king = color === Color.WHITE ? King.WHITE : King.BLACK;
+        const enemyColor = color === Color.WHITE ? Color.BLACK : Color.WHITE;
+        const kingSquare = Squares.all().find(square => this.getPiece(square) === king);
+        if ( ! kingSquare ) {
+            return false;
+        }
+        const enemyPieces = Squares.all().filter(square => this.getPiece(square).color === enemyColor)
+        const attackingEnemy = enemyPieces.flatMap(square => this._getAllowedSquares(square, false)).find(square => square === kingSquare)
+        return attackingEnemy !== undefined;
     }
 
 }

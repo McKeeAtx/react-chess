@@ -14,12 +14,12 @@ class Bishop extends Piece {
         return "B";
     }
 
-    getAllowedMovesInternal(square, gameState) {
+    getAllowedSquaresInternal(square, gameState) {
         let result = []
-        result = result.concat(this.getAllowedMovesWithOffset(square, square, -1, -1, gameState));
-        result = result.concat(this.getAllowedMovesWithOffset(square, square, -1, +1, gameState));
-        result = result.concat(this.getAllowedMovesWithOffset(square, square, +1, -1, gameState));
-        result = result.concat(this.getAllowedMovesWithOffset(square, square, +1, +1, gameState));
+        result = result.concat(this.getAllowedSquaresWithOffset(square, square, -1, -1, gameState));
+        result = result.concat(this.getAllowedSquaresWithOffset(square, square, -1, +1, gameState));
+        result = result.concat(this.getAllowedSquaresWithOffset(square, square, +1, -1, gameState));
+        result = result.concat(this.getAllowedSquaresWithOffset(square, square, +1, +1, gameState));
         return result;
     }
 

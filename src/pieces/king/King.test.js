@@ -1,7 +1,8 @@
 import King from "./King";
 import GameState from "../../gamestate/GameState";
-import Square, {C3, C4, C5, D3, D4, D5, E3, E4, E5, F6} from "../../common/Square";
+import Square, {A2, B2, C2, C3, C4, C5, D2, D3, D4, D5, E2, E3, E4, E5, F2, F6} from "../../common/Square";
 import Pawn from "../pawn/Pawn";
+import Rook from "../rook/Rook";
 
 describe('king' , () => {
 
@@ -9,27 +10,40 @@ describe('king' , () => {
         expect(King.BLACK.getLetter()).toEqual("K");
     });
 
-    it('white king on an empty board at D4 can move to all adjacent squares' , () => {
+    it('a king on an empty board at D4 can move to all adjacent squares' , () => {
         let gameState = GameState.emptyBoard()
             .setPiece(D4, King.WHITE);
-        expect(gameState.getAllowedMoves(D4).sort(Square.COMPARATOR)).toEqual([
-            C3, C4, C5,
-            D3, D5, E3,
-            E4, E5
+        expect(gameState.getAllowedSquares(D4).sort(Square.COMPARATOR)).toEqual([
+            C3, C4, C5, D3, D5, E3, E4, E5
         ]);
     });
 
-    it('white king that shares the board with other pieces can\'t move to all adjacent squares' , () => {
+    it('a king that shares the board with other pieces can\'t move to all adjacent squares' , () => {
+        let gameState = GameState.emptyBoard()
+            .setPiece(D4, King.WHITE)
+            .setPiece(C5, Pawn.WHITE)
+            .setPiece(C4, Pawn.BLACK)
+        expect(gameState.getAllowedSquares(D4).sort(Square.COMPARATOR)).toEqual([
+            C3, C4, D5, E3, E4, E5
+        ]);
+    });
+
+    it('a king can\'t move to a field where he would be under attack' , () => {
         let gameState = GameState.emptyBoard()
             .setPiece(D4, King.WHITE)
             .setPiece(F6, King.BLACK)
-            .setPiece(C5, Pawn.WHITE)
-            .setPiece(C4, Pawn.BLACK)
-        expect(gameState.getAllowedMoves(D4).sort(Square.COMPARATOR)).toEqual([
-            C3, C4, C5,
-            D3, D5, E3,
-            E4
-        ]);
+        expect(gameState.getAllowedSquares(D4).sort(Square.COMPARATOR)
+            .find( s => s === E5)).toEqual(undefined);
+    });
+
+    it('a piece can\'t move if that would expose the king to an attack' , () => {
+        let gameState = GameState.emptyBoard()
+            .setPiece(A2, King.WHITE)
+            .setPiece(D2, Rook.WHITE)
+            .setPiece(F2, Rook.BLACK);
+        expect(gameState.getAllowedSquares(D2).sort(Square.COMPARATOR)).toEqual(
+            [B2, C2, E2, F2]
+        );
     });
 
 });

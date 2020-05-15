@@ -11,10 +11,10 @@ class King extends Piece {
     }
 
     getLetter() {
-        return "N";
+        return "K";
     }
 
-    getAllowedMovesInternal(square, gameState) {
+    getAllowedSquaresInternal(square, gameState) {
         return [
             square.withOffset(-1, -1),
             square.withOffset(0, -1),
