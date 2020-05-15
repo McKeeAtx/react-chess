@@ -4,6 +4,7 @@ import './game.css'
 import Square from "../../common/Square";
 import Move from "../move/Move";
 import GameModel from "../../game/Game";
+import Engine from "../../engine/Engine";
 
 class Game extends React.Component {
 
@@ -24,6 +25,22 @@ class Game extends React.Component {
         this.setState({
             game: this.state.game.handleMoveClick(index)
         })
+    }
+
+    handleCpuMove() {
+        this.setState({
+            game: this.state.game.handleCpuMove()
+        })
+    }
+
+    handleCpuGame() {
+        const oldGame = this.state.game;
+        const newGame = this.state.game.handleCpuMove();
+        if (oldGame.states.length < newGame.states.length) {
+            this.setState({
+                game: newGame
+            }, () => setTimeout(() => this.handleCpuGame()))
+        }
     }
 
     generateListOfMoves() {
@@ -52,10 +69,13 @@ class Game extends React.Component {
                     <Board gameState={currentState} onSquareClick={ (a, b) => this.handleSquareClick(Square.of(a, b)) }/>
                 </div>
                 <div className="game-info">
+                    <button onClick={() => this.handleCpuMove()}>cpu move</button>
+                    <button onClick={() => this.handleCpuGame()}>cpu game</button>
                     <div>Moves:</div>
                     {this.generateListOfMoves().map(move => <Move key={move.index} index={move.index} btnClass={move.btnClass} onClick={() => this.handleMoveClick(move.index)} name={move.name} />)}
                 </div>
             </div>
+
         );
     }
 

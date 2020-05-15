@@ -1,4 +1,5 @@
 import GameState from "../gamestate/GameState";
+import Engine from "../engine/Engine";
 
 class Game {
 
@@ -44,6 +45,14 @@ class Game {
 
     handleMoveClick(index) {
         return new Game(this.states, index);
+    }
+
+    handleCpuMove() {
+        const move = new Engine().nextMove(this.states[this.states.length - 1]);
+        if (move) {
+            return this.handleSquareClick(move.from).handleSquareClick(move.to);
+        }
+        return this;
     }
 
 }
