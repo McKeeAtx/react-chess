@@ -147,8 +147,8 @@ class GameState  {
     }
 
     handleSquareClick(square) {
-        if (this.selectedSquare &&
-            this.getAllowedSquares(this.selectedSquare).filter(sq => sq === square).length > 0) {
+        if (this.selectedSquare && this.getAllowedSquares(this.selectedSquare)
+            .find(sq => sq === square) !== undefined) {
             return this
                 .performMove(new Move(this.selectedSquare, square))
                 .storeClick(square);
@@ -203,8 +203,8 @@ class GameState  {
             return false;
         }
         const enemyPieces = Squares.all().filter(square => this.get(square).color === enemyColor)
-        const attackingEnemy = enemyPieces.flatMap(enemy => this.getAttackedSquares(enemy)).find(attackedByEnemy => attackedByEnemy === kingSquare)
-        return attackingEnemy !== undefined;
+        return enemyPieces.flatMap(enemy => this.getAttackedSquares(enemy))
+            .find(attackedByEnemy => attackedByEnemy === kingSquare) !== undefined;
     }
 
     computeSelectedSquare() {
