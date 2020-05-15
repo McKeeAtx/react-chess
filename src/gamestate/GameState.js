@@ -54,6 +54,7 @@ class GameState  {
         this.clicks = clicks.slice();
         this.moves = moves.slice();
         this.selectedSquare = this.computeSelectedSquare();
+        this.highlightedSquares = this.computeHighlightedSquares();
     }
 
     /**
@@ -194,12 +195,7 @@ class GameState  {
      * @returns true if the square at {col} / {row} is highlighted, false otherwise
      */
     isHighlighted(square) {
-        let selected = this.selectedSquare;
-        if (selected) {
-            return this.getAllowedSquares(selected)
-                .filter(sq => sq === square).length > 0;
-        }
-        return false;
+        return this.highlightedSquares.find(highlighted => highlighted === square) !== undefined;
     }
 
     /**
@@ -209,10 +205,12 @@ class GameState  {
      * @returns {Square[]}
      */
     _getAllowedSquares(square, checkForKingAttacked) {
+        console.log("_getAllowedSquares(" + square.getName() + ", " + checkForKingAttacked + ")");
         return this.pieces[square.col][square.row].getAllowedSquares(square, this, checkForKingAttacked);
     }
 
     getAllowedSquares(square) {
+        console.log("getAllowedSquares(" + square.getName() + ")");
         return this._getAllowedSquares(square, true);
     }
 
@@ -242,6 +240,14 @@ class GameState  {
         }
         return undefined;
     }
+
+    computeHighlightedSquares() {
+        if (this.selectedSquare) {
+            return this.getAllowedSquares(this.selectedSquare);
+        }
+        return [];
+    }
+
 }
 
 export default GameState;
