@@ -1,5 +1,6 @@
 import Color from "../../common/Color";
 import Piece from "../Piece";
+import Squares from "../../common/Square";
 
 class Pawn extends Piece {
 
@@ -75,10 +76,14 @@ class Pawn extends Piece {
         if (move.from.col !== move.to.col && gameState.pieces[move.to.col][move.to.row] === gameState.getNone()) {
             // en passant
             const sign = this.color === Color.WHITE ? + 1 : -1;
-            gameState.pieces[move.to.col][move.to.row - sign] = gameState.getNone();
+            return gameState
+                .setPiece(Squares.of(move.to.col, move.to.row - sign), gameState.getNone())
+                .setPiece(move.from, gameState.getNone())
+                .setPiece(move.to, this);
         }
-        gameState.pieces[move.from.col][move.from.row] = gameState.getNone();
-        gameState.pieces[move.to.col][move.to.row] = this;
+        return gameState
+            .setPiece(move.from, gameState.getNone())
+            .setPiece(move.to, this);
     }
 
 }

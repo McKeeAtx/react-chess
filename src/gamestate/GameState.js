@@ -5,7 +5,29 @@ import Bishop from "../pieces/bishop/Bishop";
 import Queen from "../pieces/queen/Queen";
 import King from "../pieces/king/King";
 import None from "../pieces/none/None";
-import Square from "../common/Square";
+import Square, {
+    A1,
+    A2,
+    A7, A8,
+    B1,
+    B2,
+    B7, B8,
+    C1,
+    C2,
+    C7, C8,
+    D1,
+    D2,
+    D7, D8,
+    E1,
+    E2,
+    E7, E8,
+    F1,
+    F2, F7, F8,
+    G1,
+    G2, G7, G8,
+    H1,
+    H2, H7, H8
+} from "../common/Square";
 import Move from "../common/Move";
 import Squares from "../common/Square";
 import Color from "../common/Color";
@@ -16,10 +38,10 @@ import Color from "../common/Color";
  */
 class GameState  {
 
-    constructor() {
-        this.pieces = new Array(8).fill(0).map(() => new Array(8).fill(None.INSTANCE));
-        this.clicks = [];
-        this.moves = [];
+    constructor(pieces, clicks, moves) {
+        this.pieces = pieces.map(row => row.slice());
+        this.clicks = clicks.slice();
+        this.moves = moves.slice();
     }
 
     /**
@@ -28,8 +50,11 @@ class GameState  {
      * @returns {GameState}
      */
     static emptyBoard() {
-        let state = new GameState();
-        return state;
+        return new GameState(
+            new Array(8).fill(0).map(() => new Array(8).fill(None.INSTANCE)),
+            [],
+            []
+        );
     }
 
     /**
@@ -38,28 +63,39 @@ class GameState  {
      * @returns {GameState}
      */
     static initialBoard() {
-        let state = new GameState();
-        for (let col = 0; col < 8; col++) {
-            state.pieces[col][1] = Pawn.WHITE;
-            state.pieces[col][6] = Pawn.BLACK;
-        }
-        state.pieces[0][0] = Rook.WHITE;
-        state.pieces[7][0] = Rook.WHITE;
-        state.pieces[0][7] = Rook.BLACK;
-        state.pieces[7][7] = Rook.BLACK;
-        state.pieces[1][0] = Knight.WHITE;
-        state.pieces[6][0] = Knight.WHITE;
-        state.pieces[1][7] = Knight.BLACK;
-        state.pieces[6][7] = Knight.BLACK;
-        state.pieces[2][0] = Bishop.WHITE;
-        state.pieces[5][0] = Bishop.WHITE;
-        state.pieces[2][7] = Bishop.BLACK;
-        state.pieces[5][7] = Bishop.BLACK;
-        state.pieces[3][0] = Queen.WHITE;
-        state.pieces[4][0] = King.WHITE;
-        state.pieces[3][7] = King.BLACK;
-        state.pieces[4][7] = Queen.BLACK;
-        return state;
+        return this.emptyBoard()
+            .setPiece(A1, Rook.WHITE)
+            .setPiece(B1, Knight.WHITE)
+            .setPiece(C1, Bishop.WHITE)
+            .setPiece(D1, Queen.WHITE)
+            .setPiece(E1, King.WHITE)
+            .setPiece(F1, Bishop.WHITE)
+            .setPiece(G1, Knight.WHITE)
+            .setPiece(H1, Rook.WHITE)
+            .setPiece(A2, Pawn.WHITE)
+            .setPiece(B2, Pawn.WHITE)
+            .setPiece(C2, Pawn.WHITE)
+            .setPiece(D2, Pawn.WHITE)
+            .setPiece(E2, Pawn.WHITE)
+            .setPiece(F2, Pawn.WHITE)
+            .setPiece(G2, Pawn.WHITE)
+            .setPiece(H2, Pawn.WHITE)
+            .setPiece(A7, Pawn.BLACK)
+            .setPiece(B7, Pawn.BLACK)
+            .setPiece(C7, Pawn.BLACK)
+            .setPiece(D7, Pawn.BLACK)
+            .setPiece(E7, Pawn.BLACK)
+            .setPiece(F7, Pawn.BLACK)
+            .setPiece(G7, Pawn.BLACK)
+            .setPiece(H7, Pawn.BLACK)
+            .setPiece(A8, Rook.BLACK)
+            .setPiece(B8, Knight.BLACK)
+            .setPiece(C8, Bishop.BLACK)
+            .setPiece(D8, King.BLACK)
+            .setPiece(E8, Queen.BLACK)
+            .setPiece(F8, Bishop.BLACK)
+            .setPiece(G8, Knight.BLACK)
+            .setPiece(H8, Rook.BLACK);
     }
 
     /**
@@ -76,11 +112,7 @@ class GameState  {
     }
 
     copy() {
-        let result = new GameState();
-        result.pieces = this.pieces.map(row => row.slice());
-        result.clicks = this.clicks.slice();
-        result.moves = this.moves.slice();
-        return result;
+        return new GameState(this.pieces, this.clicks, this.moves);
     }
 
     /**
@@ -91,9 +123,9 @@ class GameState  {
      * @returns {GameState}
      */
     setPiece(square, piece) {
-        let result = this.copy();
-        result.pieces[square.col][square.row] = piece;
-        return result;
+        const newPieces = this.pieces.map(row => row.slice());
+        newPieces[square.col][square.row] = piece;
+        return new GameState(newPieces, this.clicks, this.moves);
     }
 
     /**
@@ -108,22 +140,28 @@ class GameState  {
     handleSquareClick(square) {
         let selectedSquare = this.getSelectedSquare();
         if (selectedSquare && this.getAllowedSquares(selectedSquare).filter(sq => sq === square).length > 0) {
-            let result = this.performMove(new Move(selectedSquare, square));
-            result.clicks.push(square)
-            return result;
+            return this
+                .performMove(new Move(selectedSquare, square))
+                .storeClick(square);
         } else {
-            let result = this.copy();
-            result.clicks.push(square);
-            return result;
+            return this.storeClick(square)
         }
     }
 
+    storeClick(square) {
+        const newClicks = this.clicks.slice();
+        newClicks.push(square);
+        return new GameState(this.pieces, newClicks, this.moves);
+    }
+
+    storeMove(move) {
+        const newMoves = this.moves.slice();
+        newMoves.push(move);
+        return new GameState(this.pieces, this.clicks, newMoves);
+    }
+
     performMove(move) {
-        let result = this.copy();
-        const piece = result.pieces[move.from.col][move.from.row];
-        piece.performMove(move, result);
-        result.moves.push(move);
-        return result;
+        return this.getPiece(move.from).performMove(move, this).storeMove(move);
     }
 
 

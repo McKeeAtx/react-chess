@@ -54,8 +54,9 @@ class Piece {
     }
 
     performMove(move, gameState) {
-        gameState.pieces[move.from.col][move.from.row] = gameState.getNone();
-        gameState.pieces[move.to.col][move.to.row] = this;
+        return gameState
+            .setPiece(move.from, gameState.getNone())
+            .setPiece(move.to, this);
     }
 
     kingUnderAttack(from, to, gameState) {
