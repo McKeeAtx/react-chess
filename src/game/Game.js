@@ -1,19 +1,8 @@
 import GameState from "../gamestate/GameState";
-import {B4, C2, D2, E1, F8} from "../common/Square";
-import King from "../pieces/king/King";
-import Pawn from "../pieces/pawn/Pawn";
-import Bishop from "../pieces/bishop/Bishop";
 
 class Game {
 
     static INITIAL = new Game([GameState.initialBoard()], 0);
-    // static INITIAL = new Game([GameState.emptyBoard()
-    //     .setPiece(E1, King.WHITE)
-    //     .setPiece(C2, Pawn.WHITE)
-    //     .setPiece(D2, Pawn.WHITE)
-    //     .setPiece(F8, Bishop.BLACK)
-    //     .setPiece(E7, Pawn.BLACK)
-    // ], 0);
 
     constructor(states, indexOfCurrentState) {
         this.states = this.removeUselessStates(states);
