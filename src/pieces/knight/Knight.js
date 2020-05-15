@@ -14,7 +14,7 @@ class Knight extends Piece {
         return "N";
     }
 
-    getAllowedSquaresInternal(square, gameState) {
+    getAttackedSquaresInternal(square, gameState) {
         return [
             square.withOffset(+ 1, + 2),
             square.withOffset(- 1, + 2),

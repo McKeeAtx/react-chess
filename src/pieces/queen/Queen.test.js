@@ -34,10 +34,10 @@ describe('queen' , () => {
 
     it('test bishop example from Wikipedia with queens instead of bishops', () => {
         let gameState = GameState.emptyBoard()
-            .setPiece(C2, Pawn.WHITE)
-            .setPiece(D7, Pawn.BLACK)
-            .setPiece(D4, Queen.BLACK)
-            .setPiece(F5, Queen.WHITE);
+            .set(C2, Pawn.WHITE)
+            .set(D7, Pawn.BLACK)
+            .set(D4, Queen.BLACK)
+            .set(F5, Queen.WHITE);
         expect(gameState.getAllowedSquares(D4).sort(Square.COMPARATOR)).toEqual(
             [
                 A1, A4, A7, B2, B4,

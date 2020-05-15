@@ -15,7 +15,7 @@ class Pawn extends Piece {
         return "";
     }
 
-    getAllowedSquaresInternal(square, gameState) {
+    getAttackedSquaresInternal(square, gameState) {
         const sign = this.color === Color.WHITE ? + 1 : -1;
         return []
             .concat(this.getVerticalMoves(square, gameState, sign))
@@ -27,12 +27,12 @@ class Pawn extends Piece {
         /* pawn can move one rank if the square is empty */
         let moves = [];
         const moveOneFile = square.withOffset(0 , 1 * sign);
-        if (moveOneFile && gameState.getPiece(moveOneFile).color === Color.TRANSLUCENT) {
+        if (moveOneFile && gameState.get(moveOneFile).color === Color.TRANSLUCENT) {
             moves.push(moveOneFile);
             if ((this.color === Color.WHITE && square.row === 1) || ((this.color === Color.BLACK && square.row === 6))) {
                 /* pawns can move another rank in the initial move if the square is empty as well */
                 const moveTwoFiles = square.withOffset(0, 2 * sign);
-                if (moveTwoFiles && gameState.getPiece(moveTwoFiles).color === Color.TRANSLUCENT) {
+                if (moveTwoFiles && gameState.get(moveTwoFiles).color === Color.TRANSLUCENT) {
                     moves.push(moveTwoFiles);
                 }
             }
@@ -45,11 +45,11 @@ class Pawn extends Piece {
         /* pawn can capture diagonally */
         const enemy = this.color === Color.WHITE ? Color.BLACK : Color.WHITE;
         const diagonalMoveOne = square.withOffset(- 1, 1 * sign);
-        if (diagonalMoveOne && gameState.getPiece(diagonalMoveOne).color === enemy) {
+        if (diagonalMoveOne && gameState.get(diagonalMoveOne).color === enemy) {
             moves.push(diagonalMoveOne);
         }
         const diagonalMoveTwo = square.withOffset(+ 1, 1 * sign);
-        if (diagonalMoveTwo && gameState.getPiece(diagonalMoveTwo).color === enemy) {
+        if (diagonalMoveTwo && gameState.get(diagonalMoveTwo).color === enemy) {
             moves.push(diagonalMoveTwo);
         }
         return moves;
@@ -59,7 +59,7 @@ class Pawn extends Piece {
         let moves = [];
         const enemy = this.color === Color.WHITE ? Pawn.BLACK : Pawn.WHITE;
         [-1, +1].forEach( colOffset => {
-            if (gameState.getPiece(square.withOffset(colOffset, 0)) === enemy) {
+            if (gameState.get(square.withOffset(colOffset, 0)) === enemy) {
                 if (gameState.moves.length > 0) {
                     const lastMove = gameState.moves[gameState.moves.length - 1];
                     if (lastMove.from === square.withOffset(colOffset, +2 * sign) &&
@@ -77,13 +77,13 @@ class Pawn extends Piece {
             // en passant
             const sign = this.color === Color.WHITE ? + 1 : -1;
             return gameState
-                .setPiece(Squares.of(move.to.col, move.to.row - sign), gameState.getNone())
-                .setPiece(move.from, gameState.getNone())
-                .setPiece(move.to, this);
+                .set(Squares.of(move.to.col, move.to.row - sign), gameState.getNone())
+                .set(move.from, gameState.getNone())
+                .set(move.to, this);
         }
         return gameState
-            .setPiece(move.from, gameState.getNone())
-            .setPiece(move.to, this);
+            .set(move.from, gameState.getNone())
+            .set(move.to, this);
     }
 
 }

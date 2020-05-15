@@ -34,10 +34,10 @@ describe('rook' , () => {
 
     it('test rook moves', () => {
         let gameState = GameState.emptyBoard()
-            .setPiece(D2, Pawn.WHITE)
-            .setPiece(D7, Pawn.BLACK)
-            .setPiece(D4, Rook.BLACK)
-            .setPiece(F4, Rook.WHITE);
+            .set(D2, Pawn.WHITE)
+            .set(D7, Pawn.BLACK)
+            .set(D4, Rook.BLACK)
+            .set(F4, Rook.WHITE);
         expect(gameState.getAllowedSquares(D4).sort(Square.COMPARATOR)).toEqual(
             [
                 A4, B4, C4,

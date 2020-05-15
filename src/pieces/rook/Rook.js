@@ -14,12 +14,12 @@ class Rook extends Piece {
         return "R";
     }
 
-    getAllowedSquaresInternal(square, gameState) {
+    getAttackedSquaresInternal(square, gameState) {
         let result = []
-        result = result.concat(this.getAllowedSquaresWithOffset(square, square, -1, 0, gameState));
-        result = result.concat(this.getAllowedSquaresWithOffset(square, square, +1, 0, gameState));
-        result = result.concat(this.getAllowedSquaresWithOffset(square, square,  0, +1, gameState));
-        result = result.concat(this.getAllowedSquaresWithOffset(square, square,  0, -1, gameState));
+        result = result.concat(this.getAttackedSquaresWithOffset(square, square, -1, 0, gameState));
+        result = result.concat(this.getAttackedSquaresWithOffset(square, square, +1, 0, gameState));
+        result = result.concat(this.getAttackedSquaresWithOffset(square, square,  0, +1, gameState));
+        result = result.concat(this.getAttackedSquaresWithOffset(square, square,  0, -1, gameState));
         return result;
     }
 

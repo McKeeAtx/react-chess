@@ -14,7 +14,7 @@ class King extends Piece {
         return "K";
     }
 
-    getAllowedSquaresInternal(square, gameState) {
+    getAttackedSquaresInternal(square, gameState) {
         return [
             square.withOffset(-1, -1),
             square.withOffset(0, -1),

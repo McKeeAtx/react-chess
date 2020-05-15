@@ -29,7 +29,7 @@ describe('knight' , () => {
     });
 
     it('black knight that sits on empty board at E5 can move to 8 squares' , () => {
-        let gameState = GameState.emptyBoard().setPiece(E5, Knight.BLACK);
+        let gameState = GameState.emptyBoard().set(E5, Knight.BLACK);
         expect(gameState.getAllowedSquares(E5)).toEqual([F7, D7, F3, D3, G6, C6, G4, C4]);
     });
 

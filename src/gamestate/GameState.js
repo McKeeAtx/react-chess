@@ -5,7 +5,7 @@ import Bishop from "../pieces/bishop/Bishop";
 import Queen from "../pieces/queen/Queen";
 import King from "../pieces/king/King";
 import None from "../pieces/none/None";
-import Square from "../common/Square";
+import Square, {D4} from "../common/Square";
 import Squares, {
     A1,
     A2,
@@ -54,11 +54,11 @@ class GameState  {
         this.clicks = clicks.slice();
         this.moves = moves.slice();
         this.selectedSquare = this.computeSelectedSquare();
-        this.highlightedSquares = this.computeHighlightedSquares();
+        this.highlightedSquares = this.selectedSquare ? this.getAllowedSquares(this.selectedSquare) : [];
     }
 
     /**
-     * Creates {GameState} with an empty board.
+     * Creates a {GameState} with an empty board.
      *
      * @returns {GameState}
      */
@@ -71,44 +71,44 @@ class GameState  {
     }
 
     /**
-     * Creates {GameState} with every piece at its starting position.
+     * Creates a {GameState} with every piece at its starting position.
      *
      * @returns {GameState}
      */
     static initialBoard() {
         return this.emptyBoard()
-            .setPiece(A1, Rook.WHITE)
-            .setPiece(B1, Knight.WHITE)
-            .setPiece(C1, Bishop.WHITE)
-            .setPiece(D1, Queen.WHITE)
-            .setPiece(E1, King.WHITE)
-            .setPiece(F1, Bishop.WHITE)
-            .setPiece(G1, Knight.WHITE)
-            .setPiece(H1, Rook.WHITE)
-            .setPiece(A2, Pawn.WHITE)
-            .setPiece(B2, Pawn.WHITE)
-            .setPiece(C2, Pawn.WHITE)
-            .setPiece(D2, Pawn.WHITE)
-            .setPiece(E2, Pawn.WHITE)
-            .setPiece(F2, Pawn.WHITE)
-            .setPiece(G2, Pawn.WHITE)
-            .setPiece(H2, Pawn.WHITE)
-            .setPiece(A7, Pawn.BLACK)
-            .setPiece(B7, Pawn.BLACK)
-            .setPiece(C7, Pawn.BLACK)
-            .setPiece(D7, Pawn.BLACK)
-            .setPiece(E7, Pawn.BLACK)
-            .setPiece(F7, Pawn.BLACK)
-            .setPiece(G7, Pawn.BLACK)
-            .setPiece(H7, Pawn.BLACK)
-            .setPiece(A8, Rook.BLACK)
-            .setPiece(B8, Knight.BLACK)
-            .setPiece(C8, Bishop.BLACK)
-            .setPiece(D8, King.BLACK)
-            .setPiece(E8, Queen.BLACK)
-            .setPiece(F8, Bishop.BLACK)
-            .setPiece(G8, Knight.BLACK)
-            .setPiece(H8, Rook.BLACK);
+            .set(A1, Rook.WHITE)
+            .set(B1, Knight.WHITE)
+            .set(C1, Bishop.WHITE)
+            .set(D1, Queen.WHITE)
+            .set(E1, King.WHITE)
+            .set(F1, Bishop.WHITE)
+            .set(G1, Knight.WHITE)
+            .set(H1, Rook.WHITE)
+            .set(A2, Pawn.WHITE)
+            .set(B2, Pawn.WHITE)
+            .set(C2, Pawn.WHITE)
+            .set(D2, Pawn.WHITE)
+            .set(E2, Pawn.WHITE)
+            .set(F2, Pawn.WHITE)
+            .set(G2, Pawn.WHITE)
+            .set(H2, Pawn.WHITE)
+            .set(A7, Pawn.BLACK)
+            .set(B7, Pawn.BLACK)
+            .set(C7, Pawn.BLACK)
+            .set(D7, Pawn.BLACK)
+            .set(E7, Pawn.BLACK)
+            .set(F7, Pawn.BLACK)
+            .set(G7, Pawn.BLACK)
+            .set(H7, Pawn.BLACK)
+            .set(A8, Rook.BLACK)
+            .set(B8, Knight.BLACK)
+            .set(C8, Bishop.BLACK)
+            .set(D8, King.BLACK)
+            .set(E8, Queen.BLACK)
+            .set(F8, Bishop.BLACK)
+            .set(G8, Knight.BLACK)
+            .set(H8, Rook.BLACK);
     }
 
     /**
@@ -117,25 +117,21 @@ class GameState  {
      * @param square the piece's square
      * @returns {Piece}
      */
-    getPiece(square) {
+    get(square) {
         if (square === undefined) {
             return undefined;
         }
         return this.pieces[square.col][square.row];
     }
 
-    copy() {
-        return new GameState(this.pieces, this.clicks, this.moves);
-    }
-
     /**
-     * Creates a new {GameState} from this instance by assigning {piece} to  {square}.
+     * Creates a new {GameState} from this instance by assigning {piece} to {square}.
      *
      * @param square
      * @param piece
      * @returns {GameState}
      */
-    setPiece(square, piece) {
+    set(square, piece) {
         const newPieces = this.pieces.map(row => row.slice());
         newPieces[square.col][square.row] = piece;
         return new GameState(newPieces, this.clicks, this.moves);
@@ -151,7 +147,8 @@ class GameState  {
     }
 
     handleSquareClick(square) {
-        if (this.selectedSquare && this.getAllowedSquares(this.selectedSquare).filter(sq => sq === square).length > 0) {
+        if (this.selectedSquare &&
+            this.getAllowedSquares(this.selectedSquare).filter(sq => sq === square).length > 0) {
             return this
                 .performMove(new Move(this.selectedSquare, square))
                 .storeClick(square);
@@ -161,19 +158,15 @@ class GameState  {
     }
 
     storeClick(square) {
-        const newClicks = this.clicks.slice();
-        newClicks.push(square);
-        return new GameState(this.pieces, newClicks, this.moves);
+        return new GameState(this.pieces, this.clicks.slice().concat([square]), this.moves);
     }
 
     storeMove(move) {
-        const newMoves = this.moves.slice();
-        newMoves.push(move);
-        return new GameState(this.pieces, this.clicks, newMoves);
+        return new GameState(this.pieces, this.clicks, this.moves.slice().concat([move]));
     }
 
     performMove(move) {
-        return this.getPiece(move.from).performMove(move, this).storeMove(move);
+        return this.get(move.from).performMove(move, this).storeMove(move);
     }
 
 
@@ -198,39 +191,19 @@ class GameState  {
         return this.highlightedSquares.find(highlighted => highlighted === square) !== undefined;
     }
 
-    /**
-     * Returns the squares that the piece at {square} can move to.
-     *
-     * @param square
-     * @returns {Square[]}
-     */
-    _getAllowedSquares(square, checkForKingAttacked) {
-        return this.pieces[square.col][square.row].getAllowedSquares(square, this, checkForKingAttacked);
-    }
-
-    getAllowedSquares(square) {
-        return this._getAllowedSquares(square, true);
-    }
-
-    getAllowedMoves() {
-        return Square.all()
-            .filter(square => this.getPiece(square).color === this.nextPlayer())
-            .flatMap(from => this.getAllowedSquares(from).map(to => new Move(from, to)));
-    }
-
     getNone() {
         return None.INSTANCE;
     }
 
-    kingUnderAttack(color) {
+    isCheck(color) {
         const king = color === Color.WHITE ? King.WHITE : King.BLACK;
         const enemyColor = color === Color.WHITE ? Color.BLACK : Color.WHITE;
-        const kingSquare = Squares.all().find(square => this.getPiece(square) === king);
+        const kingSquare = Squares.all().find(square => this.get(square) === king);
         if ( ! kingSquare ) {
             return false;
         }
-        const enemyPieces = Squares.all().filter(square => this.getPiece(square).color === enemyColor)
-        const attackingEnemy = enemyPieces.flatMap(square => this._getAllowedSquares(square, false)).find(square => square === kingSquare)
+        const enemyPieces = Squares.all().filter(square => this.get(square).color === enemyColor)
+        const attackingEnemy = enemyPieces.flatMap(enemy => this.getAttackedSquares(enemy)).find(attackedByEnemy => attackedByEnemy === kingSquare)
         return attackingEnemy !== undefined;
     }
 
@@ -244,11 +217,12 @@ class GameState  {
         return undefined;
     }
 
-    computeHighlightedSquares() {
-        if (this.selectedSquare) {
-            return this.getAllowedSquares(this.selectedSquare);
-        }
-        return [];
+    getAttackedSquares(square) {
+        return this.get(square).getAttackedSquares(square, this);
+    }
+
+    getAllowedSquares(square) {
+        return this.get(square).getAllowedSquares(square, this);
     }
 
 }

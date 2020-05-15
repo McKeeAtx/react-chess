@@ -1,6 +1,8 @@
-import Color from "../common/Color";
 import Move from "../common/Move";
 
+/**
+ * Superclass for all pieces (e.g. pawns, kings, etc.).
+ */
 class Piece {
 
     constructor(symbol, color) {
@@ -8,60 +10,64 @@ class Piece {
         this.color = color;
     }
 
-    getAllowedSquares(from, gameState, checkForKingAttacked) {
-        return this.getAllowedSquaresInternal(from, gameState)
-            .filter(to => to !== undefined)
-            .filter(to => this.emptyOrEnemy(to, gameState))
-            .filter(to => (false === checkForKingAttacked) || (false === this.kingUnderAttack(from, to, gameState)));
+    /**
+     * Returns all squares that are attacked by this piece.
+     *
+     * @param square the piece's square
+     * @param gameState the {GameState}
+     * @returns {Square[]}
+     */
+    getAttackedSquares(square, gameState) {
+        return this.getAttackedSquaresInternal(square, gameState)
+            .filter(target => target !== undefined)
+            .filter(target => gameState.get(target).color !== this.color);
     }
 
     /**
-     * Used by rooks, bishops and queens.
-     * @param originalSquare
-     * @param square
-     * @param offsetCol
-     * @param offsetRow
-     * @param gameState
-     * @returns {*[]}
+     * Returns all squares this piece can move to.
+     *
+     * @param square the piece's square
+     * @param gameState the state of the game
+     * @returns {Square[]}
      */
-    getAllowedSquaresWithOffset(originalSquare, square, offsetCol, offsetRow, gameState) {
+    getAllowedSquares(square, gameState) {
+        return this.getAttackedSquares(square, gameState)
+            .filter(target => false === gameState.performMove(new Move(square, target)).isCheck(this.color));
+    }
+
+    /**
+     * Pieces perform the actual move to make {GameState} agnostic of piece-specific moves
+     * like en passant and casteling.
+     *
+     * @param move the move that should be performed
+     * @param gameState the state of the game before the move
+     * @returns {GameState}
+     */
+    performMove(move, gameState) {
+        return gameState
+            .set(move.from, gameState.getNone())
+            .set(move.to, this);
+    }
+
+    /**
+     * Common boilerplate that rooks, bishops and queens use to implement getAttackedSquaresInternal.
+     */
+    getAttackedSquaresWithOffset(originalSquare, square, offsetCol, offsetRow, gameState) {
         const newSquare = square.withOffset(offsetCol, offsetRow);
         if (newSquare) {
-            if (gameState.getPiece(newSquare).color === Color.TRANSLUCENT) {
+            if (gameState.get(newSquare) === gameState.getNone()) {
                 let result = [];
                 result.push(newSquare);
-                result = result.concat(this.getAllowedSquaresWithOffset(originalSquare, newSquare, offsetCol, offsetRow, gameState));
+                result = result.concat(this.getAttackedSquaresWithOffset(originalSquare, newSquare, offsetCol, offsetRow, gameState));
                 return result;
             }
-            if (gameState.getPiece(newSquare).color !== gameState.getPiece(originalSquare).color) {
+            if (gameState.get(newSquare).color !== gameState.get(originalSquare).color) {
                 return [newSquare];
             }
         }
         return [];
     }
 
-
-    getLetter() {
-        return "?";
-    }
-
-    getAllowedSquaresInternal(square, gameState) {
-        return [];
-    }
-
-    emptyOrEnemy(square, gameState) {
-        return gameState.getPiece(square).color !== this.color;
-    }
-
-    performMove(move, gameState) {
-        return gameState
-            .setPiece(move.from, gameState.getNone())
-            .setPiece(move.to, this);
-    }
-
-    kingUnderAttack(from, to, gameState) {
-        return gameState.performMove(new Move(from, to)).kingUnderAttack(this.color);
-    }
 }
 
 export default Piece;
