@@ -14,6 +14,10 @@ class King extends Piece {
         return "K";
     }
 
+    canAttackOnEmptyBoard(square, target) {
+        return Math.abs(square.col - target.col) < 2 &&  Math.abs(square.row - target.row) < 2;
+    }
+
     getAttackedSquaresInternal(square, gameState) {
         return [
             square.withOffset(-1, -1),

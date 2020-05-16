@@ -15,12 +15,17 @@ class Pawn extends Piece {
         return "";
     }
 
+    canAttackOnEmptyBoard(square, target) {
+        return Math.abs(square.col - target.col) < 2 &&  Math.abs(square.row - target.row) < 2;
+    }
+
     getAttackedSquaresInternal(square, gameState) {
         const sign = this.color === Color.WHITE ? + 1 : -1;
-        return []
-            .concat(this.getVerticalMoves(square, gameState, sign))
-            .concat(this.getDiagonalMoves(square, gameState, sign))
-            .concat(this.getEnPassantMoves(square, gameState, sign));
+        return [
+            ...this.getVerticalMoves(square, gameState, sign),
+            ...this.getDiagonalMoves(square, gameState, sign),
+            ...this.getEnPassantMoves(square, gameState, sign)
+        ]
     }
 
     getVerticalMoves(square, gameState, sign) {

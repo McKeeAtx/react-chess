@@ -5,7 +5,7 @@ import Bishop from "../pieces/bishop/Bishop";
 import Queen from "../pieces/queen/Queen";
 import King from "../pieces/king/King";
 import None from "../pieces/none/None";
-import Square, {D4} from "../common/Square";
+import Square from "../common/Square";
 import Squares, {
     A1,
     A2,
@@ -158,11 +158,11 @@ class GameState  {
     }
 
     storeClick(square) {
-        return new GameState(this.pieces, this.clicks.slice().concat([square]), this.moves);
+        return new GameState(this.pieces, [...this.clicks, square], this.moves);
     }
 
     storeMove(move) {
-        return new GameState(this.pieces, this.clicks, this.moves.slice().concat([move]));
+        return new GameState(this.pieces, this.clicks, [...this.moves, move]);
     }
 
     performMove(move) {
@@ -202,8 +202,10 @@ class GameState  {
         if ( ! kingSquare ) {
             return false;
         }
-        const enemyPieces = Squares.all().filter(square => this.get(square).color === enemyColor)
-        return enemyPieces.flatMap(enemy => this.getAttackedSquares(enemy))
+        const enemySquares = Squares.all().filter(square => this.get(square).color === enemyColor)
+        return enemySquares
+            .filter(enemySquare => this.get(enemySquare).canAttackOnEmptyBoard(enemySquare, kingSquare))
+            .flatMap(enemySquare => this.getAttackedSquares(enemySquare))
             .find(attackedByEnemy => attackedByEnemy === kingSquare) !== undefined;
     }
 

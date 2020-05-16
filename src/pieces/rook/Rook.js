@@ -14,13 +14,18 @@ class Rook extends Piece {
         return "R";
     }
 
+    canAttackOnEmptyBoard(square, target) {
+        return square.col == target.col ||
+            square.row == target.row;
+    }
+
     getAttackedSquaresInternal(square, gameState) {
-        let result = []
-        result = result.concat(this.getAttackedSquaresWithOffset(square, square, -1, 0, gameState));
-        result = result.concat(this.getAttackedSquaresWithOffset(square, square, +1, 0, gameState));
-        result = result.concat(this.getAttackedSquaresWithOffset(square, square,  0, +1, gameState));
-        result = result.concat(this.getAttackedSquaresWithOffset(square, square,  0, -1, gameState));
-        return result;
+        return [
+            ...this.getAttackedSquaresWithOffset(square, square, -1, 0, gameState),
+            ...this.getAttackedSquaresWithOffset(square, square, +1, 0, gameState),
+            ...this.getAttackedSquaresWithOffset(square, square,  0, +1, gameState),
+            ...this.getAttackedSquaresWithOffset(square, square,  0, -1, gameState)
+        ];
     }
 
 }

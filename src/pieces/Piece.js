@@ -50,16 +50,21 @@ class Piece {
     }
 
     /**
+     * Allows to rule out pieces quickly before doing the comprehensive analysis which squares
+     * are attacked.
+     */
+    canAttackOnEmptyBoard(square, target) {
+        return true;
+    }
+
+    /**
      * Common boilerplate that rooks, bishops and queens use to implement getAttackedSquaresInternal.
      */
     getAttackedSquaresWithOffset(originalSquare, square, offsetCol, offsetRow, gameState) {
         const newSquare = square.withOffset(offsetCol, offsetRow);
         if (newSquare) {
             if (gameState.get(newSquare) === gameState.getNone()) {
-                let result = [];
-                result.push(newSquare);
-                result = result.concat(this.getAttackedSquaresWithOffset(originalSquare, newSquare, offsetCol, offsetRow, gameState));
-                return result;
+                return [newSquare, ...this.getAttackedSquaresWithOffset(originalSquare, newSquare, offsetCol, offsetRow, gameState)];
             }
             if (gameState.get(newSquare).color !== gameState.get(originalSquare).color) {
                 return [newSquare];

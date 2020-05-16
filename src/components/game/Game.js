@@ -4,7 +4,6 @@ import './game.css'
 import Square from "../../common/Square";
 import Move from "../move/Move";
 import GameModel from "../../game/Game";
-import Engine from "../../engine/Engine";
 
 class Game extends React.Component {
 
@@ -70,7 +69,10 @@ class Game extends React.Component {
                 </div>
                 <div className="game-info">
                     <button onClick={() => this.handleCpuMove()}>cpu move</button>
+                    <br/>
                     <button onClick={() => this.handleCpuGame()}>cpu game</button>
+                    <br/>
+                    <br/>
                     <div>Moves:</div>
                     {this.generateListOfMoves().map(move => <Move key={move.index} index={move.index} btnClass={move.btnClass} onClick={() => this.handleMoveClick(move.index)} name={move.name} />)}
                 </div>

@@ -36,11 +36,8 @@ class Game {
         if (rewritePast) {
             return new Game(this.states.slice(0, this.indexOfCurrentState + 1), this.indexOfCurrentState).handleSquareClick(square);
         }
-        const lastState = this.states[this.states.length - 1];
-        const newStates = this.states.slice();
-        const newState = lastState.handleSquareClick(square);
-        newStates.push(newState);
-        return new Game(newStates, newStates.length - 1);
+        const newState = this.states[this.states.length - 1].handleSquareClick(square);
+        return new Game([...this.states, newState], this.indexOfCurrentState + 1);
     }
 
     handleMoveClick(index) {
