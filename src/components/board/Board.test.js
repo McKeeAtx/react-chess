@@ -2,7 +2,7 @@ import React from 'react';
 import * as Enzyme from "enzyme";
 import {shallow} from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
-import GameState from "../../gamestate/GameState";
+import GameState from "../../model/gamestate/GameState";
 import Board from "../board/Board";
 import Row from "../row/Row";
 

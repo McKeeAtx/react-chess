@@ -1,5 +1,5 @@
 import GameState from "../gamestate/GameState";
-import Engine from "../engine/Engine";
+import Engine from "../../engine/Engine";
 
 class Game {
 

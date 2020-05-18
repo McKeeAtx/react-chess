@@ -5,7 +5,7 @@ import Bishop from "../pieces/bishop/Bishop";
 import Queen from "../pieces/queen/Queen";
 import King from "../pieces/king/King";
 import None from "../pieces/none/None";
-import Square from "../common/Square";
+import Square from "../Square";
 import Squares, {
     A1,
     A2,
@@ -39,9 +39,9 @@ import Squares, {
     H2,
     H7,
     H8
-} from "../common/Square";
-import Move from "../common/Move";
-import Color from "../common/Color";
+} from "../Square";
+import Move from "../Move";
+import Color from "../Color";
 
 /**
  * Represent the state of a game (the position of all pieces and all previous clicks and moves)

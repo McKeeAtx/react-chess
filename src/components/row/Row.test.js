@@ -3,12 +3,12 @@ import * as Enzyme from 'enzyme'
 import {shallow} from 'enzyme'
 import Adapter from 'enzyme-adapter-react-16';
 import Row from "./Row";
-import GameState from "../../gamestate/GameState";
+import GameState from "../../model/gamestate/GameState";
 import Square from "../square/Square";
 import Label from "../label/Label";
-import Color from "../../common/Color";
-import Rook from "../../pieces/rook/Rook";
-import Knight from "../../pieces/knight/Knight";
+import Color from "../../model/Color";
+import Rook from "../../model/pieces/rook/Rook";
+import Knight from "../../model/pieces/knight/Knight";
 
 describe('<Row />', () => {
 

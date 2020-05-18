@@ -2,7 +2,7 @@ import * as React from "react";
 import './row.css';
 import Label from "../label/Label";
 import Square from "../square/Square";
-import _Square from "../../common/Square";
+import _Square from "../../model/Square";
 
 class Row extends React.Component {
 

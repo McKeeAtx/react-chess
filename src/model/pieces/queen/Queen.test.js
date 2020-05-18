@@ -23,7 +23,7 @@ import Square, {
     G7, H3, H4, H5,
     H7,
     H8
-} from "../../common/Square";
+} from "../../Square";
 import Queen from "./Queen";
 
 describe('queen' , () => {

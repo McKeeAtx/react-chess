@@ -1,11 +1,11 @@
 import React from 'react';
 import {mount, shallow} from 'enzyme'
-import Pawn from "../../pieces/pawn/Pawn";
-import Color from "../../common/Color";
+import Pawn from "../../model/pieces/pawn/Pawn";
+import Color from "../../model/Color";
 import Square from "./Square";
 import * as Enzyme from "enzyme";
 import Adapter from 'enzyme-adapter-react-16';
-import None from "../../pieces/none/None";
+import None from "../../model/pieces/none/None";
 
 
 describe('<Square />', () => {

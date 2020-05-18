@@ -23,7 +23,7 @@ import {
     H2,
     H4,
     H5
-} from "../../common/Square";
+} from "../../Square";
 import None from "../none/None";
 
 describe('pawn' , () => {

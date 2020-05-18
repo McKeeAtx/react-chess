@@ -1,5 +1,5 @@
 import Game from "./Game";
-import {A7, E2, E3, F5, F7} from "../common/Square";
+import {A7, E2, E3, F5, F7} from "../Square";
 
 const toString = game => {
   const states = game.states.map((state, index) => {

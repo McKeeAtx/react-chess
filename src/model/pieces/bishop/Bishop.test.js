@@ -24,7 +24,7 @@ import Square, {
     G7, H3,
     H7,
     H8
-} from "../../common/Square";
+} from "../../Square";
 
 describe('bishop' , () => {
 

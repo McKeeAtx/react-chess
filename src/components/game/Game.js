@@ -1,9 +1,9 @@
 import * as React from "react";
 import Board from "../board/Board";
 import './game.css'
-import Square from "../../common/Square";
+import Square from "../../model/Square";
 import Move from "../move/Move";
-import GameModel from "../../game/Game";
+import GameModel from "../../model/game/Game";
 
 class Game extends React.Component {
 

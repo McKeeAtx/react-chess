@@ -1,6 +1,6 @@
-import Color from "../../common/Color";
+import Color from "../../Color";
 import Piece from "../Piece";
-import Squares from "../../common/Square";
+import Squares from "../../Square";
 
 class Pawn extends Piece {
 

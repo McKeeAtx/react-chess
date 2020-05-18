@@ -1,4 +1,4 @@
-import Move from "../common/Move";
+import Move from "../Move";
 
 /**
  * Superclass for all pieces (e.g. pawns, kings, etc.).

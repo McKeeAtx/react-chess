@@ -1,6 +1,6 @@
 import GameState from "./GameState";
 import Rook from "../pieces/rook/Rook";
-import Color from "../common/Color";
+import Color from "../Color";
 import Knight from "../pieces/knight/Knight";
 import Bishop from "../pieces/bishop/Bishop";
 import Queen from "../pieces/queen/Queen";
@@ -39,7 +39,7 @@ import Square, {
     H2,
     H7,
     H8
-} from "../common/Square";
+} from "../Square";
 import None from "../pieces/none/None";
 
 

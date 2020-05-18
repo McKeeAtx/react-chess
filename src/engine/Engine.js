@@ -1,5 +1,5 @@
-import Square from "../common/Square";
-import Move from "../common/Move";
+import Square from "../model/Square";
+import Move from "../model/Move";
 
 class Engine  {
 

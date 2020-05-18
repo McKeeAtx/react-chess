@@ -1,4 +1,4 @@
-import Color from "../../common/Color";
+import Color from "../../Color";
 import Piece from "../Piece";
 
 class Queen extends Piece {

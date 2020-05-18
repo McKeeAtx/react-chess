@@ -1,6 +1,6 @@
 import King from "./King";
 import GameState from "../../gamestate/GameState";
-import Square, {A2, B2, C2, C3, C4, C5, D2, D3, D4, D5, E2, E3, E4, E5, F2, F6} from "../../common/Square";
+import Square, {A2, B2, C2, C3, C4, C5, D2, D3, D4, D5, E2, E3, E4, E5, F2, F6} from "../../Square";
 import Pawn from "../pawn/Pawn";
 import Rook from "../rook/Rook";
 
