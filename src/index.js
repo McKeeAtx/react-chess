@@ -3,10 +3,22 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
 import Game from "./components/game/Game";
+import {Provider} from "react-redux";
+import {createStore, applyMiddleware} from "redux";
+import gameReducers from "./middleware/reducers";
+import { composeWithDevTools } from 'redux-devtools-extension';
+import GameState from "./model/gamestate/GameState";
+
+const store = createStore(gameReducers, composeWithDevTools(
+    applyMiddleware(),
+    // other store enhancers if any
+));
 
 ReactDOM.render(
   <React.StrictMode>
-    <Game />
+      <Provider store={store}>
+          <Game />
+      </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );

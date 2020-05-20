@@ -10,6 +10,10 @@ class Rook extends Piece {
         super(color === Color.WHITE ? '\u2656' : '\u265C', color);
     }
 
+    getValue() {
+        return 5;
+    }
+
     getLetter() {
         return "R";
     }

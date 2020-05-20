@@ -10,6 +10,10 @@ class Bishop extends Piece {
         super(color === Color.WHITE ? '\u2657' : '\u265D', color);
     }
 
+    getValue() {
+        return 3;
+    }
+
     getLetter() {
         return "B";
     }

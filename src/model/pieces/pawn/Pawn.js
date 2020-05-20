@@ -11,6 +11,10 @@ class Pawn extends Piece {
         super(color === Color.WHITE ? '\u2659' : '\u265F', color);
     }
 
+    getValue() {
+        return 1;
+    }
+
     getLetter() {
         return "";
     }

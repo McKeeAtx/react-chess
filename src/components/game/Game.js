@@ -14,12 +14,6 @@ class Game extends React.Component {
         };
     }
 
-    handleSquareClick(square) {
-        this.setState({
-            game: this.state.game.handleSquareClick(square)
-        });
-    }
-
     handleMoveClick(index) {
         this.setState({
             game: this.state.game.handleMoveClick(index)
@@ -65,7 +59,7 @@ class Game extends React.Component {
         return (
             <div className="game">
                 <div className="game-board">
-                    <Board gameState={currentState} onSquareClick={ (a, b) => this.handleSquareClick(Square.of(a, b)) }/>
+                    <Board gameState={currentState} />
                 </div>
                 <div className="game-info">
                     <button onClick={() => this.handleCpuMove()}>cpu move</button>

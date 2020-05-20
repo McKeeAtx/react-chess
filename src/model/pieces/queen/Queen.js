@@ -10,6 +10,10 @@ class Queen extends Piece {
         super(color === Color.WHITE ? '\u2655' : '\u265B', color);
     }
 
+    getValue() {
+        return 9;
+    }
+
     getLetter() {
         return "Q";
     }

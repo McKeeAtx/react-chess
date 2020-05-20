@@ -1,5 +1,6 @@
 import Square from "../model/Square";
 import Move from "../model/Move";
+import Evaluator from "../evaluator/Evaluator";
 
 class Engine  {
 
@@ -22,8 +23,13 @@ class Engine  {
         const playersSquares = Square.all().filter(square => gameState.get(square).color == nextPlayer);
         const allowedMoves = playersSquares.flatMap(square => gameState.getAllowedSquares(square).map(allowedSquare => new Move(square, allowedSquare)));
         let count = allowedMoves.length;
-        allowedMoves.forEach(move => count += this.playTillLevel(gameState.performMove(move), depth - 1));
+        allowedMoves.forEach(move => count += this.playTillLevel(this.evaluate(move), depth - 1));
         return count;
+    }
+
+    evaluate(move) {
+        let evaluation = new Evaluator().evaluate(move);
+        return move;
     }
 
 }

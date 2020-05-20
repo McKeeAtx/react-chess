@@ -10,6 +10,10 @@ class Knight extends Piece {
         super(color === Color.WHITE ? '\u2658' : '\u265E', color);
     }
 
+    getValue() {
+        return 3;
+    }
+
     getLetter() {
         return "N";
     }

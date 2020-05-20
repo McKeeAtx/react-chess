@@ -10,6 +10,10 @@ class King extends Piece {
         super(color === Color.WHITE ? '\u2654' : '\u265A', color);
     }
 
+    getValue() {
+        return 1000;
+    }
+
     getLetter() {
         return "K";
     }
