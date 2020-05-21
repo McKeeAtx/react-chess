@@ -2,11 +2,8 @@ import * as React from "react";
 import './square.css'
 import {connect} from "react-redux";
 import {squareClicked} from "../../middleware/actions";
-import { default as _Square } from "../../model/Square";
 
-export class Square extends React.Component {
-    col = this.props.col;
-    row = this.props.row;
+export class SquareComponent extends React.Component {
 
     className() {
         if (this.props.selected) {
@@ -15,7 +12,7 @@ export class Square extends React.Component {
         if (this.props.highlighted) {
             return 'square highlighted'
         }
-        if ((this.col + this.row) % 2 === 0) {
+        if ((this.props.square.col + this.props.square.row) % 2 === 0) {
             return 'square dark'
         } else {
             return 'square light'
@@ -24,7 +21,7 @@ export class Square extends React.Component {
 
     render() {
         return (
-            <button className={this.className()} onClick={() => this.props.squareClicked(_Square.of(this.col, this.row))}>
+            <button className={this.className()} onClick={() => this.props.squareClicked(this.props.square)}>
                 { this.getSymbol() }
             </button>
         );
@@ -37,9 +34,9 @@ export class Square extends React.Component {
 
 const mapStateToProps = (state, ownProps) => {
     return {
-        highlighted: state.global.isHighlighted(_Square.of(ownProps.col, ownProps.row)),
-        selected: state.global.isSelected(_Square.of(ownProps.col, ownProps.row)),
-        piece: state.global.get(_Square.of(ownProps.col, ownProps.row))
+        highlighted: state.global.isHighlighted(ownProps.square),
+        selected: state.global.isSelected(ownProps.square),
+        piece: state.global.get(ownProps.square)
     }
 };
 
@@ -47,4 +44,4 @@ const mapDispatchToProps = {
     squareClicked
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Square);
+export default connect(mapStateToProps, mapDispatchToProps)(SquareComponent);

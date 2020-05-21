@@ -8,7 +8,6 @@ function handleSquareClicked(state, action) {
     if (state === undefined) {
         return GameState.initialBoard()
     }
-    console.log(state)
     switch (action.type) {
         case SQUARE_CLICKED:
             return state.handleSquareClick(action.square);
