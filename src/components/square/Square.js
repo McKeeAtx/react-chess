@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 import {squareClicked} from "../../middleware/actions";
 import { default as _Square } from "../../model/Square";
 
-class Square extends React.Component {
+export class Square extends React.Component {
     col = this.props.col;
     row = this.props.row;
 
@@ -48,4 +48,3 @@ const mapDispatchToProps = {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Square);
-export {Square as SquareUnconnected};

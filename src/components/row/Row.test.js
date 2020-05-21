@@ -38,10 +38,10 @@ describe('<Row />', () => {
     const mockFn = jest.fn();
     const wrapper = shallow(<Row row={7} gameState={GameState.initialBoard()} onSquareClick={mockFn} />);
     expect(wrapper.find(Square).at(0).props()).toEqual({
-      col: 0, row: 7, data: { piece: new Rook(Color.BLACK), selected: false, highlighted: false }, onSquareClick: mockFn
+      col: 0, row: 7
     });
     expect(wrapper.find(Square).at(1).props()).toEqual({
-      col: 1, row: 7, data: { piece: new Knight(Color.BLACK), selected: false, highlighted: false }, onSquareClick: mockFn
+      col: 1, row: 7
     });
   });
 
@@ -49,10 +49,10 @@ describe('<Row />', () => {
     const mockFn = jest.fn();
     const wrapper = shallow(<Row row={0} gameState={GameState.initialBoard()} onSquareClick={mockFn} />);
     expect(wrapper.find(Square).at(0).props()).toEqual({
-      col: 0, row: 0, data: { piece: new Rook(Color.WHITE), selected: false, highlighted: false }, onSquareClick: mockFn
+      col: 0, row: 0
     });
     expect(wrapper.find(Square).at(1).props()).toEqual({
-      col: 1, row: 0, data: { piece: new Knight(Color.WHITE), selected: false, highlighted: false}, onSquareClick: mockFn
+      col: 1, row: 0
     });
   });
 

@@ -15,23 +15,6 @@ class Engine  {
         }
     }
 
-    playTillLevel(gameState, depth) {
-        if (depth === 0) {
-            return 0;
-        }
-        const nextPlayer = gameState.nextPlayer();
-        const playersSquares = Square.all().filter(square => gameState.get(square).color == nextPlayer);
-        const allowedMoves = playersSquares.flatMap(square => gameState.getAllowedSquares(square).map(allowedSquare => new Move(square, allowedSquare)));
-        let count = allowedMoves.length;
-        allowedMoves.forEach(move => count += this.playTillLevel(this.evaluate(move), depth - 1));
-        return count;
-    }
-
-    evaluate(move) {
-        let evaluation = new Evaluator().evaluate(move);
-        return move;
-    }
-
 }
 
 export default Engine;

@@ -14,11 +14,6 @@ class Row extends React.Component {
             key={'square-' + col}
             col={col}
             row={row}
-            data={{
-                piece: this.props.gameState.get(square),
-                selected: this.props.gameState.isSelected(square),
-                highlighted: this.props.gameState.isHighlighted(square),
-            }}
         />;
     }
 
