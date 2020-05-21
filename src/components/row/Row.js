@@ -9,11 +9,7 @@ class Row extends React.Component {
     cols = [0, 1, 2, 3, 4, 5, 6, 7];
 
     renderSquare(col, row) {
-        const square = Square.of(col, row);
-        return <SquareComponent
-            key={'square-' + col}
-            square={Square.of(col, row)}
-        />;
+        return <SquareComponent key={'square-' + col} square={Square.of(col, row)} />;
     }
 
     renderColHeader(col) {

@@ -4,12 +4,11 @@ import './index.css';
 import * as serviceWorker from './serviceWorker';
 import Game from "./components/game/Game";
 import {Provider} from "react-redux";
-import {createStore, applyMiddleware} from "redux";
-import gameReducers from "./middleware/reducers";
-import { composeWithDevTools } from 'redux-devtools-extension';
-import GameState from "./model/gamestate/GameState";
+import {applyMiddleware, createStore} from "redux";
+import rootReducer from "./middleware/reducers";
+import {composeWithDevTools} from 'redux-devtools-extension';
 
-const store = createStore(gameReducers, composeWithDevTools(
+const store = createStore(rootReducer, composeWithDevTools(
     applyMiddleware(),
     // other store enhancers if any
 ));

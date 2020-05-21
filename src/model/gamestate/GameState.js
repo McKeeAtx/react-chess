@@ -42,6 +42,7 @@ import Squares, {
 } from "../Square";
 import Move from "../Move";
 import Color from "../Color";
+import Engine from "../../engine/Engine";
 
 /**
  * Represent the state of a game (the position of all pieces and all previous clicks and moves)
@@ -156,6 +157,15 @@ class GameState  {
             return this.storeClick(square)
         }
     }
+
+    handleCpuMove() {
+        const move = new Engine().nextMove(this);
+        if (move) {
+            return this.handleSquareClick(move.from).handleSquareClick(move.to);
+        }
+        return this;
+    }
+
 
     storeClick(square) {
         return new GameState(this.pieces, [...this.clicks, square], this.moves);

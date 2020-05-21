@@ -19,8 +19,8 @@ class Rook extends Piece {
     }
 
     canAttackOnEmptyBoard(square, target) {
-        return square.col == target.col ||
-            square.row == target.row;
+        return square.col === target.col ||
+            square.row === target.row;
     }
 
     getAttackedSquaresInternal(square, gameState) {

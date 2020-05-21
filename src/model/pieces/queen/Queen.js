@@ -20,8 +20,8 @@ class Queen extends Piece {
 
     canAttackOnEmptyBoard(square, target) {
         return (Math.abs(square.col - target.col) === Math.abs(square.row - target.row)) ||
-            square.col == target.col ||
-            square.row == target.row;
+            square.col === target.col ||
+            square.row === target.row;
     }
 
     getAttackedSquaresInternal(square, gameState) {
